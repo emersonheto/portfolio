@@ -1,4 +1,4 @@
-import { route } from '@payloadcms/next/next'
+import { route } from '@payloadcms/next'
 import config from '@/payload/config'
 
 export const { GET, POST, PATCH, DELETE } = route({
