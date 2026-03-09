@@ -1,0 +1,41 @@
+import { CollectionConfig } from 'payload'
+
+export const Messages: CollectionConfig = {
+  slug: 'messages',
+  admin: {
+    useAsTitle: 'email',
+    defaultColumns: ['name', 'email', 'createdAt'],
+    disableDuplicate: true,
+  },
+  access: {
+    read: () => true,
+    create: () => true, // Only allow creation via API
+    update: () => false, // Disable editing
+    delete: () => true,
+  },
+  fields: [
+    {
+      name: 'name',
+      type: 'text',
+      required: true,
+    },
+    {
+      name: 'email',
+      type: 'text',
+      required: true,
+    },
+    {
+      name: 'message',
+      type: 'textarea',
+      required: true,
+    },
+    {
+      name: 'ipAddress',
+      type: 'text',
+    },
+    {
+      name: 'userAgent',
+      type: 'text',
+    },
+  ],
+}

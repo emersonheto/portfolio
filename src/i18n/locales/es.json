@@ -1,0 +1,61 @@
+{
+  "nav": {
+    "home": "Inicio",
+    "about": "Sobre mí",
+    "experience": "Experiencia",
+    "projects": "Proyectos",
+    "education": "Educación",
+    "certifications": "Certificaciones",
+    "contact": "Contacto"
+  },
+  "hero": {
+    "hi": "Hola, soy",
+    "contact": "Ponte en contacto",
+    "downloadCV": "Descargar CV"
+  },
+  "about": {
+    "title": "Sobre mí",
+    "yearsOfExperience": "años de experiencia"
+  },
+  "experience": {
+    "title": "Experiencia laboral",
+    "present": "Actualidad"
+  },
+  "projects": {
+    "title": "Proyectos",
+    "featured": "Destacado",
+    "viewDemo": "Ver Demo",
+    "viewCode": "Ver Código"
+  },
+  "education": {
+    "title": "Educación"
+  },
+  "certifications": {
+    "title": "Certificaciones",
+    "verify": "Verificar"
+  },
+  "contact": {
+    "title": "Ponte en contacto",
+    "name": "Nombre",
+    "email": "Correo electrónico",
+    "message": "Mensaje",
+    "send": "Enviar mensaje",
+    "sending": "Enviando...",
+    "success": "¡Mensaje enviado con éxito!",
+    "error": "Error al enviar el mensaje. Por favor, inténtalo de nuevo.",
+    "rateLimit": "Demasiadas solicitudes. Por favor, inténtalo más tarde.",
+    "validation": {
+      "nameRequired": "El nombre es requerido",
+      "nameMin": "El nombre debe tener al menos 2 caracteres",
+      "emailRequired": "El correo electrónico es requerido",
+      "emailInvalid": "Dirección de correo electrónico inválida",
+      "messageRequired": "El mensaje es requerido",
+      "messageMin": "El mensaje debe tener al menos 10 caracteres"
+    }
+  },
+  "common": {
+    "loading": "Cargando...",
+    "error": "Algo salió mal",
+    "notFound": "No encontrado"
+  }
+}
