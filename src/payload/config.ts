@@ -3,20 +3,20 @@ import { postgresAdapter } from '@payloadcms/db-postgres'
 import path from 'path'
 
 // Collections
-import Profile from './src/collections/Profile'
-import Projects from './src/collections/Projects'
-import Experience from './src/collections/Experience'
-import Education from './src/collections/Education'
-import Certifications from './src/collections/Certifications'
-import Skills from './src/collections/Skills'
-import Messages from './src/collections/Messages'
+import Profile from '../collections/Profile'
+import Projects from '../collections/Projects'
+import Experience from '../collections/Experience'
+import Education from '../collections/Education'
+import Certifications from '../collections/Certifications'
+import Skills from '../collections/Skills'
+import Messages from '../collections/Messages'
 
 export default buildConfig({
   serverURL: process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000',
   admin: {
     user: 'users',
     importMap: {
-      baseDir: path.resolve(__dirname),
+      baseDir: path.resolve(__dirname, '../..'),
     },
   },
   collections: [
@@ -34,7 +34,7 @@ export default buildConfig({
     },
   }),
   typescript: {
-    outputFile: path.resolve(__dirname, 'src/payload-types.ts'),
+    outputFile: path.resolve(__dirname, '../../src/payload-types.ts'),
   },
   // Default email configuration (can be configured later)
   email: {
