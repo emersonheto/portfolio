@@ -5,7 +5,6 @@ const Messages: CollectionConfig = {
   admin: {
     useAsTitle: 'email',
     defaultColumns: ['name', 'email', 'createdAt'],
-    disableDuplicate: true,
   },
   access: {
     read: () => true,

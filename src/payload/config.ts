@@ -14,6 +14,7 @@ import Messages from '../collections/Messages'
 
 export default buildConfig({
   serverURL: process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000',
+  secret: process.env.PAYLOAD_SECRET || '',
   admin: {
     user: 'Users',
     importMap: {
@@ -38,9 +39,9 @@ export default buildConfig({
   typescript: {
     outputFile: path.resolve(__dirname, '../../src/payload-types.ts'),
   },
-  // Default email configuration (can be configured later)
-  email: {
-    fromAddress: 'noreply@payloadcms.com',
-    fromName: 'Payload CMS',
-  },
+  // Email can be configured later
+  // email: {
+  //   fromAddress: 'noreply@payloadcms.com',
+  //   fromName: 'Payload CMS',
+  // },
 })
