@@ -1,14 +1,20 @@
 import { payload } from '@/payload'
-import { RouteHandler } from '@payloadcms/next/handlers'
+import { NextRequest } from 'next/server'
 
-const handler = payloadRouteHandler
+export const runtime = 'nodejs'
+export const dynamic = 'force-dynamic'
 
-export default payload
+async function handler(req: NextRequest) {
+  // Payload 3.x with Next.js 15 integration
+  const { searchParams } = new URL(req.url)
+  const path = searchParams.get('path') || ''
 
-const payloadRouteHandler: RouteHandler = async (req, { params }) => {
-  return payload.handler(req, { params })
+  // Handle the request through Payload
+  const response = await payload.handler(req, {
+    params: { slug: path.split('/') },
+  })
+
+  return response
 }
 
-export const config = {
-  runtime: 'nodejs',
-}
+export { handler as GET, handler as POST, handler as PUT, handler as DELETE, handler as PATCH }

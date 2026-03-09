@@ -1,15 +1,21 @@
 import { getPayload } from 'payload'
 import { unstable_cache } from 'next/cache'
 import { REVALIDATE_SECONDS } from '@/lib/constants'
+import config from '@/payload.config'
 
 // Reusable cache key generator
 function getCacheKey(collection: string, locale: string = 'en') {
   return [collection, locale]
 }
 
+// Helper to get payload instance
+async function getPayloadInstance() {
+  return await getPayload({ config })
+}
+
 // Profile service (singleton)
 export async function getProfile() {
-  const payload = await getPayload()
+  const payload = await getPayloadInstance()
   return unstable_cache(
     async () =>
       payload.find({
@@ -24,7 +30,7 @@ export async function getProfile() {
 
 // Projects service
 export async function getProjects() {
-  const payload = await getPayload()
+  const payload = await getPayloadInstance()
   return unstable_cache(
     async () =>
       payload.find({
@@ -39,7 +45,7 @@ export async function getProjects() {
 
 // Experience service
 export async function getExperience() {
-  const payload = await getPayload()
+  const payload = await getPayloadInstance()
   return unstable_cache(
     async () =>
       payload.find({
@@ -53,7 +59,7 @@ export async function getExperience() {
 
 // Education service
 export async function getEducation() {
-  const payload = await getPayload()
+  const payload = await getPayloadInstance()
   return unstable_cache(
     async () =>
       payload.find({
@@ -67,7 +73,7 @@ export async function getEducation() {
 
 // Certifications service
 export async function getCertifications() {
-  const payload = await getPayload()
+  const payload = await getPayloadInstance()
   return unstable_cache(
     async () =>
       payload.find({
@@ -81,7 +87,7 @@ export async function getCertifications() {
 
 // Skills service
 export async function getSkills() {
-  const payload = await getPayload()
+  const payload = await getPayloadInstance()
   return unstable_cache(
     async () =>
       payload.find({

@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { getPayload } from 'payload'
 import { z } from 'zod'
+import config from '@/payload.config'
 
 const contactSchema = z.object({
   name: z.string().min(2).max(100),
@@ -56,7 +57,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Save to Payload
-    const payload = await getPayload()
+    const payload = await getPayload({ config })
     await payload.create({
       collection: 'messages',
       data: {

@@ -1,10 +1,8 @@
 import { buildConfig } from 'payload'
 import { postgresAdapter } from '@payloadcms/db-postgres'
-import { slateEditor } from '@payloadcms/richtext-slate'
-import { webpackBundler } from '@payloadcms/bundler-webpack'
 import path from 'path'
 
-// Collections will be imported here
+// Collections
 import Profile from './src/collections/Profile'
 import Projects from './src/collections/Projects'
 import Experience from './src/collections/Experience'
@@ -17,7 +15,9 @@ export default buildConfig({
   serverURL: process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000',
   admin: {
     user: 'users',
-    bundler: webpackBundler(),
+    importMap: {
+      baseDir: path.resolve(__dirname),
+    },
   },
   collections: [
     Profile,
@@ -28,7 +28,6 @@ export default buildConfig({
     Skills,
     Messages,
   ],
-  editor: slateEditor({}),
   db: postgresAdapter({
     pool: {
       connectionString: process.env.DATABASE_URI,
@@ -36,5 +35,10 @@ export default buildConfig({
   }),
   typescript: {
     outputFile: path.resolve(__dirname, 'src/payload-types.ts'),
+  },
+  // Default email configuration (can be configured later)
+  email: {
+    fromAddress: 'noreply@payloadcms.com',
+    fromName: 'Payload CMS',
   },
 })
