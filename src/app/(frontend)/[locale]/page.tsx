@@ -5,11 +5,12 @@ import { Hero } from '@/components/sections/hero'
 import { About } from '@/components/sections/about'
 import { Experience } from '@/components/sections/experience'
 import { Projects } from '@/components/sections/projects'
-import { Education } from '@/components/sections/education'
+import { Education as EducationComponent } from '@/components/sections/education'
 import { Certifications } from '@/components/sections/certifications'
 import { Contact } from '@/components/sections/contact'
 import { getProfile, getProjects, getExperience, getEducation, getCertifications, getSkills } from '@/services/payload'
 import { SITE_URL, SITE_NAME } from '@/lib/constants'
+import type { Profile, Project, Experience as ExperienceType, Education as EducationType, Certification, Skill } from '@/payload-types'
 
 export const revalidate = 60
 
@@ -18,7 +19,7 @@ export async function generateMetadata(): Promise<Metadata> {
 
   try {
     const profileData = await getProfile()
-    const profile = profileData.docs?.[0]
+    const profile = profileData.docs?.[0] as Profile | undefined
 
     if (!profile) {
       return {
@@ -72,12 +73,12 @@ export default async function HomePage() {
         getSkills(),
       ])
 
-    const profile = profileData.docs?.[0]
-    const projects = projectsData.docs || []
-    const experiences = experienceData.docs || []
-    const education = educationData.docs || []
-    const certifications = certificationsData.docs || []
-    const skills = skillsData.docs || []
+    const profile = profileData.docs?.[0] as Profile | undefined
+    const projects = (projectsData.docs || []) as Project[]
+    const experiences = (experienceData.docs || []) as ExperienceType[]
+    const education = (educationData.docs || []) as EducationType[]
+    const certifications = (certificationsData.docs || []) as Certification[]
+    const skills = (skillsData.docs || []) as Skill[]
 
     if (!profile) {
       notFound()
@@ -89,7 +90,7 @@ export default async function HomePage() {
         <About profile={profile} skills={skills} />
         <Experience experiences={experiences} />
         <Projects projects={projects} />
-        <Education education={education} />
+        <EducationComponent education={education} />
         <Certifications certifications={certifications} />
         <Contact />
       </>
