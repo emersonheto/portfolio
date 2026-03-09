@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { getPayload } from 'payload'
 import { z } from 'zod'
-import config from '@/payload.config'
+import config from '@/payload/config'
 
 const contactSchema = z.object({
   name: z.string().min(2).max(100),

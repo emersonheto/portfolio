@@ -1,7 +1,7 @@
 import { getPayload } from 'payload'
 import { unstable_cache } from 'next/cache'
 import { REVALIDATE_SECONDS } from '@/lib/constants'
-import config from '@/payload.config'
+import config from '@/payload/config'
 
 // Reusable cache key generator
 function getCacheKey(collection: string, locale: string = 'en') {
