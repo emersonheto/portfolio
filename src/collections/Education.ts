@@ -1,10 +1,10 @@
-import { CollectionConfig } from 'payload'
+import { CollectionConfig } from "payload";
 
 const Education: CollectionConfig = {
-  slug: 'education',
+  slug: "education",
   admin: {
-    useAsTitle: 'degree',
-    defaultColumns: ['degree', 'institution', 'startDate', 'endDate'],
+    useAsTitle: "degree",
+    defaultColumns: ["degree", "institution", "startDate", "endDate"],
   },
   access: {
     read: () => true,
@@ -14,29 +14,29 @@ const Education: CollectionConfig = {
   },
   fields: [
     {
-      name: 'institution',
-      type: 'text',
+      name: "institution",
+      type: "text",
       required: true,
     },
     {
-      name: 'degree',
-      type: 'text',
+      name: "degree",
+      type: "text",
       required: true,
     },
     {
-      name: 'description',
-      type: 'textarea',
+      name: "description",
+      type: "textarea",
     },
     {
-      name: 'startDate',
-      type: 'date',
+      name: "startDate",
+      type: "date",
       required: true,
     },
     {
-      name: 'endDate',
-      type: 'date',
+      name: "endDate",
+      type: "date",
     },
   ],
-}
+};
 
-export default Education
+export default Education;

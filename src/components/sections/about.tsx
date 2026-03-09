@@ -1,26 +1,29 @@
-'use client'
+"use client";
 
-import { motion } from 'framer-motion'
-import { useTranslations } from 'next-intl'
-import { Badge } from '@/components/ui/badge'
-import type { Profile, Skill } from '@/payload-types'
+import { motion } from "framer-motion";
+import { useTranslations } from "next-intl";
+import { Badge } from "@/components/ui/badge";
+import type { Profile, Skill } from "@/payload-types";
 
 interface AboutProps {
-  profile: Profile
-  skills: Skill[]
+  profile: Profile;
+  skills: Skill[];
 }
 
 export function About({ profile, skills }: AboutProps) {
-  const t = useTranslations()
+  const t = useTranslations();
 
   // Group skills by category
-  const skillsByCategory = skills.reduce((acc, skill) => {
-    if (!acc[skill.category]) {
-      acc[skill.category] = []
-    }
-    acc[skill.category].push(skill)
-    return acc
-  }, {} as Record<string, Skill[]>)
+  const skillsByCategory = skills.reduce(
+    (acc, skill) => {
+      if (!acc[skill.category]) {
+        acc[skill.category] = [];
+      }
+      acc[skill.category].push(skill);
+      return acc;
+    },
+    {} as Record<string, Skill[]>
+  );
 
   return (
     <section className="container mx-auto px-4 py-20">
@@ -32,14 +35,12 @@ export function About({ profile, skills }: AboutProps) {
         className="space-y-12"
       >
         <div>
-          <h2 className="mb-6 text-3xl font-bold tracking-tight">
-            {t('about.title')}
-          </h2>
+          <h2 className="mb-6 text-3xl font-bold tracking-tight">{t("about.title")}</h2>
           <p className="prose max-w-none text-gray-600 dark:text-gray-400">
             {profile.longDescription}
           </p>
           <p className="mt-4 text-sm text-gray-600 dark:text-gray-400">
-            {profile.yearsOfExperience} {t('about.yearsOfExperience')}
+            {profile.yearsOfExperience} {t("about.yearsOfExperience")}
           </p>
         </div>
 
@@ -70,5 +71,5 @@ export function About({ profile, skills }: AboutProps) {
         </div>
       </motion.div>
     </section>
-  )
+  );
 }

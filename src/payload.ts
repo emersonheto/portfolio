@@ -1,4 +1,4 @@
-import payload from 'payload'
-import '@/payload/config'
+import payload from "payload";
+import "@/payload/config";
 
-export { payload }
+export { payload };

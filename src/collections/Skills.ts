@@ -1,10 +1,10 @@
-import { CollectionConfig } from 'payload'
+import { CollectionConfig } from "payload";
 
 const Skills: CollectionConfig = {
-  slug: 'skills',
+  slug: "skills",
   admin: {
-    useAsTitle: 'name',
-    defaultColumns: ['name', 'category', 'level'],
+    useAsTitle: "name",
+    defaultColumns: ["name", "category", "level"],
   },
   access: {
     read: () => true,
@@ -14,31 +14,31 @@ const Skills: CollectionConfig = {
   },
   fields: [
     {
-      name: 'name',
-      type: 'text',
+      name: "name",
+      type: "text",
       required: true,
     },
     {
-      name: 'category',
-      type: 'select',
+      name: "category",
+      type: "select",
       required: true,
       options: [
-        { label: 'Frontend', value: 'frontend' },
-        { label: 'Backend', value: 'backend' },
-        { label: 'DevOps', value: 'devops' },
-        { label: 'Design', value: 'design' },
-        { label: 'Tools', value: 'tools' },
-        { label: 'Soft Skills', value: 'soft' },
+        { label: "Frontend", value: "frontend" },
+        { label: "Backend", value: "backend" },
+        { label: "DevOps", value: "devops" },
+        { label: "Design", value: "design" },
+        { label: "Tools", value: "tools" },
+        { label: "Soft Skills", value: "soft" },
       ],
     },
     {
-      name: 'level',
-      type: 'number',
+      name: "level",
+      type: "number",
       required: true,
       min: 1,
       max: 100,
     },
   ],
-}
+};
 
-export default Skills
+export default Skills;

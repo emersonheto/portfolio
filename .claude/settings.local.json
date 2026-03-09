@@ -3,7 +3,9 @@
     "allow": [
       "mcp__web-search-prime__web_search_prime",
       "Bash(npx create-next-app@14 . --typescript --tailwind --eslint --app --src-dir --import-alias \"@/*\" --no-git)",
-      "Bash(npm install)"
+      "Bash(npm install)",
+      "Bash(grep -l \"export default\" src/collections/*.ts)",
+      "Bash(git add -A)"
     ]
   }
 }

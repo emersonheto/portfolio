@@ -1,20 +1,27 @@
-'use client'
+"use client";
 
-import { motion } from 'framer-motion'
-import Image from 'next/image'
-import { useTranslations } from 'next-intl'
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
-import { Badge } from '@/components/ui/badge'
-import { Button } from '@/components/ui/button'
-import { ExternalLink, Github } from 'lucide-react'
-import type { Project } from '@/payload-types'
+import { motion } from "framer-motion";
+import Image from "next/image";
+import { useTranslations } from "next-intl";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { ExternalLink, Github } from "lucide-react";
+import type { Project } from "@/payload-types";
 
 interface ProjectsProps {
-  projects: Project[]
+  projects: Project[];
 }
 
 export function Projects({ projects }: ProjectsProps) {
-  const t = useTranslations()
+  const t = useTranslations();
 
   return (
     <section className="container mx-auto px-4 py-20">
@@ -24,7 +31,7 @@ export function Projects({ projects }: ProjectsProps) {
         viewport={{ once: true }}
         className="mb-12 text-3xl font-bold tracking-tight"
       >
-        {t('projects.title')}
+        {t("projects.title")}
       </motion.h2>
 
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
@@ -40,14 +47,14 @@ export function Projects({ projects }: ProjectsProps) {
               {project.image && (
                 <div className="relative aspect-video w-full overflow-hidden">
                   <Image
-                    src={typeof project.image === 'string' ? project.image : project.image.url}
+                    src={typeof project.image === "string" ? project.image : project.image.url}
                     alt={project.name}
                     fill
                     className="object-cover"
                   />
                   {project.featured && (
                     <span className="absolute right-2 top-2 rounded-full bg-primary-600 px-3 py-1 text-xs font-medium text-white">
-                      {t('projects.featured')}
+                      {t("projects.featured")}
                     </span>
                   )}
                 </div>
@@ -61,7 +68,7 @@ export function Projects({ projects }: ProjectsProps) {
                   <div className="flex flex-wrap gap-2">
                     {project.technologies.map((tech, techIndex) => (
                       <Badge key={techIndex} variant="secondary">
-                        {typeof tech === 'string' ? tech : tech.technology}
+                        {typeof tech === "string" ? tech : tech.technology}
                       </Badge>
                     ))}
                   </div>
@@ -76,8 +83,8 @@ export function Projects({ projects }: ProjectsProps) {
                     className="flex-1"
                   >
                     <Button variant="outline" size="sm" className="w-full">
-                      <ExternalLink className="mr-2 h-4 w-4 inline" />
-                      {t('projects.viewDemo')}
+                      <ExternalLink className="mr-2 inline h-4 w-4" />
+                      {t("projects.viewDemo")}
                     </Button>
                   </a>
                 )}
@@ -89,8 +96,8 @@ export function Projects({ projects }: ProjectsProps) {
                     className="flex-1"
                   >
                     <Button variant="outline" size="sm" className="w-full">
-                      <Github className="mr-2 h-4 w-4 inline" />
-                      {t('projects.viewCode')}
+                      <Github className="mr-2 inline h-4 w-4" />
+                      {t("projects.viewCode")}
                     </Button>
                   </a>
                 )}
@@ -100,5 +107,5 @@ export function Projects({ projects }: ProjectsProps) {
         ))}
       </div>
     </section>
-  )
+  );
 }

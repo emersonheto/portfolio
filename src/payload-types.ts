@@ -8,97 +8,97 @@
 
 export interface Config {
   collections: {
-    profile: Profile
-    projects: Project
-    experience: Experience
-    education: Education
-    certifications: Certification
-    skills: Skill
-    messages: Message
-  }
-  globals: {}
+    profile: Profile;
+    projects: Project;
+    experience: Experience;
+    education: Education;
+    certifications: Certification;
+    skills: Skill;
+    messages: Message;
+  };
+  globals: {};
 }
 
 export interface Profile {
-  id: string
-  name: string
-  professionalTitle: string
-  shortDescription: string
-  longDescription: string
-  photo: string | { url: string; alt?: string; filename?: string }
-  cv?: string | { url: string; filename?: string }
-  yearsOfExperience: number
+  id: string;
+  name: string;
+  professionalTitle: string;
+  shortDescription: string;
+  longDescription: string;
+  photo: string | { url: string; alt?: string; filename?: string };
+  cv?: string | { url: string; filename?: string };
+  yearsOfExperience: number;
   socialNetworks?: Array<{
-    platform: string
-    url: string
-  }>
-  createdAt: string
-  updatedAt: string
+    platform: string;
+    url: string;
+  }>;
+  createdAt: string;
+  updatedAt: string;
 }
 
 export interface Project {
-  id: string
-  name: string
-  description: string
-  featured: boolean
-  image: string | { url: string; alt?: string; filename?: string }
-  technologies?: Array<{ technology: string }>
-  demoUrl?: string
-  githubUrl?: string
-  createdAt: string
-  updatedAt: string
+  id: string;
+  name: string;
+  description: string;
+  featured: boolean;
+  image: string | { url: string; alt?: string; filename?: string };
+  technologies?: Array<{ technology: string }>;
+  demoUrl?: string;
+  githubUrl?: string;
+  createdAt: string;
+  updatedAt: string;
 }
 
 export interface Experience {
-  id: string
-  company: string
-  position: string
-  description: string
-  startDate: string
-  endDate?: string
-  current: boolean
-  technologies?: Array<{ technology: string }>
-  createdAt: string
-  updatedAt: string
+  id: string;
+  company: string;
+  position: string;
+  description: string;
+  startDate: string;
+  endDate?: string;
+  current: boolean;
+  technologies?: Array<{ technology: string }>;
+  createdAt: string;
+  updatedAt: string;
 }
 
 export interface Education {
-  id: string
-  institution: string
-  degree: string
-  description?: string
-  startDate: string
-  endDate?: string
-  createdAt: string
-  updatedAt: string
+  id: string;
+  institution: string;
+  degree: string;
+  description?: string;
+  startDate: string;
+  endDate?: string;
+  createdAt: string;
+  updatedAt: string;
 }
 
 export interface Certification {
-  id: string
-  name: string
-  institution: string
-  date: string
-  image?: string | { url: string; alt?: string; filename?: string }
-  verificationUrl?: string
-  createdAt: string
-  updatedAt: string
+  id: string;
+  name: string;
+  institution: string;
+  date: string;
+  image?: string | { url: string; alt?: string; filename?: string };
+  verificationUrl?: string;
+  createdAt: string;
+  updatedAt: string;
 }
 
 export interface Skill {
-  id: string
-  name: string
-  category: 'frontend' | 'backend' | 'devops' | 'design' | 'tools' | 'soft'
-  level: number
-  createdAt: string
-  updatedAt: string
+  id: string;
+  name: string;
+  category: "frontend" | "backend" | "devops" | "design" | "tools" | "soft";
+  level: number;
+  createdAt: string;
+  updatedAt: string;
 }
 
 export interface Message {
-  id: string
-  name: string
-  email: string
-  message: string
-  ipAddress?: string
-  userAgent?: string
-  createdAt: string
+  id: string;
+  name: string;
+  email: string;
+  message: string;
+  ipAddress?: string;
+  userAgent?: string;
+  createdAt: string;
 }

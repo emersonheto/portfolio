@@ -1,26 +1,33 @@
-'use client'
+"use client";
 
-import { motion } from 'framer-motion'
-import Image from 'next/image'
-import { useTranslations } from 'next-intl'
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
-import { Button } from '@/components/ui/button'
-import { ExternalLink } from 'lucide-react'
-import type { Certification } from '@/payload-types'
+import { motion } from "framer-motion";
+import Image from "next/image";
+import { useTranslations } from "next-intl";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { ExternalLink } from "lucide-react";
+import type { Certification } from "@/payload-types";
 
 interface CertificationsProps {
-  certifications: Certification[]
+  certifications: Certification[];
 }
 
 export function Certifications({ certifications }: CertificationsProps) {
-  const t = useTranslations()
+  const t = useTranslations();
 
   const formatDate = (date: string) => {
-    return new Date(date).toLocaleDateString('en-US', {
-      year: 'numeric',
-      month: 'short',
-    })
-  }
+    return new Date(date).toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "short",
+    });
+  };
 
   return (
     <section className="container mx-auto px-4 py-20">
@@ -30,7 +37,7 @@ export function Certifications({ certifications }: CertificationsProps) {
         viewport={{ once: true }}
         className="mb-12 text-3xl font-bold tracking-tight"
       >
-        {t('certifications.title')}
+        {t("certifications.title")}
       </motion.h2>
 
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
@@ -46,7 +53,7 @@ export function Certifications({ certifications }: CertificationsProps) {
               {cert.image && (
                 <div className="relative aspect-video w-full overflow-hidden">
                   <Image
-                    src={typeof cert.image === 'string' ? cert.image : cert.image.url}
+                    src={typeof cert.image === "string" ? cert.image : cert.image.url}
                     alt={cert.name}
                     fill
                     className="object-cover"
@@ -64,14 +71,10 @@ export function Certifications({ certifications }: CertificationsProps) {
               </CardContent>
               {cert.verificationUrl && (
                 <CardFooter>
-                  <a
-                    href={cert.verificationUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
+                  <a href={cert.verificationUrl} target="_blank" rel="noopener noreferrer">
                     <Button variant="outline" size="sm">
                       <ExternalLink className="mr-2 h-4 w-4" />
-                      {t('certifications.verify')}
+                      {t("certifications.verify")}
                     </Button>
                   </a>
                 </CardFooter>
@@ -81,5 +84,5 @@ export function Certifications({ certifications }: CertificationsProps) {
         ))}
       </div>
     </section>
-  )
+  );
 }

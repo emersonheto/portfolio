@@ -1,21 +1,17 @@
-import { routing } from '@/i18n/routing'
-import { getMessages } from 'next-intl/server'
-import { NextIntlClientProvider } from 'next-intl'
-import { ThemeProvider } from '@/components/providers/theme-provider'
-import { ThemeToggle } from '@/components/ui/theme-toggle'
-import { Link } from '@/i18n/routing'
+import { routing } from "@/i18n/routing";
+import { getMessages } from "next-intl/server";
+import { NextIntlClientProvider } from "next-intl";
+import { ThemeProvider } from "@/components/providers/theme-provider";
+import { ThemeToggle } from "@/components/ui/theme-toggle";
+import { Link } from "@/i18n/routing";
 
 export function generateStaticParams() {
-  return routing.locales.map((locale) => ({ locale }))
+  return routing.locales.map((locale) => ({ locale }));
 }
 
-export default async function RootLayout({
-  children,
-}: {
-  children: React.ReactNode
-}) {
+export default async function RootLayout({ children }: { children: React.ReactNode }) {
   // Get messages for default locale (will be overridden in locale layout)
-  const messages = await getMessages()
+  const messages = await getMessages();
 
   return (
     <html suppressHydrationWarning>
@@ -66,5 +62,5 @@ export default async function RootLayout({
         </ThemeProvider>
       </body>
     </html>
-  )
+  );
 }

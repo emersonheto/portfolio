@@ -61,6 +61,7 @@ npm run dev
 ```
 
 Accede a:
+
 - Portafolio: http://localhost:3000
 - Panel Admin: http://localhost:3000/admin
 
@@ -182,6 +183,7 @@ npm run type-check   # Verificar tipos TypeScript
 ### Error de conexión a PostgreSQL
 
 Verifica que:
+
 1. El servicio PostgreSQL está corriendo en Dokploy
 2. La `DATABASE_URI` es correcta
 3. El nombre del servicio coincide en la conexión

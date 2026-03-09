@@ -1,18 +1,18 @@
-'use client'
+"use client";
 
-import { motion } from 'framer-motion'
-import Image from 'next/image'
-import Link from 'next/link'
-import { useTranslations } from 'next-intl'
-import { Button } from '@/components/ui/button'
-import type { Profile } from '@/payload-types'
+import { motion } from "framer-motion";
+import Image from "next/image";
+import Link from "next/link";
+import { useTranslations } from "next-intl";
+import { Button } from "@/components/ui/button";
+import type { Profile } from "@/payload-types";
 
 interface HeroProps {
-  profile: Profile
+  profile: Profile;
 }
 
 export function Hero({ profile }: HeroProps) {
-  const t = useTranslations()
+  const t = useTranslations();
 
   return (
     <section className="container mx-auto px-4 py-20">
@@ -29,7 +29,7 @@ export function Hero({ profile }: HeroProps) {
             transition={{ duration: 0.5, delay: 0.2 }}
           >
             <h1 className="text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl">
-              {t('hero.hi')} {profile.name}
+              {t("hero.hi")} {profile.name}
             </h1>
             <p className="mt-4 text-xl text-gray-600 dark:text-gray-400">
               {profile.professionalTitle}
@@ -52,15 +52,15 @@ export function Hero({ profile }: HeroProps) {
             className="flex gap-4"
           >
             <Link href="/contact" passHref>
-              <Button>{t('hero.contact')}</Button>
+              <Button>{t("hero.contact")}</Button>
             </Link>
             {profile.cv && (
               <Link
-                href={(typeof profile.cv === 'string' ? profile.cv : profile.cv.url)}
+                href={typeof profile.cv === "string" ? profile.cv : profile.cv.url}
                 download
                 passHref
               >
-                <Button variant="outline">{t('hero.downloadCV')}</Button>
+                <Button variant="outline">{t("hero.downloadCV")}</Button>
               </Link>
             )}
           </motion.div>
@@ -74,9 +74,7 @@ export function Hero({ profile }: HeroProps) {
             className="relative h-64 w-64 overflow-hidden rounded-full sm:h-80 sm:w-80"
           >
             <Image
-              src={
-                typeof profile.photo === 'string' ? profile.photo : profile.photo.url
-              }
+              src={typeof profile.photo === "string" ? profile.photo : profile.photo.url}
               alt={profile.name}
               fill
               className="object-cover"
@@ -86,5 +84,5 @@ export function Hero({ profile }: HeroProps) {
         )}
       </motion.div>
     </section>
-  )
+  );
 }

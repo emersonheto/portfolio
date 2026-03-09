@@ -1,10 +1,10 @@
-import { CollectionConfig } from 'payload'
+import { CollectionConfig } from "payload";
 
 const Experience: CollectionConfig = {
-  slug: 'experience',
+  slug: "experience",
   admin: {
-    useAsTitle: 'position',
-    defaultColumns: ['position', 'company', 'startDate', 'endDate'],
+    useAsTitle: "position",
+    defaultColumns: ["position", "company", "startDate", "endDate"],
   },
   access: {
     read: () => true,
@@ -14,46 +14,46 @@ const Experience: CollectionConfig = {
   },
   fields: [
     {
-      name: 'company',
-      type: 'text',
+      name: "company",
+      type: "text",
       required: true,
     },
     {
-      name: 'position',
-      type: 'text',
+      name: "position",
+      type: "text",
       required: true,
     },
     {
-      name: 'description',
-      type: 'textarea',
+      name: "description",
+      type: "textarea",
       required: true,
     },
     {
-      name: 'startDate',
-      type: 'date',
+      name: "startDate",
+      type: "date",
       required: true,
     },
     {
-      name: 'endDate',
-      type: 'date',
+      name: "endDate",
+      type: "date",
     },
     {
-      name: 'current',
-      type: 'checkbox',
+      name: "current",
+      type: "checkbox",
       defaultValue: false,
     },
     {
-      name: 'technologies',
-      type: 'array',
+      name: "technologies",
+      type: "array",
       fields: [
         {
-          name: 'technology',
-          type: 'text',
+          name: "technology",
+          type: "text",
           required: true,
         },
       ],
     },
   ],
-}
+};
 
-export default Experience
+export default Experience;

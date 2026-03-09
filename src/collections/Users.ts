@@ -1,12 +1,12 @@
-import { CollectionConfig } from 'payload'
+import { CollectionConfig } from "payload";
 
 const Users: CollectionConfig = {
-  slug: 'users',
+  slug: "users",
   auth: {
     verify: false,
   },
   admin: {
-    useAsTitle: 'email',
+    useAsTitle: "email",
   },
   access: {
     read: () => true,
@@ -16,11 +16,11 @@ const Users: CollectionConfig = {
   },
   fields: [
     {
-      name: 'name',
-      label: 'Name',
-      type: 'text',
+      name: "name",
+      label: "Name",
+      type: "text",
     },
   ],
-}
+};
 
-export default Users
+export default Users;

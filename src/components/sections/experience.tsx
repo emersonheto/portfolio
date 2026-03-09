@@ -1,23 +1,23 @@
-'use client'
+"use client";
 
-import { motion } from 'framer-motion'
-import { useTranslations } from 'next-intl'
-import { Badge } from '@/components/ui/badge'
-import type { Experience as ExperienceType } from '@/payload-types'
+import { motion } from "framer-motion";
+import { useTranslations } from "next-intl";
+import { Badge } from "@/components/ui/badge";
+import type { Experience as ExperienceType } from "@/payload-types";
 
 interface ExperienceProps {
-  experiences: ExperienceType[]
+  experiences: ExperienceType[];
 }
 
 export function Experience({ experiences }: ExperienceProps) {
-  const t = useTranslations()
+  const t = useTranslations();
 
   const formatDate = (date: string) => {
-    return new Date(date).toLocaleDateString('en-US', {
-      year: 'numeric',
-      month: 'short',
-    })
-  }
+    return new Date(date).toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "short",
+    });
+  };
 
   return (
     <section className="container mx-auto px-4 py-20">
@@ -27,7 +27,7 @@ export function Experience({ experiences }: ExperienceProps) {
         viewport={{ once: true }}
         className="mb-12 text-3xl font-bold tracking-tight"
       >
-        {t('experience.title')}
+        {t("experience.title")}
       </motion.h2>
 
       <div className="space-y-8">
@@ -43,27 +43,23 @@ export function Experience({ experiences }: ExperienceProps) {
             <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
               <div>
                 <h3 className="text-xl font-semibold">{experience.position}</h3>
-                <p className="text-lg text-gray-600 dark:text-gray-400">
-                  {experience.company}
-                </p>
+                <p className="text-lg text-gray-600 dark:text-gray-400">{experience.company}</p>
               </div>
               <div className="text-sm text-gray-600 dark:text-gray-400">
-                {formatDate(experience.startDate)} -{' '}
+                {formatDate(experience.startDate)} -{" "}
                 {experience.current
-                  ? t('experience.present')
+                  ? t("experience.present")
                   : experience.endDate && formatDate(experience.endDate)}
               </div>
             </div>
 
-            <p className="mt-4 text-gray-600 dark:text-gray-400">
-              {experience.description}
-            </p>
+            <p className="mt-4 text-gray-600 dark:text-gray-400">{experience.description}</p>
 
             {experience.technologies && experience.technologies.length > 0 && (
               <div className="mt-4 flex flex-wrap gap-2">
                 {experience.technologies.map((tech, techIndex) => (
                   <Badge key={techIndex} variant="primary">
-                    {typeof tech === 'string' ? tech : tech.technology}
+                    {typeof tech === "string" ? tech : tech.technology}
                   </Badge>
                 ))}
               </div>
@@ -72,5 +68,5 @@ export function Experience({ experiences }: ExperienceProps) {
         ))}
       </div>
     </section>
-  )
+  );
 }

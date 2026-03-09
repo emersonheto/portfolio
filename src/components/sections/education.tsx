@@ -1,23 +1,23 @@
-'use client'
+"use client";
 
-import { motion } from 'framer-motion'
-import { useTranslations } from 'next-intl'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
-import type { Education as EducationType } from '@/payload-types'
+import { motion } from "framer-motion";
+import { useTranslations } from "next-intl";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import type { Education as EducationType } from "@/payload-types";
 
 interface EducationProps {
-  education: EducationType[]
+  education: EducationType[];
 }
 
 export function Education({ education }: EducationProps) {
-  const t = useTranslations()
+  const t = useTranslations();
 
   const formatDate = (date: string) => {
-    return new Date(date).toLocaleDateString('en-US', {
-      year: 'numeric',
-      month: 'short',
-    })
-  }
+    return new Date(date).toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "short",
+    });
+  };
 
   return (
     <section className="container mx-auto px-4 py-20">
@@ -27,7 +27,7 @@ export function Education({ education }: EducationProps) {
         viewport={{ once: true }}
         className="mb-12 text-3xl font-bold tracking-tight"
       >
-        {t('education.title')}
+        {t("education.title")}
       </motion.h2>
 
       <div className="grid gap-6 md:grid-cols-2">
@@ -46,8 +46,7 @@ export function Education({ education }: EducationProps) {
               </CardHeader>
               <CardContent>
                 <div className="mb-2 text-sm text-gray-600 dark:text-gray-400">
-                  {formatDate(edu.startDate)} -{' '}
-                  {edu.endDate ? formatDate(edu.endDate) : 'Present'}
+                  {formatDate(edu.startDate)} - {edu.endDate ? formatDate(edu.endDate) : "Present"}
                 </div>
                 {edu.description && (
                   <p className="text-gray-600 dark:text-gray-400">{edu.description}</p>
@@ -58,5 +57,5 @@ export function Education({ education }: EducationProps) {
         ))}
       </div>
     </section>
-  )
+  );
 }

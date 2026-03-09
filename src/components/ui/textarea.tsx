@@ -1,15 +1,14 @@
-import * as React from 'react'
-import { cn } from '@/lib/utils'
+import * as React from "react";
+import { cn } from "@/lib/utils";
 
-export interface TextareaProps
-  extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {
-  label?: string
-  error?: string
+export interface TextareaProps extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {
+  label?: string;
+  error?: string;
 }
 
 const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
   ({ className, label, error, id, rows = 4, ...props }, ref) => {
-    const textareaId = id || label?.toLowerCase().replace(/\s/g, '-')
+    const textareaId = id || label?.toLowerCase().replace(/\s/g, "-");
 
     return (
       <div className="w-full">
@@ -25,20 +24,18 @@ const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
           id={textareaId}
           rows={rows}
           className={cn(
-            'flex w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm ring-offset-white placeholder:text-gray-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 dark:border-gray-700 dark:bg-gray-900 dark:ring-offset-gray-950 dark:placeholder:text-gray-400 dark:focus-visible:ring-primary-400',
-            error && 'border-red-500 focus-visible:ring-red-500',
+            "flex w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm ring-offset-white placeholder:text-gray-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 dark:border-gray-700 dark:bg-gray-900 dark:ring-offset-gray-950 dark:placeholder:text-gray-400 dark:focus-visible:ring-primary-400",
+            error && "border-red-500 focus-visible:ring-red-500",
             className
           )}
           ref={ref}
           {...props}
         />
-        {error && (
-          <p className="mt-1 text-sm text-red-600 dark:text-red-400">{error}</p>
-        )}
+        {error && <p className="mt-1 text-sm text-red-600 dark:text-red-400">{error}</p>}
       </div>
-    )
+    );
   }
-)
-Textarea.displayName = 'Textarea'
+);
+Textarea.displayName = "Textarea";
 
-export { Textarea }
+export { Textarea };

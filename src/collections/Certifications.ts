@@ -1,10 +1,10 @@
-import { CollectionConfig } from 'payload'
+import { CollectionConfig } from "payload";
 
 const Certifications: CollectionConfig = {
-  slug: 'certifications',
+  slug: "certifications",
   admin: {
-    useAsTitle: 'name',
-    defaultColumns: ['name', 'institution', 'date'],
+    useAsTitle: "name",
+    defaultColumns: ["name", "institution", "date"],
   },
   access: {
     read: () => true,
@@ -14,29 +14,29 @@ const Certifications: CollectionConfig = {
   },
   fields: [
     {
-      name: 'name',
-      type: 'text',
+      name: "name",
+      type: "text",
       required: true,
     },
     {
-      name: 'institution',
-      type: 'text',
+      name: "institution",
+      type: "text",
       required: true,
     },
     {
-      name: 'date',
-      type: 'date',
+      name: "date",
+      type: "date",
       required: true,
     },
     {
-      name: 'image',
-      type: 'text',
+      name: "image",
+      type: "text",
     },
     {
-      name: 'verificationUrl',
-      type: 'text',
+      name: "verificationUrl",
+      type: "text",
     },
   ],
-}
+};
 
-export default Certifications
+export default Certifications;
