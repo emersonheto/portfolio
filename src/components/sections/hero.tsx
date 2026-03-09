@@ -51,18 +51,17 @@ export function Hero({ profile }: HeroProps) {
             transition={{ duration: 0.5, delay: 0.6 }}
             className="flex gap-4"
           >
-            <Button asChild>
-              <Link href="/contact">{t('hero.contact')}</Link>
-            </Button>
+            <Link href="/contact" passHref>
+              <Button>{t('hero.contact')}</Button>
+            </Link>
             {profile.cv && (
-              <Button variant="outline" asChild>
-                <Link
-                  href={(typeof profile.cv === 'string' ? profile.cv : profile.cv.url)}
-                  download
-                >
-                  {t('hero.downloadCV')}
-                </Link>
-              </Button>
+              <Link
+                href={(typeof profile.cv === 'string' ? profile.cv : profile.cv.url)}
+                download
+                passHref
+              >
+                <Button variant="outline">{t('hero.downloadCV')}</Button>
+              </Link>
             )}
           </motion.div>
         </div>

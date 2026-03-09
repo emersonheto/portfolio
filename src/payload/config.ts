@@ -16,7 +16,7 @@ export default buildConfig({
   serverURL: process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000',
   secret: process.env.PAYLOAD_SECRET || '',
   admin: {
-    user: 'Users',
+    user: 'users',
     importMap: {
       baseDir: path.resolve(__dirname, '../..'),
     },

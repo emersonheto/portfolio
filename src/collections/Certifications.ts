@@ -30,8 +30,7 @@ const Certifications: CollectionConfig = {
     },
     {
       name: 'image',
-      type: 'upload',
-      relationTo: 'media',
+      type: 'text',
     },
     {
       name: 'verificationUrl',

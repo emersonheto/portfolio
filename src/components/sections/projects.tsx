@@ -6,7 +6,7 @@ import { useTranslations } from 'next-intl'
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
-import { ExternalLink, GitFork } from 'lucide-react'
+import { ExternalLink, Github } from 'lucide-react'
 import type { Project } from '@/payload-types'
 
 interface ProjectsProps {
@@ -69,20 +69,30 @@ export function Projects({ projects }: ProjectsProps) {
               </CardContent>
               <CardFooter className="flex gap-2">
                 {project.demoUrl && (
-                  <Button variant="outline" size="sm" asChild className="flex-1">
-                    <a href={project.demoUrl} target="_blank" rel="noopener noreferrer">
-                      <ExternalLink className="mr-2 h-4 w-4" />
+                  <a
+                    href={project.demoUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex-1"
+                  >
+                    <Button variant="outline" size="sm" className="w-full">
+                      <ExternalLink className="mr-2 h-4 w-4 inline" />
                       {t('projects.viewDemo')}
-                    </a>
-                  </Button>
+                    </Button>
+                  </a>
                 )}
                 {project.githubUrl && (
-                  <Button variant="outline" size="sm" asChild className="flex-1">
-                    <a href={project.githubUrl} target="_blank" rel="noopener noreferrer">
-                      <GitFork className="mr-2 h-4 w-4" />
+                  <a
+                    href={project.githubUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex-1"
+                  >
+                    <Button variant="outline" size="sm" className="w-full">
+                      <Github className="mr-2 h-4 w-4 inline" />
                       {t('projects.viewCode')}
-                    </a>
-                  </Button>
+                    </Button>
+                  </a>
                 )}
               </CardFooter>
             </Card>

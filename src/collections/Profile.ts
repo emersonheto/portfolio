@@ -32,14 +32,12 @@ const Profile: CollectionConfig = {
     },
     {
       name: 'photo',
-      type: 'upload',
-      relationTo: 'media',
+      type: 'text',
       required: true,
     },
     {
       name: 'cv',
-      type: 'upload',
-      relationTo: 'media',
+      type: 'text',
     },
     {
       name: 'yearsOfExperience',

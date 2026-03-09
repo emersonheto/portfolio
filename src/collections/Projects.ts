@@ -30,8 +30,7 @@ const Projects: CollectionConfig = {
     },
     {
       name: 'image',
-      type: 'upload',
-      relationTo: 'media',
+      type: 'text',
       required: true,
     },
     {

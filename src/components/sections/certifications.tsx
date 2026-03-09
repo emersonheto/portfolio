@@ -64,12 +64,16 @@ export function Certifications({ certifications }: CertificationsProps) {
               </CardContent>
               {cert.verificationUrl && (
                 <CardFooter>
-                  <Button variant="outline" size="sm" asChild>
-                    <a href={cert.verificationUrl} target="_blank" rel="noopener noreferrer">
+                  <a
+                    href={cert.verificationUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <Button variant="outline" size="sm">
                       <ExternalLink className="mr-2 h-4 w-4" />
                       {t('certifications.verify')}
-                    </a>
-                  </Button>
+                    </Button>
+                  </a>
                 </CardFooter>
               )}
             </Card>

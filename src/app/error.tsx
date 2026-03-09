@@ -24,9 +24,9 @@ export default function Error({
         </p>
         <div className="flex gap-4 justify-center">
           <Button onClick={reset}>Try Again</Button>
-          <Button variant="outline" asChild>
-            <Link href="/">Return Home</Link>
-          </Button>
+          <Link href="/" passHref>
+            <Button variant="outline">Return Home</Button>
+          </Link>
         </div>
       </div>
     </div>

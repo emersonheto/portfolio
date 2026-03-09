@@ -9,9 +9,9 @@ export default function NotFound() {
         <p className="mb-8 text-xl text-gray-600 dark:text-gray-400">
           Page not found
         </p>
-        <Button asChild>
-          <Link href="/">Return Home</Link>
-        </Button>
+        <Link href="/" passHref>
+          <Button>Return Home</Button>
+        </Link>
       </div>
     </div>
   )
