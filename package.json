@@ -2,10 +2,16 @@
   "name": "portfolio",
   "version": "1.0.0",
   "private": true,
+  "engines": {
+    "node": ">=20.0.0",
+    "npm": ">=10.0.0"
+  },
   "scripts": {
     "dev": "next dev",
-    "build": "payload migrate && next build",
+    "build": "next build",
+    "db:migrate": "payload migrate",
     "start": "next start -p 3000",
+    "start:prod": "bash ./scripts/start.sh",
     "lint": "next lint",
     "type-check": "tsc --noEmit"
   },

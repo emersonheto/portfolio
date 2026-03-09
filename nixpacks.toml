@@ -1,0 +1,15 @@
+[phases.build]
+cmds = ["npm run build"]
+
+[phases.start]
+cmd = "npm run start:prod"
+
+[start]
+cmd = "npm run start:prod"
+
+[variables]
+NODE_ENV = "production"
+
+# Force Node.js 20
+[build.env]
+NPM_CONFIG_PRODUCTION = "false"
