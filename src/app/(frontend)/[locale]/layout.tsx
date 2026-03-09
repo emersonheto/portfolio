@@ -1,5 +1,7 @@
 import { routing } from '@/i18n/routing'
 import { notFound } from 'next/navigation'
+import { getMessages } from 'next-intl/server'
+import { NextIntlClientProvider } from 'next-intl'
 
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }))
@@ -17,5 +19,12 @@ export default async function FrontendLayout({
     notFound()
   }
 
-  return <>{children}</>
+  // Get messages for this locale
+  const messages = await getMessages()
+
+  return (
+    <NextIntlClientProvider messages={messages} locale={locale}>
+      {children}
+    </NextIntlClientProvider>
+  )
 }

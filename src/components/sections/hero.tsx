@@ -56,12 +56,12 @@ export function Hero({ profile }: HeroProps) {
             </Button>
             {profile.cv && (
               <Button variant="outline" asChild>
-                <a
+                <Link
                   href={(typeof profile.cv === 'string' ? profile.cv : profile.cv.url)}
                   download
                 >
                   {t('hero.downloadCV')}
-                </a>
+                </Link>
               </Button>
             )}
           </motion.div>

@@ -1,5 +1,4 @@
 import { routing } from '@/i18n/routing'
-import { notFound } from 'next/navigation'
 import { getMessages } from 'next-intl/server'
 import { NextIntlClientProvider } from 'next-intl'
 import { ThemeProvider } from '@/components/providers/theme-provider'
@@ -12,21 +11,14 @@ export function generateStaticParams() {
 
 export default async function RootLayout({
   children,
-  params: { locale },
 }: {
   children: React.ReactNode
-  params: { locale: string }
 }) {
-  // Ensure that the incoming `locale` is valid
-  if (!routing.locales.includes(locale as any)) {
-    notFound()
-  }
-
-  // Providing all messages to the client side is the easiest way to get started
+  // Get messages for default locale (will be overridden in locale layout)
   const messages = await getMessages()
 
   return (
-    <html lang={locale} suppressHydrationWarning>
+    <html suppressHydrationWarning>
       <body className="min-h-screen bg-white text-gray-950 antialiased dark:bg-gray-950 dark:text-gray-50">
         <ThemeProvider>
           <NextIntlClientProvider messages={messages}>

@@ -3,6 +3,7 @@ import { postgresAdapter } from '@payloadcms/db-postgres'
 import path from 'path'
 
 // Collections
+import Users from '../collections/Users'
 import Profile from '../collections/Profile'
 import Projects from '../collections/Projects'
 import Experience from '../collections/Experience'
@@ -14,12 +15,13 @@ import Messages from '../collections/Messages'
 export default buildConfig({
   serverURL: process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000',
   admin: {
-    user: 'users',
+    user: 'Users',
     importMap: {
       baseDir: path.resolve(__dirname, '../..'),
     },
   },
   collections: [
+    Users,
     Profile,
     Projects,
     Experience,
