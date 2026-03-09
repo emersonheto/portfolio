@@ -1,6 +1,6 @@
 import { CollectionConfig } from 'payload'
 
-export const Certifications: CollectionConfig = {
+const Certifications: CollectionConfig = {
   slug: 'certifications',
   admin: {
     useAsTitle: 'name',
@@ -39,3 +39,5 @@ export const Certifications: CollectionConfig = {
     },
   ],
 }
+
+export default Certifications

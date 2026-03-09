@@ -1,6 +1,6 @@
 import { CollectionConfig } from 'payload'
 
-export const Experience: CollectionConfig = {
+const Experience: CollectionConfig = {
   slug: 'experience',
   admin: {
     useAsTitle: 'position',
@@ -55,3 +55,5 @@ export const Experience: CollectionConfig = {
     },
   ],
 }
+
+export default Experience

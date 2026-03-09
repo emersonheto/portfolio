@@ -6,7 +6,7 @@ import { useTranslations } from 'next-intl'
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
-import { ExternalLink, GitHub } from 'lucide-react'
+import { ExternalLink, GitFork } from 'lucide-react'
 import type { Project } from '@/payload-types'
 
 interface ProjectsProps {
@@ -79,7 +79,7 @@ export function Projects({ projects }: ProjectsProps) {
                 {project.githubUrl && (
                   <Button variant="outline" size="sm" asChild className="flex-1">
                     <a href={project.githubUrl} target="_blank" rel="noopener noreferrer">
-                      <GitHub className="mr-2 h-4 w-4" />
+                      <GitFork className="mr-2 h-4 w-4" />
                       {t('projects.viewCode')}
                     </a>
                   </Button>

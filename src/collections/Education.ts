@@ -1,6 +1,6 @@
 import { CollectionConfig } from 'payload'
 
-export const Education: CollectionConfig = {
+const Education: CollectionConfig = {
   slug: 'education',
   admin: {
     useAsTitle: 'degree',
@@ -38,3 +38,5 @@ export const Education: CollectionConfig = {
     },
   ],
 }
+
+export default Education

@@ -1,6 +1,6 @@
 import { CollectionConfig } from 'payload'
 
-export const Profile: CollectionConfig = {
+const Profile: CollectionConfig = {
   slug: 'profile',
   admin: {
     useAsTitle: 'name',
@@ -64,3 +64,5 @@ export const Profile: CollectionConfig = {
     },
   ],
 }
+
+export default Profile

@@ -1,6 +1,6 @@
 import { CollectionConfig } from 'payload'
 
-export const Skills: CollectionConfig = {
+const Skills: CollectionConfig = {
   slug: 'skills',
   admin: {
     useAsTitle: 'name',
@@ -40,3 +40,5 @@ export const Skills: CollectionConfig = {
     },
   ],
 }
+
+export default Skills

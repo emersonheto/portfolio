@@ -2,6 +2,7 @@
 
 import { motion } from 'framer-motion'
 import Image from 'next/image'
+import Link from 'next/link'
 import { useTranslations } from 'next-intl'
 import { Button } from '@/components/ui/button'
 import type { Profile } from '@/payload-types'
@@ -51,7 +52,7 @@ export function Hero({ profile }: HeroProps) {
             className="flex gap-4"
           >
             <Button asChild>
-              <a href="/contact">{t('hero.contact')}</a>
+              <Link href="/contact">{t('hero.contact')}</Link>
             </Button>
             {profile.cv && (
               <Button variant="outline" asChild>
