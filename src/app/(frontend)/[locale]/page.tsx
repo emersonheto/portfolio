@@ -26,7 +26,8 @@ import type {
   Skill,
 } from "@/payload-types";
 
-export const revalidate = 60;
+// Avoid prerender DB access during image build; data is cached in service layer.
+export const dynamic = "force-dynamic";
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations("hero");

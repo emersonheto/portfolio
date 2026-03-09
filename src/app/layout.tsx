@@ -1,3 +1,4 @@
+import "./globals.css";
 import { routing } from "@/i18n/routing";
 import { getMessages } from "next-intl/server";
 import { NextIntlClientProvider } from "next-intl";
@@ -14,7 +15,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   const messages = await getMessages();
 
   return (
-    <html suppressHydrationWarning>
+    <html suppressHydrationWarning className="scroll-smooth">
       <body className="min-h-screen bg-white text-gray-950 antialiased dark:bg-gray-950 dark:text-gray-50">
         <ThemeProvider>
           <NextIntlClientProvider messages={messages}>
@@ -24,30 +25,30 @@ export default async function RootLayout({ children }: { children: React.ReactNo
                   Portfolio
                 </Link>
                 <nav className="flex items-center gap-6">
-                  <Link
-                    href="/about"
+                  <a
+                    href="#about"
                     className="text-sm font-medium text-gray-700 hover:text-gray-900 dark:text-gray-300 dark:hover:text-gray-100"
                   >
                     About
-                  </Link>
-                  <Link
-                    href="/experience"
+                  </a>
+                  <a
+                    href="#experience"
                     className="text-sm font-medium text-gray-700 hover:text-gray-900 dark:text-gray-300 dark:hover:text-gray-100"
                   >
                     Experience
-                  </Link>
-                  <Link
-                    href="/projects"
+                  </a>
+                  <a
+                    href="#projects"
                     className="text-sm font-medium text-gray-700 hover:text-gray-900 dark:text-gray-300 dark:hover:text-gray-100"
                   >
                     Projects
-                  </Link>
-                  <Link
-                    href="/contact"
+                  </a>
+                  <a
+                    href="#contact"
                     className="text-sm font-medium text-gray-700 hover:text-gray-900 dark:text-gray-300 dark:hover:text-gray-100"
                   >
                     Contact
-                  </Link>
+                  </a>
                   <ThemeToggle />
                 </nav>
               </div>

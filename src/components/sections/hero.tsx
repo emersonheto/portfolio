@@ -2,7 +2,6 @@
 
 import { motion } from "framer-motion";
 import Image from "next/image";
-import Link from "next/link";
 import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
 import type { Profile } from "@/payload-types";
@@ -15,7 +14,7 @@ export function Hero({ profile }: HeroProps) {
   const t = useTranslations();
 
   return (
-    <section className="container mx-auto px-4 py-20">
+    <section id="home" className="container mx-auto scroll-mt-24 px-4 py-20">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -51,17 +50,16 @@ export function Hero({ profile }: HeroProps) {
             transition={{ duration: 0.5, delay: 0.6 }}
             className="flex gap-4"
           >
-            <Link href="/contact" passHref>
+            <a href="#contact">
               <Button>{t("hero.contact")}</Button>
-            </Link>
+            </a>
             {profile.cv && (
-              <Link
+              <a
                 href={typeof profile.cv === "string" ? profile.cv : profile.cv.url}
                 download
-                passHref
               >
                 <Button variant="outline">{t("hero.downloadCV")}</Button>
-              </Link>
+              </a>
             )}
           </motion.div>
         </div>
