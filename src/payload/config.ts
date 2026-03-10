@@ -35,6 +35,7 @@ export default buildConfig({
     pool: {
       connectionString: process.env.DATABASE_URI,
     },
+    push: true,
   }),
   typescript: {
     outputFile: path.resolve(__dirname, '../../src/payload-types.ts'),
