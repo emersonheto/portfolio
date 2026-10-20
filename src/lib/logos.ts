@@ -14,6 +14,9 @@ const ORGANIZATION_LOGOS: [string, string][] = [
   ["nacional de ingeniería", "/logos/uni.jpg"],
   ["sise", "/logos/sise.jpg"],
   ["tecylab", "/logos/tecylab.jpg"],
+  ["lite thinking", "/logos/litethinking.png"],
+  ["mcontrol", "/logos/mcontrol.png"],
+  ["certiprof", "/logos/certiprof.png"],
 ];
 
 export function organizationLogo(name: string): string | null {
