@@ -75,7 +75,13 @@
     "contactText": "Estoy abierto a roles de IA Generativa e ingeniería de software, y a colaboraciones de investigación. La forma más rápida de contactarme es por email o LinkedIn.",
     "footer": "© 2026 Emerson Herrera Tolentino",
     "view": "Ver certificado",
-    "languageSelect": "Idiomas"
+    "languageSelect": "Idiomas",
+    "cv": {
+      "genai": "CV · GenAI / AI Engineer",
+      "fullstack": "CV · Full Stack / Backend",
+      "academic": "CV académico"
+    },
+    "academicTitle": "Perfil académico"
   },
   "highlights": [
     {

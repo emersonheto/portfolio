@@ -15,6 +15,11 @@ type LanguageOption = {
   current?: boolean;
 };
 
+type CvLink = {
+  href: string;
+  label: string;
+};
+
 const ICONS: Record<string, typeof Github> = { github: Github, linkedin: Linkedin, email: Mail };
 
 export function Sidebar({
@@ -22,11 +27,13 @@ export function Sidebar({
   navItems,
   labels,
   languages,
+  cvLinks,
 }: {
   profile: Profile;
   navItems: { id: string; label: string }[];
   labels: Labels;
   languages: LanguageOption[];
+  cvLinks: CvLink[];
 }) {
   return (
     <header className="lg:sticky lg:top-0 lg:flex lg:max-h-screen lg:w-[46%] lg:flex-col lg:justify-between lg:py-24">
@@ -71,16 +78,20 @@ export function Sidebar({
       </div>
 
       <div className="mt-8 flex flex-wrap items-center gap-5 lg:mt-0">
-        {profile.cv && (
-          <a
-            href={profile.cv}
-            download
-            className="inline-flex items-center gap-2 rounded-md bg-mint-400 px-4 py-2 text-sm font-semibold text-ink-950 transition hover:bg-mint-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-mint-300"
-          >
-            <FileDown className="h-4 w-4" aria-hidden />
-            {labels.downloadCV}
-          </a>
-        )}
+        <ul className="flex flex-wrap gap-3" aria-label={labels.downloadCV}>
+          {cvLinks.map((cv, index) => (
+            <li key={cv.href}>
+              <a
+                href={cv.href}
+                download
+                className={`inline-flex items-center gap-2 rounded-md px-4 py-2 text-sm font-semibold transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-mint-300 ${index === 0 ? "bg-mint-400 text-ink-950 hover:bg-mint-300" : "border border-mint-400/60 text-mint-300 hover:bg-mint-400/10"}`}
+              >
+                <FileDown className="h-4 w-4" aria-hidden />
+                {cv.label}
+              </a>
+            </li>
+          ))}
+        </ul>
         <ul className="flex items-center gap-5" aria-label="Social media">
           {(profile.socialNetworks || []).map((network) => {
             const Icon = ICONS[network.platform.toLowerCase()] ?? Mail;
