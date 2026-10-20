@@ -8,7 +8,8 @@
     "certifications": "Certifications",
     "contact": "Contact",
     "research": "Research",
-    "skills": "Skills"
+    "skills": "Skills",
+    "ai": "How I work"
   },
   "hero": {
     "hi": "Hi, I'm",
@@ -71,7 +72,8 @@
     "featured": "Featured",
     "contactTitle": "Let's talk",
     "contactText": "I'm open to roles in Generative AI and software engineering, and to research collaborations. The fastest way to reach me is by email or LinkedIn.",
-    "footer": "Built with Next.js, Payload CMS and Tailwind CSS, deployed on my own VPS with Dokploy. Designed and developed with AI coding agents."
+    "footer": "© 2026 Emerson Herrera Tolentino",
+    "view": "View certificate"
   },
   "highlights": [
     {
@@ -107,5 +109,26 @@
     "tools": "Tools",
     "design": "Design",
     "soft": "Soft skills"
+  },
+  "aiWork": {
+    "intro": "I use AI as a working tool every day — at Canvia and in my own projects — with the same discipline as any engineering practice: clear scope, tests and human review before every delivery.",
+    "items": [
+      {
+        "title": "Coding agents with a controlled workflow",
+        "text": "Claude Code, Codex and Pi on Gentle Shell and Gentle AI, following ODD (Organic Driven Development): explore before changing, subagents to implement and verify, TDD and risk-based review before every commit."
+      },
+      {
+        "title": "Persistent memory",
+        "text": "Engram keeps architecture decisions, findings and task state across sessions, so context is never lost between days or projects."
+      },
+      {
+        "title": "Environment tailored to real projects",
+        "text": "Custom skills, MCP servers wired to real systems (read-only Oracle, Laravel Boost, container logs, GitLab, CodeGraph) and model selection per task."
+      },
+      {
+        "title": "Agent factory on my own VPS",
+        "text": "Unattended issue execution triggered from Telegram (n8n) and nightly batches, with pull requests and CI as quality gates."
+      }
+    ]
   }
 }

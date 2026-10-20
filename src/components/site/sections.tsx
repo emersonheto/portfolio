@@ -183,25 +183,60 @@ export function EducationList({ items, locale, present }: { items: Education[]; 
   );
 }
 
-export function CertificationList({ items, locale, verify }: { items: Certification[]; locale: Locale; verify: string }) {
+export function CertificationList({ items, locale, labels }: { items: Certification[]; locale: Locale; labels: { verify: string; view: string } }) {
   return (
-    <ul className="divide-y divide-ink-700">
+    <ul className="grid gap-4 sm:grid-cols-2">
       {items.map((item) => (
-        <li key={item.id} className="flex items-baseline justify-between gap-4 py-3">
-          <div>
-            <p className="text-sm font-medium text-haze-100">{item.name}</p>
-            <p className="text-xs text-haze-400">
-              {item.institution} · {formatMonth(item.date, locale)}
-            </p>
-          </div>
-          {item.verificationUrl && (
-            <a href={item.verificationUrl} target="_blank" rel="noreferrer noopener" className="inline-flex shrink-0 items-center gap-1 text-xs font-medium text-mint-300 hover:text-mint-400">
-              {verify} <ArrowUpRight className="h-3 w-3" aria-hidden />
+        <li key={item.id} className="group flex flex-col overflow-hidden rounded-lg border border-mint-400/15 bg-ink-800/60 transition hover:border-mint-400/40">
+          {item.image && (
+            <a href={item.image} target="_blank" rel="noreferrer noopener" aria-label={`${labels.view}: ${item.name}`} className="block overflow-hidden bg-white">
+              <Image
+                src={item.image}
+                alt={item.name}
+                width={640}
+                height={480}
+                sizes="(min-width: 1024px) 300px, (min-width: 640px) 45vw, 90vw"
+                className="aspect-[4/3] w-full object-cover object-top transition duration-300 group-hover:scale-[1.03]"
+              />
             </a>
           )}
+          <div className="flex flex-1 flex-col p-4">
+            <p className="text-sm font-medium leading-snug text-haze-100">{item.name}</p>
+            <p className="mt-1 text-xs text-haze-400">
+              {item.institution} · {formatMonth(item.date, locale)}
+            </p>
+            <div className="mt-auto flex gap-4 pt-3">
+              {item.image && (
+                <a href={item.image} target="_blank" rel="noreferrer noopener" className="inline-flex items-center gap-1 text-xs font-medium text-mint-300 hover:text-mint-400">
+                  {labels.view} <ArrowUpRight className="h-3 w-3" aria-hidden />
+                </a>
+              )}
+              {item.verificationUrl && (
+                <a href={item.verificationUrl} target="_blank" rel="noreferrer noopener" className="inline-flex items-center gap-1 text-xs font-medium text-mint-300 hover:text-mint-400">
+                  {labels.verify} <ArrowUpRight className="h-3 w-3" aria-hidden />
+                </a>
+              )}
+            </div>
+          </div>
         </li>
       ))}
     </ul>
+  );
+}
+
+export function AiWork({ text }: { text: { intro: string; items: { title: string; text: string }[] } }) {
+  return (
+    <>
+      <p className="leading-relaxed text-haze-400">{text.intro}</p>
+      <ul className="mt-6 grid gap-4 sm:grid-cols-2">
+        {text.items.map((item) => (
+          <li key={item.title} className="rounded-lg border border-mint-400/15 bg-ink-800/60 p-4">
+            <h3 className="text-sm font-semibold text-haze-100">{item.title}</h3>
+            <p className="mt-2 text-sm leading-normal text-haze-400">{item.text}</p>
+          </li>
+        ))}
+      </ul>
+    </>
   );
 }
 

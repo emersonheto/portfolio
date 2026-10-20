@@ -4,6 +4,7 @@ import { getTranslations } from "next-intl/server";
 import { Sidebar } from "@/components/site/sidebar";
 import {
   About,
+  AiWork,
   CertificationList,
   Contact,
   EducationList,
@@ -122,7 +123,8 @@ export default async function HomePage({ params }: PageProps) {
     const highlights = root.raw("highlights") as { value: string; label: string }[];
     const research = root.raw("research") as { title: string; venue: string; authors: string; summary: string; code: string };
     const skillLabels = root.raw("skillCategories") as Record<string, string>;
-    const sections = ["about", "experience", "research", "projects", "skills", "education", "certifications"];
+    const aiWork = root.raw("aiWork") as { intro: string; items: { title: string; text: string }[] };
+    const sections = ["about", "experience", "ai", "research", "projects", "skills", "education", "certifications"];
     const navItems = sections.map((id) => ({ id, label: nav(id) }));
 
     return (
@@ -139,6 +141,9 @@ export default async function HomePage({ params }: PageProps) {
             <Section id="experience" title={nav("experience")}>
               <ExperienceList items={experiences} locale={locale} present={t("present")} />
             </Section>
+            <Section id="ai" title={nav("ai")}>
+              <AiWork text={aiWork} />
+            </Section>
             <Section id="research" title={nav("research")}>
               <Research text={research} href="https://github.com/emersonheto/damage_dataset_fewshot_vlms" />
             </Section>
@@ -152,12 +157,12 @@ export default async function HomePage({ params }: PageProps) {
               <EducationList items={education} locale={locale} present={t("present")} />
             </Section>
             <Section id="certifications" title={nav("certifications")}>
-              <CertificationList items={certifications} locale={locale} verify={t("verify")} />
+              <CertificationList items={certifications} locale={locale} labels={{ verify: t("verify"), view: t("view") }} />
             </Section>
             <Section id="contact" title={t("contactTitle")}>
               <Contact profile={profile} text={{ title: t("contactTitle"), body: t("contactText") }} />
             </Section>
-            <footer className="max-w-md pb-16 text-sm text-haze-500 sm:pb-0">
+            <footer className="pb-16 text-sm text-haze-500 sm:pb-0">
               <p>{t("footer")}</p>
             </footer>
           </main>

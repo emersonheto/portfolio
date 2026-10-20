@@ -8,7 +8,8 @@
     "certifications": "Certificaciones",
     "contact": "Contacto",
     "research": "Investigación",
-    "skills": "Habilidades"
+    "skills": "Habilidades",
+    "ai": "Cómo trabajo"
   },
   "hero": {
     "hi": "Hola, soy",
@@ -71,7 +72,8 @@
     "featured": "Destacado",
     "contactTitle": "Hablemos",
     "contactText": "Estoy abierto a roles de IA Generativa e ingeniería de software, y a colaboraciones de investigación. La forma más rápida de contactarme es por email o LinkedIn.",
-    "footer": "Hecho con Next.js, Payload CMS y Tailwind CSS, desplegado en mi propio VPS con Dokploy. Diseñado y desarrollado con agentes de IA."
+    "footer": "© 2026 Emerson Herrera Tolentino",
+    "view": "Ver certificado"
   },
   "highlights": [
     {
@@ -107,5 +109,26 @@
     "tools": "Herramientas",
     "design": "Diseño",
     "soft": "Habilidades blandas"
+  },
+  "aiWork": {
+    "intro": "Uso la IA como herramienta de trabajo todos los días —en Canvia y en mis propios proyectos— con la misma disciplina que cualquier práctica de ingeniería: alcance claro, pruebas y revisión humana antes de cada entrega.",
+    "items": [
+      {
+        "title": "Agentes de código con un flujo controlado",
+        "text": "Claude Code, Codex y Pi sobre Gentle Shell y Gentle AI, con el flujo ODD (Organic Driven Development): explorar antes de cambiar, subagentes para implementar y verificar, TDD y revisión según el riesgo antes de cada commit."
+      },
+      {
+        "title": "Memoria persistente",
+        "text": "Engram conserva entre sesiones las decisiones de arquitectura, los hallazgos y el estado de las tareas, para no perder contexto entre días ni proyectos."
+      },
+      {
+        "title": "Entorno adaptado a proyectos reales",
+        "text": "Skills propias, servidores MCP conectados a sistemas reales (Oracle de solo lectura, Laravel Boost, logs de contenedores, GitLab, CodeGraph) y elección del modelo según la tarea."
+      },
+      {
+        "title": "Fábrica de agentes en mi propio VPS",
+        "text": "Ejecución desatendida de issues disparada desde Telegram (n8n) y tandas nocturnas, con pull requests y CI como control de calidad."
+      }
+    ]
   }
 }
