@@ -1,8 +1,24 @@
 import Image from "next/image";
 import { ArrowUpRight, Github, Mail, Linkedin } from "lucide-react";
 import type { Certification, Education, Experience, Profile, Project, Skill } from "@/payload-types";
+import { AI_TOOLS, initials, organizationLogo } from "@/lib/logos";
 
 type Locale = "en" | "es";
+
+/** Organization logo on a white tile; initials when there is no logo. */
+function OrgLogo({ name, size = 40 }: { name: string; size?: number }) {
+  const logo = organizationLogo(name);
+  const box = { width: size, height: size };
+  return logo ? (
+    <span style={box} className="flex shrink-0 items-center justify-center overflow-hidden rounded-md bg-white p-1 ring-1 ring-mint-400/20">
+      <Image src={logo} alt="" width={size * 2} height={size * 2} className="h-full w-full object-contain" />
+    </span>
+  ) : (
+    <span style={box} aria-hidden className="flex shrink-0 items-center justify-center rounded-md bg-ink-700 text-xs font-bold text-mint-300 ring-1 ring-mint-400/20">
+      {initials(name)}
+    </span>
+  );
+}
 
 /** Section wrapper: on small screens the title sticks to the top while scrolling the section. */
 export function Section({ id, title, children }: { id: string; title: string; children: React.ReactNode }) {
@@ -84,10 +100,13 @@ export function ExperienceList({ items, locale, present }: { items: Experience[]
               </p>
             }
           >
-            <h3 className="font-medium leading-snug text-haze-100">
-              <span className="group-hover:text-mint-300">{item.position}</span>
-              <span className="block text-sm text-haze-300">{item.company}</span>
-            </h3>
+            <div className="flex items-start gap-3">
+              <OrgLogo name={item.company} />
+              <h3 className="font-medium leading-snug text-haze-100">
+                <span className="group-hover:text-mint-300">{item.position}</span>
+                <span className="block text-sm text-haze-300">{item.company}</span>
+              </h3>
+            </div>
             <p className="mt-2 text-sm leading-normal text-haze-400">{item.description}</p>
             <Chips items={(item.technologies || []).map((t) => t.technology)} />
           </Row>
@@ -172,10 +191,13 @@ export function EducationList({ items, locale, present }: { items: Education[]; 
           <p className="mt-1 text-xs font-semibold uppercase tracking-wide text-haze-500 sm:col-span-2">
             {formatRange(item.startDate, item.endDate, !item.endDate, locale, present)}
           </p>
-          <div className="sm:col-span-6">
+          <div className="flex items-start gap-3 sm:col-span-6">
+            <OrgLogo name={item.institution} />
+            <div>
             <h3 className="font-medium leading-snug text-haze-100">{item.degree}</h3>
             <p className="text-sm text-haze-300">{item.institution}</p>
             {item.description && <p className="mt-1 text-sm leading-normal text-haze-400">{item.description}</p>}
+            </div>
           </div>
         </li>
       ))}
@@ -202,7 +224,8 @@ export function CertificationList({ items, locale, labels }: { items: Certificat
           )}
           <div className="flex flex-1 flex-col p-4">
             <p className="text-sm font-medium leading-snug text-haze-100">{item.name}</p>
-            <p className="mt-1 text-xs text-haze-400">
+            <p className="mt-2 flex items-center gap-2 text-xs text-haze-400">
+              <OrgLogo name={item.institution} size={22} />
               {item.institution} · {formatMonth(item.date, locale)}
             </p>
             <div className="mt-auto flex gap-4 pt-3">
@@ -228,6 +251,16 @@ export function AiWork({ text }: { text: { intro: string; items: { title: string
   return (
     <>
       <p className="leading-relaxed text-haze-400">{text.intro}</p>
+      <ul className="mt-6 flex flex-wrap gap-3" aria-label="Tools">
+        {AI_TOOLS.map((tool) => (
+          <li key={tool.name} className="flex items-center gap-2 rounded-full border border-mint-400/20 bg-ink-800/60 py-1 pl-1 pr-3">
+            <span className={`flex h-7 w-7 items-center justify-center overflow-hidden rounded-full ${"fill" in tool ? "bg-black" : "bg-white p-1"}`}>
+              <Image src={tool.logo} alt="" width={56} height={56} unoptimized={tool.logo.endsWith(".svg")} className={`h-full w-full ${"fill" in tool ? "object-cover" : "object-contain"}`} />
+            </span>
+            <span className="text-xs font-medium text-haze-100">{tool.name}</span>
+          </li>
+        ))}
+      </ul>
       <ul className="mt-6 grid gap-4 sm:grid-cols-2">
         {text.items.map((item) => (
           <li key={item.title} className="rounded-lg border border-mint-400/15 bg-ink-800/60 p-4">
