@@ -29,3 +29,4 @@ Create recruiter-focused, evidence-backed case study pages for the portfolio in 
 - **L6** — Added reusable EN/ES/PT case-study detail routes, recruiter-oriented sections, stack/evidence cards, architecture diagrams, card links, per-page metadata and Article JSON-LD.
 - **L7** — Verified TypeScript, production build, nine localized routes returning 200 with JSON-LD, and desktop visual rendering in Ego Lite.
 - **L8** — Added the public BCRP Portal capture at `public/case-studies/bcrp-research-portal.png`; no private screenshots or VPS/BCRP internal data were added.
+- **L9** — Delivered to main (9fd812e, f4bfcfe) and verified live: localized case-study routes return 200; sitemap fix 473d30c lists all 9 case-study URLs with hreflang alternates.
