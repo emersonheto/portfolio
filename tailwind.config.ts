@@ -10,6 +10,24 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
+        ink: {
+          950: '#081012',
+          900: '#0B1517',
+          800: '#10272B',
+          700: '#12343B',
+          600: '#1F4E5C',
+        },
+        mint: {
+          300: '#5EEAD4',
+          400: '#2DD4BF',
+          500: '#14B8A6',
+        },
+        haze: {
+          100: '#E6F1F1',
+          300: '#B6CBCD',
+          400: '#8FA9AD',
+          500: '#6B878B',
+        },
         border: 'hsl(var(--border))',
         input: 'hsl(var(--input))',
         ring: 'hsl(var(--ring))',

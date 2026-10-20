@@ -4,9 +4,11 @@
     "about": "Sobre mí",
     "experience": "Experiencia",
     "projects": "Proyectos",
-    "education": "Educación",
+    "education": "Formación",
     "certifications": "Certificaciones",
-    "contact": "Contacto"
+    "contact": "Contacto",
+    "research": "Investigación",
+    "skills": "Habilidades"
   },
   "hero": {
     "hi": "Hola, soy",
@@ -57,5 +59,53 @@
     "loading": "Cargando...",
     "error": "Algo salió mal",
     "notFound": "No encontrado"
+  },
+  "site": {
+    "downloadCV": "Descargar CV",
+    "language": "English",
+    "languageHref": "en",
+    "skip": "Ir al contenido",
+    "present": "Actualidad",
+    "viewCode": "Ver código",
+    "verify": "Verificar",
+    "featured": "Destacado",
+    "contactTitle": "Hablemos",
+    "contactText": "Estoy abierto a roles de IA Generativa e ingeniería de software, y a colaboraciones de investigación. La forma más rápida de contactarme es por email o LinkedIn.",
+    "footer": "Hecho con Next.js, Payload CMS y Tailwind CSS, desplegado en mi propio VPS con Dokploy. Diseñado y desarrollado con agentes de IA."
+  },
+  "highlights": [
+    {
+      "value": "8+",
+      "label": "años construyendo software para banca, telecomunicaciones, salud y educación"
+    },
+    {
+      "value": "4",
+      "label": "aplicaciones del Banco Central de Reserva del Perú atendidas por una plataforma RAG"
+    },
+    {
+      "value": "0,19 → 0,90",
+      "label": "F1 tras fine-tuning de un modelo visión-lenguaje (workshop de CVPR 2026)"
+    },
+    {
+      "value": "19/20",
+      "label": "Especialización AI Engineer, Diploma de Excelencia"
+    }
+  ],
+  "research": {
+    "title": "Benchmark of Multimodal Vision-Language Models for Damage Detection",
+    "venue": "LatinX in Computer Vision (LXCV) Workshop · CVPR 2026 · Denver",
+    "authors": "Con Mariana Risco Cosavalente y el Prof. Claudio Jung (UFRGS)",
+    "summary": "Evaluamos CLIP, SigLIP, SigLIP2 y FuseLIP para detectar daños en desastres naturales sobre CrisisMMD y DamageDataset, comparando fine-tuning contrastivo, adaptación few-shot en dos etapas y fusión multimodal. Combinar imagen y texto superó siempre a cada modalidad por separado, y el fine-tuning llevó el F1 de SigLIP de 0,19 a 0,90.",
+    "code": "Código"
+  },
+  "skillCategories": {
+    "ai": "IA y Machine Learning",
+    "backend": "Backend",
+    "frontend": "Frontend",
+    "data": "Datos",
+    "devops": "Cloud y DevOps",
+    "tools": "Herramientas",
+    "design": "Diseño",
+    "soft": "Habilidades blandas"
   }
 }

@@ -6,7 +6,9 @@
     "projects": "Projects",
     "education": "Education",
     "certifications": "Certifications",
-    "contact": "Contact"
+    "contact": "Contact",
+    "research": "Research",
+    "skills": "Skills"
   },
   "hero": {
     "hi": "Hi, I'm",
@@ -57,5 +59,53 @@
     "loading": "Loading...",
     "error": "Something went wrong",
     "notFound": "Not Found"
+  },
+  "site": {
+    "downloadCV": "Download CV",
+    "language": "Español",
+    "languageHref": "es",
+    "skip": "Skip to content",
+    "present": "Present",
+    "viewCode": "View code",
+    "verify": "Verify",
+    "featured": "Featured",
+    "contactTitle": "Let's talk",
+    "contactText": "I'm open to roles in Generative AI and software engineering, and to research collaborations. The fastest way to reach me is by email or LinkedIn.",
+    "footer": "Built with Next.js, Payload CMS and Tailwind CSS, deployed on my own VPS with Dokploy. Designed and developed with AI coding agents."
+  },
+  "highlights": [
+    {
+      "value": "8+",
+      "label": "years building software for banking, telecom, health and education"
+    },
+    {
+      "value": "4",
+      "label": "Central Reserve Bank of Peru applications served by one RAG platform"
+    },
+    {
+      "value": "0.19 → 0.90",
+      "label": "F1 after fine-tuning a vision-language model (CVPR 2026 workshop)"
+    },
+    {
+      "value": "19/20",
+      "label": "AI Engineer Specialization, Diploma of Excellence"
+    }
+  ],
+  "research": {
+    "title": "Benchmark of Multimodal Vision-Language Models for Damage Detection",
+    "venue": "LatinX in Computer Vision (LXCV) Workshop · CVPR 2026 · Denver",
+    "authors": "With Mariana Risco Cosavalente and Prof. Claudio Jung (UFRGS)",
+    "summary": "We evaluated CLIP, SigLIP, SigLIP2 and FuseLIP for disaster damage detection on CrisisMMD and DamageDataset, comparing contrastive fine-tuning, two-stage few-shot adaptation and multimodal fusion. Combining image and text consistently outperformed either modality alone, and fine-tuning raised SigLIP's F1 from 0.19 to 0.90.",
+    "code": "Code"
+  },
+  "skillCategories": {
+    "ai": "AI & Machine Learning",
+    "backend": "Backend",
+    "frontend": "Frontend",
+    "data": "Data",
+    "devops": "Cloud & DevOps",
+    "tools": "Tools",
+    "design": "Design",
+    "soft": "Soft skills"
   }
 }
