@@ -57,7 +57,7 @@ jobs:
         run: |
           deadline=$((SECONDS + 900))
           while [ "$SECONDS" -lt "$deadline" ]; do
-            live=$(curl -fsS -A "Mozilla/5.0 (deploy-check)" "$SITE_URL/api/version?t=$(date +%s)" | jq -r '.version' || true)
+            live=$(curl -fsS --max-time 10 -A "Mozilla/5.0 (deploy-check)" "$SITE_URL/api/version?t=$(date +%s)" | jq -r '.version' || true)
             if [ "$live" = "$EXPECTED_VERSION" ]; then
               echo "Live version: $live"
               exit 0
@@ -71,6 +71,7 @@ jobs:
       # Code deploys do not trigger the CMS hooks, so purge the edge-cached home pages here.
       - name: Purge Cloudflare cache for the home pages
         if: ${{ env.DOKPLOY_DEPLOY_WEBHOOK != '' }}
+        timeout-minutes: 2
         env:
           CLOUDFLARE_ZONE_ID: ${{ secrets.CLOUDFLARE_ZONE_ID }}
           CLOUDFLARE_PURGE_TOKEN: ${{ secrets.CLOUDFLARE_PURGE_TOKEN }}
@@ -80,7 +81,7 @@ jobs:
             exit 0
           fi
           files=$(jq -cn --arg site "$SITE_URL" '{files: [$site + "/", $site + "/es", $site + "/pt"]}')
-          response=$(curl -sS -X POST "https://api.cloudflare.com/client/v4/zones/$CLOUDFLARE_ZONE_ID/purge_cache" \
+          response=$(curl -sS --connect-timeout 10 --max-time 30 -X POST "https://api.cloudflare.com/client/v4/zones/$CLOUDFLARE_ZONE_ID/purge_cache" \
             -H "Authorization: Bearer $CLOUDFLARE_PURGE_TOKEN" \
             -H "Content-Type: application/json" \
             --data "$files")
