@@ -63,8 +63,8 @@
   },
   "site": {
     "downloadCV": "Descargar CV",
-    "language": "English",
-    "languageHref": "en",
+    "language": "Português",
+    "languageHref": "pt",
     "skip": "Ir al contenido",
     "present": "Actualidad",
     "viewCode": "Ver código",

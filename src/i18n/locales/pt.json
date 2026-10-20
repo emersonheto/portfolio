@@ -1,0 +1,134 @@
+{
+  "nav": {
+    "home": "Início",
+    "about": "Sobre mim",
+    "experience": "Experiência",
+    "projects": "Projetos",
+    "education": "Formação",
+    "certifications": "Certificações",
+    "contact": "Contato",
+    "research": "Pesquisa",
+    "skills": "Habilidades",
+    "ai": "Como trabalho"
+  },
+  "hero": {
+    "hi": "Olá, sou",
+    "contact": "Entre em contato",
+    "downloadCV": "Baixar CV"
+  },
+  "about": {
+    "title": "Sobre mim",
+    "yearsOfExperience": "anos de experiência"
+  },
+  "experience": {
+    "title": "Experiência profissional",
+    "present": "Atualidade"
+  },
+  "projects": {
+    "title": "Projetos",
+    "featured": "Destaque",
+    "viewDemo": "Ver demonstração",
+    "viewCode": "Ver código"
+  },
+  "education": {
+    "title": "Formação"
+  },
+  "certifications": {
+    "title": "Certificações",
+    "verify": "Verificar"
+  },
+  "contact": {
+    "title": "Entre em contato",
+    "name": "Nome",
+    "email": "E-mail",
+    "message": "Mensagem",
+    "send": "Enviar mensagem",
+    "sending": "Enviando...",
+    "success": "Mensagem enviada com sucesso!",
+    "error": "Falha ao enviar a mensagem. Tente novamente.",
+    "rateLimit": "Muitas solicitações. Tente novamente mais tarde.",
+    "validation": {
+      "nameRequired": "O nome é obrigatório",
+      "nameMin": "O nome deve ter pelo menos 2 caracteres",
+      "emailRequired": "O e-mail é obrigatório",
+      "emailInvalid": "Endereço de e-mail inválido",
+      "messageRequired": "A mensagem é obrigatória",
+      "messageMin": "A mensagem deve ter pelo menos 10 caracteres"
+    }
+  },
+  "common": {
+    "loading": "Carregando...",
+    "error": "Algo deu errado",
+    "notFound": "Não encontrado"
+  },
+  "site": {
+    "downloadCV": "Baixar CV",
+    "language": "English",
+    "languageHref": "en",
+    "skip": "Ir para o conteúdo",
+    "present": "Atualidade",
+    "viewCode": "Ver código",
+    "verify": "Verificar",
+    "featured": "Destaque",
+    "contactTitle": "Vamos conversar",
+    "contactText": "Estou aberto a oportunidades em IA Generativa e engenharia de software, além de colaborações de pesquisa. A forma mais rápida de falar comigo é por e-mail ou LinkedIn.",
+    "footer": "© 2026 Emerson Herrera Tolentino",
+    "view": "Ver certificado"
+  },
+  "highlights": [
+    {
+      "value": "8+",
+      "label": "anos desenvolvendo software para os setores bancário, de telecomunicações, saúde e educação"
+    },
+    {
+      "value": "4",
+      "label": "aplicações do Banco Central de Reserva do Peru atendidas por uma plataforma RAG"
+    },
+    {
+      "value": "0.19 → 0.90",
+      "label": "F1 após o fine-tuning de um modelo de visão-linguagem (workshop do CVPR 2026)"
+    },
+    {
+      "value": "19/20",
+      "label": "Especialização AI Engineer, Diploma de Excelência"
+    }
+  ],
+  "research": {
+    "title": "Benchmark de Modelos Multimodais de Visão-Linguagem para Detecção de Danos",
+    "venue": "LatinX in Computer Vision (LXCV) Workshop · CVPR 2026 · Denver",
+    "authors": "Com Mariana Risco Cosavalente e o Prof. Claudio Jung (UFRGS)",
+    "summary": "Avaliamos CLIP, SigLIP, SigLIP2 e FuseLIP para detecção de danos causados por desastres usando CrisisMMD e DamageDataset, comparando fine-tuning contrastivo, adaptação few-shot em duas etapas e fusão multimodal. A combinação de imagem e texto superou consistentemente cada modalidade isolada, e o fine-tuning elevou o F1 do SigLIP de 0.19 para 0.90.",
+    "code": "Código"
+  },
+  "skillCategories": {
+    "ai": "IA e Machine Learning",
+    "backend": "Backend",
+    "frontend": "Frontend",
+    "data": "Dados",
+    "devops": "Cloud e DevOps",
+    "tools": "Ferramentas",
+    "design": "Design",
+    "soft": "Habilidades interpessoais"
+  },
+  "aiWork": {
+    "intro": "Uso IA como ferramenta de trabalho todos os dias — na Canvia e nos meus próprios projetos — com a mesma disciplina de qualquer prática de engenharia: escopo claro, testes e revisão humana antes de cada entrega.",
+    "items": [
+      {
+        "title": "Agentes de código com um fluxo controlado",
+        "text": "Claude Code, Codex e Pi no Gentle Shell e no Gentle AI, seguindo ODD (Organic Driven Development): explorar antes de mudar, subagentes para implementar e verificar, TDD e revisão baseada em risco antes de cada commit."
+      },
+      {
+        "title": "Memória persistente",
+        "text": "O Engram mantém decisões de arquitetura, descobertas e o estado das tarefas entre sessões, para que o contexto nunca se perca entre dias ou projetos."
+      },
+      {
+        "title": "Ambiente adaptado a projetos reais",
+        "text": "Skills personalizadas, servidores MCP conectados a sistemas reais (Oracle somente leitura, Laravel Boost, logs de contêineres, GitLab, CodeGraph) e seleção do modelo para cada tarefa."
+      },
+      {
+        "title": "Fábrica de agentes no meu próprio VPS",
+        "text": "Execução autônoma de issues acionada pelo Telegram (n8n) e por lotes noturnos, com pull requests e CI como barreiras de qualidade."
+      }
+    ]
+  }
+}

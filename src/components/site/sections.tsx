@@ -3,7 +3,7 @@ import { ArrowUpRight, Github, Mail, Linkedin } from "lucide-react";
 import type { Certification, Education, Experience, Profile, Project, Skill } from "@/payload-types";
 import { AI_TOOLS, initials, organizationLogo } from "@/lib/logos";
 
-type Locale = "en" | "es";
+type Locale = "en" | "es" | "pt";
 
 /** Organization logo on a white tile; initials when there is no logo. */
 function OrgLogo({ name, size = 40 }: { name: string; size?: number }) {

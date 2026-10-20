@@ -3,7 +3,7 @@ import { unstable_cache } from "next/cache";
 import { REVALIDATE_SECONDS } from "@/lib/constants";
 import config from "@/payload/config";
 
-type Locale = "en" | "es";
+type Locale = "en" | "es" | "pt";
 
 // Reusable cache key generator
 function getCacheKey(collection: string, locale: string = "en") {

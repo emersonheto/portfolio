@@ -98,10 +98,10 @@ export interface Config {
   db: {
     defaultIDType: number;
   };
-  fallbackLocale: ('false' | 'none' | 'null') | false | null | ('en' | 'es') | ('en' | 'es')[];
+  fallbackLocale: ('false' | 'none' | 'null') | false | null | ('en' | 'es' | 'pt') | ('en' | 'es' | 'pt')[];
   globals: {};
   globalsSelect: {};
-  locale: 'en' | 'es';
+  locale: 'en' | 'es' | 'pt';
   widgets: {
     collections: CollectionsWidget;
   };

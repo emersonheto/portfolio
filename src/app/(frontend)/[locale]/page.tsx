@@ -23,6 +23,7 @@ import {
   getSkills,
 } from "@/services/payload";
 import { SITE_NAME } from "@/lib/constants";
+import { routing, type Locale } from "@/i18n/routing";
 import type {
   Profile,
   Project,
@@ -43,8 +44,8 @@ export function generateStaticParams() {
 
 type PageProps = { params: Promise<{ locale: string }> };
 
-function toLocale(value: string): "en" | "es" {
-  return value === "es" ? "es" : "en";
+function toLocale(value: string): Locale {
+  return routing.locales.includes(value as Locale) ? (value as Locale) : routing.defaultLocale;
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {

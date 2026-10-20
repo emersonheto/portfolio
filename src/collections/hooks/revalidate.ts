@@ -1,7 +1,7 @@
 import type { CollectionAfterChangeHook, CollectionAfterDeleteHook } from "payload";
 
 /** Public pages that the CDN caches; keep in sync with the Cloudflare cache rule. */
-const CACHED_PATHS = ["/", "/es"];
+const CACHED_PATHS = ["/", "/es", "/pt"];
 
 /** Ask Cloudflare to drop its copy of the public pages. Optional: skipped without credentials. */
 async function purgeCdn() {
