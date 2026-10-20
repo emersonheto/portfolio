@@ -33,6 +33,9 @@ COPY --chown=node:node public ./public
 COPY --chown=node:node package.json package-lock.json next.config.mjs tsconfig.json ./
 COPY --chown=node:node src ./src
 COPY --chown=node:node scripts ./scripts
+# Declared last so a new commit only rebuilds this metadata layer; read by /api/version.
+ARG APP_VERSION=dev
+ENV APP_VERSION=$APP_VERSION
 USER node
 EXPOSE 3000
 CMD ["bash", "./scripts/start.sh"]

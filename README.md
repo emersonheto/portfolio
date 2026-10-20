@@ -11,7 +11,7 @@ Portafolio personal administrable construido con Next.js 15, Payload CMS 3.x, Po
 - **Animaciones**: Framer Motion
 - **Multi-idioma**: next-intl (Español/Inglés)
 - **Validación**: Zod
-- **Deployment**: Dokploy con Nixpacks
+- **Deployment**: GitHub Actions → GHCR → Dokploy, con caché de Cloudflare
 
 ## 📋 Características
 
@@ -67,54 +67,44 @@ Accede a:
 
 ## 🚀 Deployment en Dokploy
 
-### 1. Preparar el Repositorio
+Cada push a `main` ejecuta `.github/workflows/deploy.yml`:
 
-```bash
-# Hacer push del código a tu repositorio (GitHub, GitLab, etc.)
-git remote add origin <tu-repositorio>
-git push -u origin main
-```
+1. GitHub Actions construye la imagen con el `Dockerfile` y la publica en GHCR
+   (`ghcr.io/emersonheto/portfolio:latest` y `:<commit>`), con el commit en `APP_VERSION`.
+2. Llama al webhook de deploy de Dokploy. Dokploy encola el deploy, que puede tardar unos minutos en empezar.
+3. Espera hasta 15 minutos a que `https://portfolio.certilab.app/api/version` devuelva el commit del push.
+   Si no aparece, el job falla: revisar el deployment en Dokploy.
+4. Purga la caché de Cloudflare de `/`, `/es` y `/pt`, que el edge guarda y un deploy de código no invalida.
 
-### 2. Configurar Base de Datos en Dokploy
+### Secrets de GitHub
 
-1. En Dokploy, crear un nuevo servicio **PostgreSQL**
-2. Anotar la cadena de conexión (DATABASE_URI)
-3. La base de datos se creará automáticamente en el primer deploy
+| Secret                   | Uso                                                                                  |
+| ------------------------ | ------------------------------------------------------------------------------------ |
+| `DOKPLOY_DEPLOY_WEBHOOK` | Webhook de deploy de la aplicación en Dokploy (solo despliega esta app).             |
+| `CLOUDFLARE_ZONE_ID`     | Zona `certilab.app`.                                                                 |
+| `CLOUDFLARE_PURGE_TOKEN` | Token limitado a `Zone > Cache Purge` en esa zona. Sin él, el paso avisa y no purga. |
 
-### 3. Crear el Proyecto en Dokploy
+No usar una API key de Dokploy en GitHub: controla todo el servidor.
 
-1. **Crear nuevo proyecto**
-   - Build Type: `Nixpacks` (NO usar Dockerfile)
-   - Repository: Conectar tu repo de Git
+### Aplicación en Dokploy
 
-2. **Configurar Variables de Entorno**
-   En el panel de Dokploy, agregar:
+- Tipo de origen: imagen Docker `ghcr.io/emersonheto/portfolio:latest`, con deploy automático activado
+  (sin él, el webhook responde 400).
+- Puerto `3000`. Las migraciones de Payload corren al iniciar (`scripts/start.sh`).
+- Variables de entorno:
 
-   ```env
-   DATABASE_URI=postgresql://usuario:password@postgres-service:5432/portfolio_db
-   PAYLOAD_SECRET=tu-clave-secreta-minimo-32-caracteres
-   NEXT_PUBLIC_SITE_URL=https://tudominio.com
-   NEXT_PUBLIC_SITE_NAME=Tu Nombre
-   ```
+  ```env
+  DATABASE_URI=postgresql://usuario:password@postgres-service:5432/portfolio_db
+  PAYLOAD_SECRET=tu-clave-secreta-minimo-32-caracteres
+  NEXT_PUBLIC_SITE_URL=https://portfolio.certilab.app
+  NEXT_PUBLIC_SITE_NAME=Tu Nombre
+  CLOUDFLARE_ZONE_ID=...        # purga al editar contenido en el CMS
+  CLOUDFLARE_PURGE_TOKEN=...
+  ```
 
-   > **IMPORTANTE**: Reemplaza `postgres-service` con el nombre real del servicio PostgreSQL en Dokploy
+- Dominio y HTTPS: se configuran en Dokploy (Traefik) con el DNS en Cloudflare.
 
-3. **Configurar Settings**
-   - Port: `3000`
-   - Health Check Path: `/`
-
-4. **Deploy**
-   - Click en "Deploy"
-   - Nixpacks detectará automáticamente que es un proyecto Next.js
-   - Las migraciones de Payload correrán automáticamente antes del build
-
-### 4. Configurar Dominio y HTTPS
-
-1. En Dokploy, agregar tu dominio personalizado
-2. Traefik configurará HTTPS automáticamente
-3. Configura los DNS de tu dominio apuntando a la IP de Dokploy
-
-### 5. Primer Acceso al Admin
+### Primer Acceso al Admin
 
 1. Accede a `https://tudominio.com/admin`
 2. Crea el primer usuario administrador

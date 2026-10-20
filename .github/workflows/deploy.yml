@@ -18,6 +18,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       DOKPLOY_DEPLOY_WEBHOOK: ${{ secrets.DOKPLOY_DEPLOY_WEBHOOK }}
+      SITE_URL: https://portfolio.certilab.app
     steps:
       - uses: actions/checkout@v4
 
@@ -37,6 +38,8 @@ jobs:
           tags: |
             ghcr.io/${{ github.repository }}:latest
             ghcr.io/${{ github.repository }}:${{ github.sha }}
+          build-args: |
+            APP_VERSION=${{ github.sha }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
@@ -44,3 +47,45 @@ jobs:
         if: ${{ env.DOKPLOY_DEPLOY_WEBHOOK != '' }}
         run: |
           curl -fsS -X POST "$DOKPLOY_DEPLOY_WEBHOOK" -H "user-agent: github-actions-deploy" -o /dev/null -w "Dokploy: %{http_code}\n"
+
+      # Dokploy queues deployments, so an accepted webhook is not a live release.
+      - name: Wait until the new version is live
+        if: ${{ env.DOKPLOY_DEPLOY_WEBHOOK != '' }}
+        timeout-minutes: 16
+        env:
+          EXPECTED_VERSION: ${{ github.sha }}
+        run: |
+          deadline=$((SECONDS + 900))
+          while [ "$SECONDS" -lt "$deadline" ]; do
+            live=$(curl -fsS -A "Mozilla/5.0 (deploy-check)" "$SITE_URL/api/version?t=$(date +%s)" | jq -r '.version' || true)
+            if [ "$live" = "$EXPECTED_VERSION" ]; then
+              echo "Live version: $live"
+              exit 0
+            fi
+            echo "Live version: ${live:-unreachable}; waiting for $EXPECTED_VERSION"
+            sleep 15
+          done
+          echo "::error::$EXPECTED_VERSION was not live on $SITE_URL after 15 minutes; check the Dokploy deployment."
+          exit 1
+
+      # Code deploys do not trigger the CMS hooks, so purge the edge-cached home pages here.
+      - name: Purge Cloudflare cache for the home pages
+        if: ${{ env.DOKPLOY_DEPLOY_WEBHOOK != '' }}
+        env:
+          CLOUDFLARE_ZONE_ID: ${{ secrets.CLOUDFLARE_ZONE_ID }}
+          CLOUDFLARE_PURGE_TOKEN: ${{ secrets.CLOUDFLARE_PURGE_TOKEN }}
+        run: |
+          if [ -z "$CLOUDFLARE_ZONE_ID" ] || [ -z "$CLOUDFLARE_PURGE_TOKEN" ]; then
+            echo "::warning::CLOUDFLARE_ZONE_ID or CLOUDFLARE_PURGE_TOKEN is not set; the home pages may stay stale until the edge cache expires."
+            exit 0
+          fi
+          files=$(jq -cn --arg site "$SITE_URL" '{files: [$site + "/", $site + "/es", $site + "/pt"]}')
+          response=$(curl -sS -X POST "https://api.cloudflare.com/client/v4/zones/$CLOUDFLARE_ZONE_ID/purge_cache" \
+            -H "Authorization: Bearer $CLOUDFLARE_PURGE_TOKEN" \
+            -H "Content-Type: application/json" \
+            --data "$files")
+          if [ "$(echo "$response" | jq -r '.success')" != "true" ]; then
+            echo "::error::Cloudflare purge failed: $(echo "$response" | jq -c '.errors')"
+            exit 1
+          fi
+          echo "Purged $files"
