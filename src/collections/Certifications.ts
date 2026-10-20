@@ -1,7 +1,12 @@
+import { revalidateAfterChange, revalidateAfterDelete } from "./hooks/revalidate";
 import { CollectionConfig } from "payload";
 
 const Certifications: CollectionConfig = {
   slug: "certifications",
+  hooks: {
+    afterChange: [revalidateAfterChange],
+    afterDelete: [revalidateAfterDelete],
+  },
   admin: {
     useAsTitle: "name",
     defaultColumns: ["name", "institution", "date"],

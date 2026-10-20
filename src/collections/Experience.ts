@@ -1,7 +1,12 @@
+import { revalidateAfterChange, revalidateAfterDelete } from "./hooks/revalidate";
 import { CollectionConfig } from "payload";
 
 const Experience: CollectionConfig = {
   slug: "experience",
+  hooks: {
+    afterChange: [revalidateAfterChange],
+    afterDelete: [revalidateAfterDelete],
+  },
   admin: {
     useAsTitle: "position",
     defaultColumns: ["position", "company", "startDate", "endDate"],

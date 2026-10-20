@@ -1,7 +1,12 @@
+import { revalidateAfterChange, revalidateAfterDelete } from "./hooks/revalidate";
 import { CollectionConfig } from "payload";
 
 const Profile: CollectionConfig = {
   slug: "profile",
+  hooks: {
+    afterChange: [revalidateAfterChange],
+    afterDelete: [revalidateAfterDelete],
+  },
   admin: {
     useAsTitle: "name",
   },

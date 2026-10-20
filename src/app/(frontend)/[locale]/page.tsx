@@ -1,6 +1,6 @@
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { getTranslations } from "next-intl/server";
+import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Sidebar } from "@/components/site/sidebar";
 import {
   About,
@@ -33,7 +33,13 @@ import type {
 } from "@/payload-types";
 
 // Avoid prerender DB access during image build; data is cached in service layer.
-export const dynamic = "force-dynamic";
+export const revalidate = 3600;
+
+// No pages at build time (the build has no database); each locale is rendered on its
+// first request and then served from the cache until content changes.
+export function generateStaticParams() {
+  return [];
+}
 
 type PageProps = { params: Promise<{ locale: string }> };
 
@@ -43,6 +49,7 @@ function toLocale(value: string): "en" | "es" {
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const locale = toLocale((await params).locale);
+  setRequestLocale(locale);
   const t = await getTranslations("hero");
 
   try {
@@ -89,6 +96,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
 export default async function HomePage({ params }: PageProps) {
   const locale = toLocale((await params).locale);
+  setRequestLocale(locale);
   try {
     const [
       profileData,

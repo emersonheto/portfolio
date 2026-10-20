@@ -4,6 +4,6 @@ export const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:30
 export const LOCALES = ["en", "es"] as const;
 export const DEFAULT_LOCALE = "en" as const;
 
-export const REVALIDATE_SECONDS = 60;
+export const REVALIDATE_SECONDS = 3600;
 
 export const CONTACT_FORM_RATE_LIMIT = 5; // requests per hour per IP

@@ -1,7 +1,12 @@
+import { revalidateAfterChange, revalidateAfterDelete } from "./hooks/revalidate";
 import { CollectionConfig } from "payload";
 
 const Skills: CollectionConfig = {
   slug: "skills",
+  hooks: {
+    afterChange: [revalidateAfterChange],
+    afterDelete: [revalidateAfterDelete],
+  },
   admin: {
     useAsTitle: "name",
     defaultColumns: ["name", "category", "level"],

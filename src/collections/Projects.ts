@@ -1,7 +1,12 @@
+import { revalidateAfterChange, revalidateAfterDelete } from "./hooks/revalidate";
 import { CollectionConfig } from "payload";
 
 const Projects: CollectionConfig = {
   slug: "projects",
+  hooks: {
+    afterChange: [revalidateAfterChange],
+    afterDelete: [revalidateAfterDelete],
+  },
   admin: {
     useAsTitle: "name",
     defaultColumns: ["name", "featured", "createdAt"],
@@ -55,24 +60,6 @@ const Projects: CollectionConfig = {
       type: "text",
     },
   ],
-  hooks: {
-    afterChange: [
-      () => {
-        // Trigger ISR revalidation
-        if (typeof window === "undefined") {
-          // Only run on server
-          const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
-          const secret = process.env.PAYLOAD_SECRET;
-
-          if (secret) {
-            fetch(`${siteUrl}/api/revalidate?secret=${secret}&path=/projects`, {
-              method: "GET",
-            }).catch((err) => console.error("ISR revalidation failed:", err));
-          }
-        }
-      },
-    ],
-  },
 };
 
 export default Projects;
