@@ -23,7 +23,7 @@ async function purgeCdn() {
 }
 
 /** Refresh the cached public pages whenever site content changes. */
-async function refreshSite() {
+async function refreshSite(purgeCdnCache = true) {
   try {
     const { revalidatePath } = await import("next/cache");
     revalidatePath("/", "layout");
@@ -31,15 +31,15 @@ async function refreshSite() {
     // Outside a Next.js request (CLI, migrations) there is no cache to refresh.
     return;
   }
-  await purgeCdn();
+  if (purgeCdnCache) await purgeCdn();
 }
 
-export const revalidateAfterChange: CollectionAfterChangeHook = async ({ doc }) => {
-  await refreshSite();
+export const revalidateAfterChange: CollectionAfterChangeHook = async ({ doc, req }) => {
+  await refreshSite(req?.headers?.get("x-portfolio-content-loader") !== "1");
   return doc;
 };
 
-export const revalidateAfterDelete: CollectionAfterDeleteHook = async ({ doc }) => {
-  await refreshSite();
+export const revalidateAfterDelete: CollectionAfterDeleteHook = async ({ doc, req }) => {
+  await refreshSite(req?.headers?.get("x-portfolio-content-loader") !== "1");
   return doc;
 };
