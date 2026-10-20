@@ -87,7 +87,7 @@ export interface Certification {
 export interface Skill {
   id: string;
   name: string;
-  category: "frontend" | "backend" | "devops" | "design" | "tools" | "soft";
+  category: "ai" | "frontend" | "backend" | "data" | "devops" | "design" | "tools" | "soft";
   level: number;
   createdAt: string;
   updatedAt: string;

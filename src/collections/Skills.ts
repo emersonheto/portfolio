@@ -23,7 +23,9 @@ const Skills: CollectionConfig = {
       type: "select",
       required: true,
       options: [
+        { label: "AI & Machine Learning", value: "ai" },
         { label: "Frontend", value: "frontend" },
+        { label: "Data", value: "data" },
         { label: "Backend", value: "backend" },
         { label: "DevOps", value: "devops" },
         { label: "Design", value: "design" },

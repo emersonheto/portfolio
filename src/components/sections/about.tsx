@@ -10,6 +10,24 @@ interface AboutProps {
   skills: Skill[];
 }
 
+const CATEGORY_LABELS: Record<string, string> = {
+  ai: "AI & Machine Learning",
+  backend: "Backend",
+  frontend: "Frontend",
+  data: "Data",
+  devops: "Cloud & DevOps",
+  tools: "Tools",
+  design: "Design",
+  soft: "Soft Skills",
+};
+
+const CATEGORY_ORDER = Object.keys(CATEGORY_LABELS);
+
+function categoryOrder(category: string) {
+  const index = CATEGORY_ORDER.indexOf(category);
+  return index === -1 ? CATEGORY_ORDER.length : index;
+}
+
 export function About({ profile, skills }: AboutProps) {
   const t = useTranslations();
 
@@ -47,7 +65,9 @@ export function About({ profile, skills }: AboutProps) {
         <div>
           <h3 className="mb-6 text-2xl font-semibold">Skills</h3>
           <div className="space-y-6">
-            {Object.entries(skillsByCategory).map(([category, categorySkills]) => (
+            {Object.entries(skillsByCategory)
+              .sort(([a], [b]) => categoryOrder(a) - categoryOrder(b))
+              .map(([category, categorySkills]) => (
               <motion.div
                 key={category}
                 initial={{ opacity: 0, y: 20 }}
@@ -56,12 +76,12 @@ export function About({ profile, skills }: AboutProps) {
                 transition={{ duration: 0.5 }}
               >
                 <h4 className="mb-3 text-sm font-medium uppercase text-gray-600 dark:text-gray-400">
-                  {category}
+                  {CATEGORY_LABELS[category] ?? category}
                 </h4>
                 <div className="flex flex-wrap gap-2">
                   {categorySkills.map((skill) => (
                     <Badge key={skill.id} variant="secondary">
-                      {skill.name} ({skill.level}%)
+                      {skill.name}
                     </Badge>
                   ))}
                 </div>
