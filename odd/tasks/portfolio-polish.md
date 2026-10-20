@@ -15,12 +15,14 @@ Improve portfolio.certilab.app without adding paid services, preserving English,
 
 | ID  | Task                                                                        | Specs  | Route                       | Commit |
 | --- | --------------------------------------------------------------------------- | ------ | --------------------------- | ------ |
-| T1  | Add translated case studies for BCRP, Certilab RAG, and multimodal research | S2, S6 | worker + inline integration |        |
-| T2  | Add international SEO metadata, hreflang, JSON-LD, and per-locale previews  | S3, S6 | worker + inline integration |        |
-| T3  | Replace the cycling language control with explicit EN/ES/PT links           | S4, S6 | inline                      |        |
-| T4  | Improve hero/LCP loading and image delivery                                 | S5, S6 | inline                      |        |
-| T5  | Run type/build, Lighthouse, route, accessibility, and regression checks     | S2-S6  | inline                      |        |
+| T1  | Add translated case studies for BCRP, Certilab RAG, and multimodal research | S2, S6 | worker + inline integration | ba47df4 |
+| T2  | Add international SEO metadata, hreflang, JSON-LD, and per-locale previews  | S3, S6 | worker + inline integration | ba47df4 |
+| T3  | Replace the cycling language control with explicit EN/ES/PT links           | S4, S6 | inline                      | ba47df4 |
+| T4  | Improve hero/LCP loading and image delivery                                 | S5, S6 | inline                      | ba47df4 |
+| T5  | Run type/build, Lighthouse, route, accessibility, and regression checks     | S2-S6  | inline                      | ba47df4 |
 
 ## Log
 
 - **L1** — "pues hagamos 2 , 3 , 4 y 5".
+- **L2** — Implemented in `ba47df4`; GitHub Actions and Dokploy deployed `main` successfully.
+- **L3** — Verification: TypeScript, Prettier, diff check, production build; production `/`, `/es`, `/pt` returned 200 with Cloudflare `HIT`, JSON-LD, canonical, hreflang and visible language links; Lighthouse performance EN 93, ES 95, PT 92 with accessibility/SEO 100 on all; Ego Lite desktop/mobile and keyboard focus checks passed.
