@@ -16,11 +16,13 @@ const Projects: CollectionConfig = {
     {
       name: "name",
       type: "text",
+      localized: true,
       required: true,
     },
     {
       name: "description",
       type: "textarea",
+      localized: true,
       required: true,
     },
     {

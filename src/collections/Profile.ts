@@ -18,16 +18,19 @@ const Profile: CollectionConfig = {
     {
       name: "professionalTitle",
       type: "text",
+      localized: true,
       required: true,
     },
     {
       name: "shortDescription",
       type: "text",
+      localized: true,
       required: true,
     },
     {
       name: "longDescription",
       type: "textarea",
+      localized: true,
       required: true,
     },
     {
@@ -38,6 +41,7 @@ const Profile: CollectionConfig = {
     {
       name: "cv",
       type: "text",
+      localized: true,
     },
     {
       name: "yearsOfExperience",

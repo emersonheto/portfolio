@@ -16,16 +16,19 @@ const Experience: CollectionConfig = {
     {
       name: "company",
       type: "text",
+      localized: true,
       required: true,
     },
     {
       name: "position",
       type: "text",
+      localized: true,
       required: true,
     },
     {
       name: "description",
       type: "textarea",
+      localized: true,
       required: true,
     },
     {

@@ -16,16 +16,19 @@ const Education: CollectionConfig = {
     {
       name: "institution",
       type: "text",
+      localized: true,
       required: true,
     },
     {
       name: "degree",
       type: "text",
+      localized: true,
       required: true,
     },
     {
       name: "description",
       type: "textarea",
+      localized: true,
     },
     {
       name: "startDate",

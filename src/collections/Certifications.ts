@@ -16,6 +16,7 @@ const Certifications: CollectionConfig = {
     {
       name: "name",
       type: "text",
+      localized: true,
       required: true,
     },
     {
