@@ -9,7 +9,8 @@
     "contact": "Contato",
     "research": "Pesquisa",
     "skills": "Habilidades",
-    "ai": "Como trabalho"
+    "ai": "Como trabalho",
+    "caseStudies": "Casos selecionados"
   },
   "hero": {
     "hi": "Olá, sou",
@@ -73,7 +74,8 @@
     "contactTitle": "Vamos conversar",
     "contactText": "Estou aberto a oportunidades em IA Generativa e engenharia de software, além de colaborações de pesquisa. A forma mais rápida de falar comigo é por e-mail ou LinkedIn.",
     "footer": "© 2026 Emerson Herrera Tolentino",
-    "view": "Ver certificado"
+    "view": "Ver certificado",
+    "languageSelect": "Idiomas"
   },
   "highlights": [
     {
@@ -128,6 +130,56 @@
       {
         "title": "Fábrica de agentes no meu próprio VPS",
         "text": "Execução autônoma de issues acionada pelo Telegram (n8n) e por lotes noturnos, com pull requests e CI como barreiras de qualidade."
+      }
+    ]
+  },
+  "caseStudies": {
+    "title": "Casos de estudo selecionados",
+    "labels": {
+      "problem": "Problema",
+      "contribution": "Minha contribuição",
+      "architecture": "Arquitetura e stack",
+      "result": "Resultado"
+    },
+    "items": [
+      {
+        "id": "bcrp-rag",
+        "eyebrow": "Plataforma RAG em produção",
+        "title": "Plataforma RAG multi-tenant para o BCRP",
+        "problem": "Várias aplicações institucionais precisavam de buscas confiáveis e experiências de assistente sobre milhares de documentos de pesquisa.",
+        "contribution": "Na Canvia, projetei, construí e aprimorei a plataforma, incluindo ingestão e indexação, ferramentas compartilhadas, módulos configuráveis de chat/busca/prompts, ingestão multimodal e testes diários com revisão humana.",
+        "architecture": "Gateway em Node.js, backend em Python, Oracle 23ai, pgvector, Pinecone, Chroma, pipelines SQL para o RePEc e processamento multimodal de documentos.",
+        "result": "Uma plataforma atende quatro aplicações do BCRP; seu assistente está disponível no Portal de Investigação.",
+        "link": {
+          "href": "https://investigacion.bcrp.gob.pe/",
+          "label": "Abrir Portal de Investigação"
+        }
+      },
+      {
+        "id": "certilab-rag",
+        "eyebrow": "RAG agêntico e adaptativo",
+        "title": "RAG da Certilab para certificados de calibração",
+        "problem": "Os certificados de calibração combinam campos estruturados e conteúdo documental que os usuários precisam buscar, entender e validar.",
+        "contribution": "Projetei serviços RAG agênticos e adaptativos com busca estruturada/semântica, citações de fontes, controle de acesso, reescrita de consultas e verificação de respostas.",
+        "architecture": "LangGraph, FastAPI, Qdrant, OpenAI e MySQL; a versão adaptativa trabalha sobre 3.848 vetores indexados de certificados reais.",
+        "result": "Um sistema de certificação com mais de 300 certificados emitidos e uma base RAG/chatbot orientada à produção.",
+        "link": {
+          "href": "https://github.com/emersonheto/certilab-agentic-rag",
+          "label": "Ver projeto"
+        }
+      },
+      {
+        "id": "vision-language-research",
+        "eyebrow": "Pesquisa · CVPR 2026",
+        "title": "Modelos visão-linguagem para detecção de danos",
+        "problem": "A detecção de danos causados por desastres precisava de uma comparação fundamentada de modelos visão-linguagem sobre CrisisMMD e DamageDataset.",
+        "contribution": "Fui coautor da avaliação de CLIP, SigLIP, SigLIP2 e FuseLIP, comparando fine-tuning contrastivo, adaptação few-shot em duas etapas e fusão multimodal.",
+        "architecture": "Python, PyTorch, modelos da família CLIP, experimentos de fine-tuning e pipelines de avaliação multimodal.",
+        "result": "O fine-tuning elevou o F1 do SigLIP de 0,19 para 0,90; o artigo foi apresentado no LXCV Workshop do CVPR 2026.",
+        "link": {
+          "href": "https://github.com/emersonheto/damage_dataset_fewshot_vlms",
+          "label": "Ver código da pesquisa"
+        }
       }
     ]
   }

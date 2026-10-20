@@ -9,7 +9,8 @@
     "contact": "Contact",
     "research": "Research",
     "skills": "Skills",
-    "ai": "How I work"
+    "ai": "How I work",
+    "caseStudies": "Selected case studies"
   },
   "hero": {
     "hi": "Hi, I'm",
@@ -73,7 +74,8 @@
     "contactTitle": "Let's talk",
     "contactText": "I'm open to roles in Generative AI and software engineering, and to research collaborations. The fastest way to reach me is by email or LinkedIn.",
     "footer": "© 2026 Emerson Herrera Tolentino",
-    "view": "View certificate"
+    "view": "View certificate",
+    "languageSelect": "Languages"
   },
   "highlights": [
     {
@@ -128,6 +130,56 @@
       {
         "title": "Agent factory on my own VPS",
         "text": "Unattended issue execution triggered from Telegram (n8n) and nightly batches, with pull requests and CI as quality gates."
+      }
+    ]
+  },
+  "caseStudies": {
+    "title": "Selected case studies",
+    "labels": {
+      "problem": "Problem",
+      "contribution": "My contribution",
+      "architecture": "Architecture & stack",
+      "result": "Result"
+    },
+    "items": [
+      {
+        "id": "bcrp-rag",
+        "eyebrow": "Production RAG platform",
+        "title": "Multi-tenant RAG platform for BCRP",
+        "problem": "Several institutional applications needed reliable search and assistant experiences over thousands of research documents.",
+        "contribution": "At Canvia, I designed, built and improved the platform, including ingestion and indexing, shared tools, configurable chat/search/prompt modules, multimodal ingestion, and daily testing with human review.",
+        "architecture": "Node.js gateway, Python backend, Oracle 23ai, pgvector, Pinecone, Chroma, SQL pipelines to RePEc, and multimodal document processing.",
+        "result": "One platform serving four BCRP applications; its assistant is live on the Research Portal.",
+        "link": {
+          "href": "https://investigacion.bcrp.gob.pe/",
+          "label": "Open Research Portal"
+        }
+      },
+      {
+        "id": "certilab-rag",
+        "eyebrow": "Agentic & adaptive RAG",
+        "title": "Certilab RAG for calibration certificates",
+        "problem": "Calibration certificates combine structured fields and document content that users need to search, understand and validate.",
+        "contribution": "I designed agentic and adaptive RAG services with structured/semantic search, source citations, access control, query rewriting and answer verification.",
+        "architecture": "LangGraph, FastAPI, Qdrant, OpenAI and MySQL; the adaptive version works over 3,848 indexed vectors from real certificates.",
+        "result": "A certification system with 300+ certificates issued, plus a production-oriented RAG and chatbot foundation.",
+        "link": {
+          "href": "https://github.com/emersonheto/certilab-agentic-rag",
+          "label": "View project"
+        }
+      },
+      {
+        "id": "vision-language-research",
+        "eyebrow": "Research · CVPR 2026",
+        "title": "Vision-language models for damage detection",
+        "problem": "Disaster damage detection needed a grounded comparison of vision-language models across CrisisMMD and DamageDataset.",
+        "contribution": "I co-authored the evaluation of CLIP, SigLIP, SigLIP2 and FuseLIP, comparing contrastive fine-tuning, two-stage few-shot adaptation and multimodal fusion.",
+        "architecture": "Python, PyTorch, CLIP-family models, fine-tuning experiments and multimodal evaluation pipelines.",
+        "result": "Fine-tuning raised SigLIP F1 from 0.19 to 0.90; the paper was presented at the LXCV Workshop at CVPR 2026.",
+        "link": {
+          "href": "https://github.com/emersonheto/damage_dataset_fewshot_vlms",
+          "label": "View research code"
+        }
       }
     ]
   }

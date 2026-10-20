@@ -9,7 +9,8 @@
     "contact": "Contacto",
     "research": "Investigación",
     "skills": "Habilidades",
-    "ai": "Cómo trabajo"
+    "ai": "Cómo trabajo",
+    "caseStudies": "Casos de estudio"
   },
   "hero": {
     "hi": "Hola, soy",
@@ -73,7 +74,8 @@
     "contactTitle": "Hablemos",
     "contactText": "Estoy abierto a roles de IA Generativa e ingeniería de software, y a colaboraciones de investigación. La forma más rápida de contactarme es por email o LinkedIn.",
     "footer": "© 2026 Emerson Herrera Tolentino",
-    "view": "Ver certificado"
+    "view": "Ver certificado",
+    "languageSelect": "Idiomas"
   },
   "highlights": [
     {
@@ -128,6 +130,56 @@
       {
         "title": "Fábrica de agentes en mi propio VPS",
         "text": "Ejecución desatendida de issues disparada desde Telegram (n8n) y tandas nocturnas, con pull requests y CI como control de calidad."
+      }
+    ]
+  },
+  "caseStudies": {
+    "title": "Casos de estudio seleccionados",
+    "labels": {
+      "problem": "Problema",
+      "contribution": "Mi aporte",
+      "architecture": "Arquitectura y stack",
+      "result": "Resultado"
+    },
+    "items": [
+      {
+        "id": "bcrp-rag",
+        "eyebrow": "Plataforma RAG en producción",
+        "title": "Plataforma RAG multi-tenant para el BCRP",
+        "problem": "Varias aplicaciones institucionales necesitaban búsquedas confiables y asistentes sobre miles de documentos de investigación.",
+        "contribution": "En Canvia diseñé, construí y mejoré la plataforma, incluyendo ingesta e indexación, herramientas compartidas, módulos configurables de chat/búsqueda/prompts, ingesta multimodal y pruebas diarias con revisión humana.",
+        "architecture": "Gateway en Node.js, backend en Python, Oracle 23ai, pgvector, Pinecone, Chroma, pipelines SQL hacia RePEc y procesamiento multimodal de documentos.",
+        "result": "Una plataforma atiende a cuatro aplicaciones del BCRP; su asistente está disponible en el Portal de Investigación.",
+        "link": {
+          "href": "https://investigacion.bcrp.gob.pe/",
+          "label": "Abrir Portal de Investigación"
+        }
+      },
+      {
+        "id": "certilab-rag",
+        "eyebrow": "RAG agéntico y adaptativo",
+        "title": "RAG de Certilab para certificados de calibración",
+        "problem": "Los certificados de calibración combinan campos estructurados y contenido documental que los usuarios necesitan buscar, entender y validar.",
+        "contribution": "Diseñé servicios RAG agénticos y adaptativos con búsqueda estructurada/semántica, citas de fuentes, control de acceso, reescritura de consultas y verificación de respuestas.",
+        "architecture": "LangGraph, FastAPI, Qdrant, OpenAI y MySQL; la versión adaptativa trabaja sobre 3.848 vectores indexados de certificados reales.",
+        "result": "Un sistema de certificación con más de 300 certificados emitidos y una base RAG/chatbot orientada a producción.",
+        "link": {
+          "href": "https://github.com/emersonheto/certilab-agentic-rag",
+          "label": "Ver proyecto"
+        }
+      },
+      {
+        "id": "vision-language-research",
+        "eyebrow": "Investigación · CVPR 2026",
+        "title": "Modelos visión-lenguaje para detección de daños",
+        "problem": "La detección de daños por desastres necesitaba una comparación fundamentada de modelos visión-lenguaje sobre CrisisMMD y DamageDataset.",
+        "contribution": "Fui coautor de la evaluación de CLIP, SigLIP, SigLIP2 y FuseLIP, comparando fine-tuning contrastivo, adaptación few-shot en dos etapas y fusión multimodal.",
+        "architecture": "Python, PyTorch, modelos de la familia CLIP, experimentos de fine-tuning y pipelines de evaluación multimodal.",
+        "result": "El fine-tuning elevó el F1 de SigLIP de 0,19 a 0,90; el paper fue presentado en el LXCV Workshop de CVPR 2026.",
+        "link": {
+          "href": "https://github.com/emersonheto/damage_dataset_fewshot_vlms",
+          "label": "Ver código de investigación"
+        }
       }
     ]
   }

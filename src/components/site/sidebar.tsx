@@ -5,8 +5,14 @@ import { SideNav } from "./side-nav";
 
 type Labels = {
   downloadCV: string;
-  language: string;
-  languageHref: string;
+  languageSelect: string;
+};
+
+type LanguageOption = {
+  code: string;
+  href: string;
+  label: string;
+  current?: boolean;
 };
 
 const ICONS: Record<string, typeof Github> = { github: Github, linkedin: Linkedin, email: Mail };
@@ -15,10 +21,12 @@ export function Sidebar({
   profile,
   navItems,
   labels,
+  languages,
 }: {
   profile: Profile;
   navItems: { id: string; label: string }[];
   labels: Labels;
+  languages: LanguageOption[];
 }) {
   return (
     <header className="lg:sticky lg:top-0 lg:flex lg:max-h-screen lg:w-[46%] lg:flex-col lg:justify-between lg:py-24">
@@ -29,20 +37,35 @@ export function Sidebar({
             alt={profile.name}
             width={88}
             height={88}
+            sizes="88px"
+            quality={80}
             priority
             className="h-20 w-20 rounded-full border border-mint-400/30 object-cover sm:h-[88px] sm:w-[88px]"
           />
-          <a
-            href={`/${labels.languageHref === "en" ? "" : labels.languageHref}`}
-            className="inline-flex items-center gap-1.5 rounded-full border border-haze-500/40 px-3 py-1 text-xs font-medium text-haze-300 transition hover:border-mint-400 hover:text-mint-300"
-            hrefLang={labels.languageHref}
+          <nav
+            aria-label={labels.languageSelect}
+            className="inline-flex items-center gap-1 rounded-full border border-haze-500/40 p-1 text-xs font-semibold text-haze-300"
           >
-            <Languages className="h-3.5 w-3.5" aria-hidden />
-            {labels.language}
-          </a>
+            <Languages className="mx-1 h-3.5 w-3.5" aria-hidden />
+            {languages.map((language) => (
+              <a
+                key={language.code}
+                href={language.href}
+                hrefLang={language.code}
+                aria-current={language.current ? "page" : undefined}
+                className={`rounded-full px-2 py-1 transition hover:bg-mint-400/20 hover:text-mint-300 ${language.current ? "bg-mint-400 text-ink-950" : ""}`}
+              >
+                {language.label}
+              </a>
+            ))}
+          </nav>
         </div>
-        <h1 className="mt-6 text-4xl font-bold tracking-tight text-haze-100 sm:text-5xl">{profile.name}</h1>
-        <h2 className="mt-3 text-lg font-medium tracking-tight text-haze-100 sm:text-xl">{profile.professionalTitle}</h2>
+        <h1 className="mt-6 text-4xl font-bold tracking-tight text-haze-100 sm:text-5xl">
+          {profile.name}
+        </h1>
+        <h2 className="mt-3 text-lg font-medium tracking-tight text-haze-100 sm:text-xl">
+          {profile.professionalTitle}
+        </h2>
         <p className="mt-4 max-w-sm leading-normal text-haze-400">{profile.shortDescription}</p>
         <SideNav items={navItems} />
       </div>
