@@ -77,8 +77,8 @@
     "view": "View certificate",
     "languageSelect": "Languages",
     "cv": {
-      "genai": "CV · GenAI / AI Engineer",
-      "fullstack": "CV · Full Stack / Backend",
+      "genai": "CV GenAI",
+      "fullstack": "CV Full Stack",
       "academic": "Academic CV"
     },
     "academicTitle": "Academic profile"

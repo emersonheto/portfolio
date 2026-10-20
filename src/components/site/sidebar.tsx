@@ -36,7 +36,7 @@ export function Sidebar({
   cvLinks: CvLink[];
 }) {
   return (
-    <header className="lg:sticky lg:top-0 lg:flex lg:max-h-screen lg:w-[46%] lg:flex-col lg:justify-between lg:py-24">
+    <header className="lg:sticky lg:top-0 lg:flex lg:max-h-screen lg:w-[46%] lg:flex-col lg:overflow-y-auto lg:py-24">
       <div>
         <div className="flex items-center gap-5">
           <Image
@@ -74,17 +74,17 @@ export function Sidebar({
           {profile.professionalTitle}
         </h2>
         <p className="mt-4 max-w-sm leading-normal text-haze-400">{profile.shortDescription}</p>
-        <SideNav items={navItems} />
       </div>
 
-      <div className="mt-8 flex flex-wrap items-center gap-5 lg:mt-0">
+      {/* CV and contact links sit above the section nav so short laptop screens never hide them. */}
+      <div className="mt-8 flex flex-wrap items-center gap-5">
         <ul className="flex flex-wrap gap-3" aria-label={labels.downloadCV}>
           {cvLinks.map((cv, index) => (
             <li key={cv.href}>
               <a
                 href={cv.href}
                 download
-                className={`inline-flex items-center gap-2 rounded-md px-4 py-2 text-sm font-semibold transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-mint-300 ${index === 0 ? "bg-mint-400 text-ink-950 hover:bg-mint-300" : "border border-mint-400/60 text-mint-300 hover:bg-mint-400/10"}`}
+                className={`inline-flex items-center gap-2 rounded-md px-4 py-2 text-sm font-semibold transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-mint-300 ${index === 0 ? "border border-mint-400 bg-mint-400 text-ink-950 hover:bg-mint-300" : "border border-mint-400/60 text-mint-300 hover:bg-mint-400/10"}`}
               >
                 <FileDown className="h-4 w-4" aria-hidden />
                 {cv.label}
@@ -112,6 +112,7 @@ export function Sidebar({
           })}
         </ul>
       </div>
+      <SideNav items={navItems} />
     </header>
   );
 }
