@@ -1,6 +1,9 @@
 import { buildConfig } from 'payload'
 import { postgresAdapter } from '@payloadcms/db-postgres'
 import path from 'path'
+import { fileURLToPath } from 'url'
+
+const dirname = path.dirname(fileURLToPath(import.meta.url))
 
 // Collections
 import Users from '../collections/Users'
@@ -18,7 +21,7 @@ export default buildConfig({
   admin: {
     user: 'users',
     importMap: {
-      baseDir: path.resolve(__dirname, '../..'),
+      baseDir: path.resolve(dirname, '..'),
     },
   },
   collections: [
@@ -35,10 +38,11 @@ export default buildConfig({
     pool: {
       connectionString: process.env.DATABASE_URI,
     },
-    push: true,
+    push: false,
+    migrationDir: path.resolve(dirname, '../migrations'),
   }),
   typescript: {
-    outputFile: path.resolve(__dirname, '../../src/payload-types.ts'),
+    outputFile: path.resolve(dirname, '../payload-types.ts'),
   },
   // Email can be configured later
   // email: {

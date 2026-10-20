@@ -51,7 +51,7 @@ export async function generateMetadata(): Promise<Metadata> {
         description: profile.shortDescription,
         images: [
           {
-            url: typeof profile.photo === "string" ? profile.photo : profile.photo.url,
+            url: profile.photo,
             width: 1200,
             height: 630,
           },
@@ -63,7 +63,7 @@ export async function generateMetadata(): Promise<Metadata> {
         card: "summary_large_image",
         title: profile.name,
         description: profile.shortDescription,
-        images: [typeof profile.photo === "string" ? profile.photo : profile.photo.url],
+        images: [profile.photo],
       },
     };
   } catch {

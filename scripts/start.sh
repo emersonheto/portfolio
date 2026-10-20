@@ -1,11 +1,11 @@
 #!/bin/bash
+set -e
 
-# Push schema to database on startup (NODE_ENV=development bypasses production guard)
+# Apply database migrations (production-safe; replaces the old dev-mode schema push).
 if [ -n "$DATABASE_URI" ]; then
-  echo "Initializing database schema..."
-  NODE_ENV=development npx tsx scripts/init-db.ts 2>&1 || echo "Schema push skipped or already up to date."
+  echo "Running database migrations..."
+  npm run payload -- migrate
 fi
 
-# Start Next.js
 echo "Starting Next.js..."
 exec npm start
