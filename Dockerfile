@@ -18,10 +18,11 @@ ARG NEXT_PUBLIC_SITE_NAME="Emerson Herrera Tolentino"
 # The build needs no database: public pages are rendered on first request and cached.
 ENV NEXT_PUBLIC_SITE_URL=$NEXT_PUBLIC_SITE_URL \
     NEXT_PUBLIC_SITE_NAME=$NEXT_PUBLIC_SITE_NAME \
-    PAYLOAD_SECRET=build-only-placeholder-not-used-at-runtime \
     NEXT_TELEMETRY_DISABLED=1 \
     NODE_ENV=production
-RUN npm run build
+# Payload refuses to build without a secret; this placeholder is scoped to the build
+# command so it never lands in image metadata.
+RUN PAYLOAD_SECRET=build-only-placeholder-not-used-at-runtime npm run build
 
 FROM node:24-bookworm-slim AS runtime
 WORKDIR /app
