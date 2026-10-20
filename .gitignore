@@ -35,3 +35,6 @@ next-env.d.ts
 
 # Payload
 /payload-media
+
+# CodeGraph index
+.codegraph/
