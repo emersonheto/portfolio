@@ -42,4 +42,5 @@ jobs:
 
       - name: Trigger Dokploy deploy
         if: ${{ env.DOKPLOY_DEPLOY_WEBHOOK != '' }}
-        run: curl -fsS -X POST "$DOKPLOY_DEPLOY_WEBHOOK" -H "user-agent: github-actions-deploy" -o /dev/null -w "Dokploy: %{http_code}\n"
+        run: |
+          curl -fsS -X POST "$DOKPLOY_DEPLOY_WEBHOOK" -H "user-agent: github-actions-deploy" -o /dev/null -w "Dokploy: %{http_code}\n"
