@@ -139,7 +139,13 @@
       "problem": "Problema",
       "contribution": "Mi aporte",
       "architecture": "Arquitectura y stack",
-      "result": "Resultado"
+      "result": "Resultado",
+      "detail": "Leer caso completo",
+      "back": "Volver al portfolio",
+      "role": "Rol",
+      "stack": "Stack",
+      "evidence": "Evidencia pública",
+      "architectureDiagram": "Esquema de arquitectura"
     },
     "items": [
       {
@@ -153,6 +159,58 @@
         "link": {
           "href": "https://investigacion.bcrp.gob.pe/",
           "label": "Abrir Portal de Investigación"
+        },
+        "slug": "bcrp-rag",
+        "summary": "Una plataforma RAG multi-tenant que lleva búsquedas fundamentadas y asistentes a cuatro aplicaciones del BCRP.",
+        "role": "Analista Programador II / Full Stack AI Engineer en Canvia",
+        "stack": [
+          "Python",
+          "FastAPI",
+          "LangChain",
+          "Node.js",
+          "Oracle 23ai",
+          "pgvector",
+          "Pinecone",
+          "Chroma",
+          "OpenAI"
+        ],
+        "sections": [
+          {
+            "heading": "Entrega basada en evidencia",
+            "body": "Trabajé en ingesta e indexación, herramientas compartidas, módulos configurables de chat, búsqueda y prompts, procesamiento multimodal y pruebas diarias con revisión humana. La historia pública muestra el aporte de ingeniería sin exponer documentos institucionales ni datos internos."
+          },
+          {
+            "heading": "Límite público",
+            "body": "El esquema mantiene un nivel técnico seguro: muestra el flujo desde las fuentes institucionales hasta la recuperación, los servicios compartidos y las aplicaciones, sin credenciales, endpoints privados ni detalles operativos."
+          }
+        ],
+        "diagram": {
+          "heading": "De documentos a respuestas fundamentadas",
+          "nodes": [
+            {
+              "title": "Fuentes e ingesta",
+              "text": "Documentos de investigación, parseo multimodal e indexación reproducible."
+            },
+            {
+              "title": "Recuperación y servicios",
+              "text": "Gateway Node.js, servicios Python y módulos RAG configurables."
+            },
+            {
+              "title": "Aplicaciones",
+              "text": "Cuatro aplicaciones del BCRP, incluido el asistente del Portal de Investigación."
+            }
+          ]
+        },
+        "evidence": [
+          {
+            "href": "https://investigacion.bcrp.gob.pe/",
+            "label": "Abrir el Portal de Investigación del BCRP"
+          }
+        ],
+        "visual": {
+          "src": "/case-studies/bcrp-research-portal.png",
+          "alt": "Página pública del Portal de Investigación del BCRP con navegación de investigación y botón del asistente.",
+          "caption": "Captura pública del Portal de Investigación del BCRP. El caso mantiene los detalles de implementación en un nivel seguro y enlaza al producto."
         }
       },
       {
@@ -166,7 +224,57 @@
         "link": {
           "href": "https://github.com/emersonheto/certilab-agentic-rag",
           "label": "Ver proyecto"
-        }
+        },
+        "slug": "certilab-rag",
+        "summary": "Un producto de certificación y una base RAG que convierten certificados de calibración en soporte de decisiones buscable y trazable.",
+        "role": "Full Stack & AI Developer freelance en Certilab",
+        "stack": [
+          "Laravel 11",
+          "Filament",
+          "MySQL",
+          "S3",
+          "Python",
+          "LangGraph",
+          "FastAPI",
+          "Qdrant"
+        ],
+        "sections": [
+          {
+            "heading": "De la base de producto a la capa de IA",
+            "body": "Construí la base de certificación con backoffice, acceso de clientes, validación por QR, PDFs firmados, roles y auditoría; luego la extendí con servicios RAG agénticos y adaptativos para consultar certificados."
+          },
+          {
+            "heading": "Diseñado para la trazabilidad",
+            "body": "Los proyectos RAG combinan recuperación estructurada y semántica, citas de fuentes, control de acceso y verificación de respuestas. El proyecto adaptativo documenta un grafo de siete nodos con reescritura de consultas y loops de verificación."
+          }
+        ],
+        "diagram": {
+          "heading": "Del certificado al soporte de decisiones",
+          "nodes": [
+            {
+              "title": "Sistema de certificados",
+              "text": "Emisión, PDFs firmados, validación QR, roles y auditoría."
+            },
+            {
+              "title": "Servicios RAG",
+              "text": "Recuperación estructurada y semántica con citas y acceso controlado."
+            },
+            {
+              "title": "Preguntas del negocio",
+              "text": "Experiencias de chat y búsqueda sobre datos y documentos."
+            }
+          ]
+        },
+        "evidence": [
+          {
+            "href": "https://github.com/emersonheto/certilab-agentic-rag",
+            "label": "Ver Certilab Agentic RAG"
+          },
+          {
+            "href": "https://github.com/emersonheto/certilab-adaptive-rag",
+            "label": "Ver Certilab Adaptive RAG"
+          }
+        ]
       },
       {
         "id": "vision-language-research",
@@ -179,7 +287,53 @@
         "link": {
           "href": "https://github.com/emersonheto/damage_dataset_fewshot_vlms",
           "label": "Ver código de investigación"
-        }
+        },
+        "slug": "vision-language-research",
+        "summary": "Una comparación medida de modelos visión-lenguaje para detectar daños por desastres, con experimentos reproducibles y un resultado publicado en workshop.",
+        "role": "Coautor / investigador de Machine Learning",
+        "stack": [
+          "Python",
+          "PyTorch",
+          "CLIP",
+          "SigLIP",
+          "SigLIP2",
+          "FuseLIP",
+          "CrisisMMD",
+          "DamageDataset"
+        ],
+        "sections": [
+          {
+            "heading": "Diseño de evaluación",
+            "body": "El trabajo compara modelos de la familia CLIP sobre datasets de daños por desastres y distintas estrategias de adaptación: fine-tuning contrastivo, adaptación few-shot en dos etapas y fusión multimodal."
+          },
+          {
+            "heading": "Un resultado que explica el trabajo",
+            "body": "El fine-tuning elevó el F1 de SigLIP de 0,19 a 0,90 en el experimento reportado. Lo importante no es solo el número: la evaluación vuelve visibles los trade-offs entre adaptar el modelo y obtener predicciones confiables en el dominio."
+          }
+        ],
+        "diagram": {
+          "heading": "De los datasets a la evidencia del modelo",
+          "nodes": [
+            {
+              "title": "Datasets",
+              "text": "CrisisMMD y DamageDataset con etiquetas de daños por desastres."
+            },
+            {
+              "title": "Adaptación",
+              "text": "Backbones de la familia CLIP y experimentos few-shot y multimodales."
+            },
+            {
+              "title": "Evaluación",
+              "text": "Comparaciones F1, análisis de errores y comunicación científica."
+            }
+          ]
+        },
+        "evidence": [
+          {
+            "href": "https://github.com/emersonheto/damage_dataset_fewshot_vlms",
+            "label": "Ver repositorio de investigación"
+          }
+        ]
       }
     ]
   }

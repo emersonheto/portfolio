@@ -1,4 +1,5 @@
 import type { Profile, Project } from "@/payload-types";
+import type { CaseStudyDetailData } from "@/components/site/case-study-detail";
 
 type Locale = "en" | "es" | "pt";
 
@@ -74,6 +75,34 @@ export function SeoJsonLd({ locale, siteUrl, profile, projects }: SeoJsonLdProps
   const jsonLd = {
     "@context": "https://schema.org",
     "@graph": [person, ...projectItems],
+  };
+
+  return <script type="application/ld+json">{serializeJsonLd(jsonLd)}</script>;
+}
+
+export function CaseStudyJsonLd({
+  locale,
+  siteUrl,
+  item,
+}: {
+  locale: Locale;
+  siteUrl: string;
+  item: CaseStudyDetailData;
+}) {
+  const normalizedSiteUrl = siteUrl.replace(/\/+$/, "");
+  const localePrefix = locale === "en" ? "" : `/${locale}`;
+  const url = `${normalizedSiteUrl}${localePrefix}/case-studies/${item.slug}`;
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "@id": `${url}#case-study`,
+    headline: item.title,
+    description: item.summary,
+    url,
+    inLanguage: locale,
+    author: { "@type": "Person", name: "Emerson Herrera Tolentino", url: normalizedSiteUrl },
+    about: item.stack,
+    keywords: item.stack,
   };
 
   return <script type="application/ld+json">{serializeJsonLd(jsonLd)}</script>;

@@ -2,6 +2,7 @@ import { ArrowUpRight } from "lucide-react";
 
 export type CaseStudy = {
   id?: string;
+  slug?: string;
   title: string;
   eyebrow: string;
   problem: string;
@@ -19,10 +20,19 @@ export type CaseStudyLabels = {
   contribution: string;
   architecture: string;
   result: string;
+  detail?: string;
 };
 
 /** Presentational case-study cards. All copy is supplied by the localized caller. */
-export function CaseStudies({ items, labels }: { items: CaseStudy[]; labels: CaseStudyLabels }) {
+export function CaseStudies({
+  items,
+  labels,
+  detailBasePath,
+}: {
+  items: CaseStudy[];
+  labels: CaseStudyLabels;
+  detailBasePath?: string;
+}) {
   return (
     <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
       {items.map((item, index) => {
@@ -60,12 +70,22 @@ export function CaseStudies({ items, labels }: { items: CaseStudy[]; labels: Cas
                 </div>
               </dl>
 
+              {detailBasePath && item.slug && labels.detail && (
+                <a
+                  href={`${detailBasePath}/${item.slug}`}
+                  className="mt-6 inline-flex items-center gap-1.5 self-start text-sm font-medium text-mint-300 transition hover:text-mint-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-mint-300"
+                >
+                  {labels.detail}
+                  <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
+                </a>
+              )}
+
               {item.link && (
                 <a
                   href={item.link.href}
                   target="_blank"
                   rel="noreferrer noopener"
-                  className="mt-6 inline-flex items-center gap-1.5 self-start text-sm font-medium text-mint-300 transition hover:text-mint-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-mint-300"
+                  className="mt-3 inline-flex items-center gap-1.5 self-start text-sm font-medium text-mint-300 transition hover:text-mint-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-mint-300"
                 >
                   {item.link.label}
                   <ArrowUpRight className="h-4 w-4" aria-hidden="true" />

@@ -181,6 +181,7 @@ export default async function HomePage({ params }: PageProps) {
       { code: "es", href: "/es", label: "ES", current: locale === "es" },
       { code: "pt", href: "/pt", label: "PT", current: locale === "pt" },
     ];
+    const caseStudyBasePath = locale === "en" ? "/case-studies" : `/${locale}/case-studies`;
 
     return (
       <div className="mx-auto min-h-screen max-w-screen-xl px-6 py-12 font-sans md:px-12 md:py-16 lg:py-0">
@@ -215,7 +216,11 @@ export default async function HomePage({ params }: PageProps) {
               />
             </Section>
             <Section id="case-studies" title={caseStudies.title}>
-              <CaseStudies items={caseStudies.items} labels={caseStudies.labels} />
+              <CaseStudies
+                items={caseStudies.items}
+                labels={caseStudies.labels}
+                detailBasePath={caseStudyBasePath}
+              />
             </Section>
             <Section id="projects" title={nav("projects")}>
               <ProjectList
