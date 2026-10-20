@@ -47,7 +47,7 @@ export function Projects({ projects }: ProjectsProps) {
               {project.image && (
                 <div className="relative aspect-video w-full overflow-hidden">
                   <Image
-                    src={typeof project.image === "string" ? project.image : project.image.url}
+                    src={project.image}
                     alt={project.name}
                     fill
                     className="object-cover"

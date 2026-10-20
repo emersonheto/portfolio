@@ -53,7 +53,7 @@ export function Certifications({ certifications }: CertificationsProps) {
               {cert.image && (
                 <div className="relative aspect-video w-full overflow-hidden">
                   <Image
-                    src={typeof cert.image === "string" ? cert.image : cert.image.url}
+                    src={cert.image}
                     alt={cert.name}
                     fill
                     className="object-cover"

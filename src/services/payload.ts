@@ -35,7 +35,8 @@ export async function getProjects() {
     async () =>
       payload.find({
         collection: "projects",
-        sort: "-createdAt",
+        sort: "createdAt",
+        limit: 100,
         depth: 1,
       }),
     getCacheKey("projects"),
@@ -51,6 +52,7 @@ export async function getExperience() {
       payload.find({
         collection: "experience",
         sort: "-startDate",
+        limit: 100,
       }),
     getCacheKey("experience"),
     { revalidate: REVALIDATE_SECONDS }
@@ -65,6 +67,7 @@ export async function getEducation() {
       payload.find({
         collection: "education",
         sort: "-startDate",
+        limit: 100,
       }),
     getCacheKey("education"),
     { revalidate: REVALIDATE_SECONDS }
@@ -79,6 +82,7 @@ export async function getCertifications() {
       payload.find({
         collection: "certifications",
         sort: "-date",
+        limit: 100,
       }),
     getCacheKey("certifications"),
     { revalidate: REVALIDATE_SECONDS }
@@ -93,6 +97,7 @@ export async function getSkills() {
       payload.find({
         collection: "skills",
         sort: "category",
+        limit: 100,
       }),
     getCacheKey("skills"),
     { revalidate: REVALIDATE_SECONDS }

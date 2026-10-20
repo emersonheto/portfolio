@@ -55,7 +55,7 @@ export function Hero({ profile }: HeroProps) {
             </a>
             {profile.cv && (
               <a
-                href={typeof profile.cv === "string" ? profile.cv : profile.cv.url}
+                href={profile.cv}
                 download
               >
                 <Button variant="outline">{t("hero.downloadCV")}</Button>
@@ -72,7 +72,7 @@ export function Hero({ profile }: HeroProps) {
             className="relative h-64 w-64 overflow-hidden rounded-full sm:h-80 sm:w-80"
           >
             <Image
-              src={typeof profile.photo === "string" ? profile.photo : profile.photo.url}
+              src={profile.photo}
               alt={profile.name}
               fill
               className="object-cover"
