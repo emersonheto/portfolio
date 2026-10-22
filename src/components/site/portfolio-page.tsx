@@ -51,6 +51,8 @@ function toLocale(value: string): Locale {
   return routing.locales.includes(value as Locale) ? (value as Locale) : routing.defaultLocale;
 }
 
+const OG_IMAGE = { url: "/images/og-emerson-herrera.jpg", width: 1200, height: 630 } as const;
+
 const OG_LOCALES: Record<Locale, string> = { en: "en_US", es: "es_PE", pt: "pt_BR" };
 
 function getLocalePath(locale: Locale, variant: PortfolioVariant) {
@@ -63,9 +65,10 @@ function getLocaleUrl(locale: Locale, variant: PortfolioVariant) {
 }
 
 function getLanguageAlternates(variant: PortfolioVariant) {
-  return Object.fromEntries(
-    routing.locales.map((locale) => [locale, getLocaleUrl(locale, variant)])
-  );
+  return {
+    ...Object.fromEntries(routing.locales.map((locale) => [locale, getLocaleUrl(locale, variant)])),
+    "x-default": getLocaleUrl(routing.defaultLocale, variant),
+  };
 }
 
 export async function generatePortfolioMetadata(
@@ -82,9 +85,13 @@ export async function generatePortfolioMetadata(
     const profile = profileData.docs?.[0] as Profile | undefined;
 
     const pageUrl = getLocaleUrl(locale, variant);
-    const description = profile?.shortDescription || t("hi");
-    const subtitle = variant === "academic" ? site("academicTitle") : profile?.professionalTitle;
-    const title = profile ? `${profile.name} — ${subtitle}` : SITE_NAME;
+    const isAcademic = variant === "academic";
+    const description = isAcademic ? profile?.shortDescription || t("hi") : site("homeDescription");
+    const title = isAcademic
+      ? profile
+        ? `${profile.name} — ${site("academicTitle")}`
+        : SITE_NAME
+      : site("homeTitle");
     const alternates = getLanguageAlternates(variant);
 
     return {
@@ -102,9 +109,7 @@ export async function generatePortfolioMetadata(
         alternateLocale: routing.locales
           .filter((item) => item !== locale)
           .map((item) => OG_LOCALES[item]),
-        images: profile?.photo
-          ? [{ url: profile.photo, width: 1200, height: 630, alt: profile.name }]
-          : undefined,
+        images: [{ ...OG_IMAGE, alt: profile?.name || SITE_NAME }],
         type: "website",
         siteName: SITE_NAME,
       },
@@ -112,7 +117,7 @@ export async function generatePortfolioMetadata(
         card: "summary_large_image",
         title,
         description,
-        images: profile?.photo ? [profile.photo] : undefined,
+        images: [OG_IMAGE.url],
       },
     };
   } catch {
@@ -207,7 +212,14 @@ export async function PortfolioPage({
 
     return (
       <div className="mx-auto min-h-screen max-w-screen-xl px-6 py-12 font-sans md:px-12 md:py-16 lg:py-0">
-        <SeoJsonLd locale={locale} siteUrl={SITE_URL} profile={profile} projects={projects} />
+        <SeoJsonLd
+          locale={locale}
+          siteUrl={SITE_URL}
+          profile={profile}
+          projects={projects}
+          experiences={experiences}
+          education={education}
+        />
         <a
           href="#content"
           className="absolute left-0 top-0 block -translate-x-full rounded bg-mint-400 px-4 py-3 text-sm font-bold text-ink-950 focus-visible:translate-x-0"

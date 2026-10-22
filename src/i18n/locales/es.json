@@ -81,7 +81,9 @@
       "fullstack": "CV Full Stack",
       "academic": "CV académico"
     },
-    "academicTitle": "Perfil académico"
+    "academicTitle": "Perfil académico",
+    "homeTitle": "Emerson Herrera Tolentino — Ingeniero de IA Generativa y RAG",
+    "homeDescription": "Diseño y llevo a producción sistemas de IA Generativa —plataformas RAG, chatbots empresariales y agentes— con más de 8 años de ingeniería de software."
   },
   "highlights": [
     {

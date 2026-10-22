@@ -81,7 +81,9 @@
       "fullstack": "CV Full Stack",
       "academic": "Academic CV"
     },
-    "academicTitle": "Academic profile"
+    "academicTitle": "Academic profile",
+    "homeTitle": "Emerson Herrera Tolentino — GenAI & RAG Engineer",
+    "homeDescription": "I design and ship production GenAI systems — RAG platforms, enterprise chatbots and agentic AI — backed by 8+ years of software engineering."
   },
   "highlights": [
     {

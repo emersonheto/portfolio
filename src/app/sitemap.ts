@@ -8,6 +8,7 @@ function localizedAlternates(path: string) {
       en: `${SITE_URL}${path}`,
       es: `${SITE_URL}/es${path}`,
       pt: `${SITE_URL}/pt${path}`,
+      "x-default": `${SITE_URL}${path}`,
     },
   };
 }

@@ -1,4 +1,4 @@
-import type { Profile, Project } from "@/payload-types";
+import type { Education, Experience, Profile, Project } from "@/payload-types";
 import type { CaseStudyDetailData } from "@/components/site/case-study-detail";
 
 type Locale = "en" | "es" | "pt";
@@ -8,7 +8,15 @@ export type SeoJsonLdProps = {
   siteUrl: string;
   profile: Profile;
   projects: Project[];
+  experiences: Experience[];
+  education: Education[];
 };
+
+const EMPLOYER = "Canvia";
+const ALUMNI_PATTERNS = [/UFRGS|Rio Grande do Sul/i, /SENATI/i];
+const FALLBACK_OG_IMAGE = "/images/og-emerson-herrera.jpg";
+const CASE_STUDY_PUBLISHED = "2026-10-20";
+const CASE_STUDY_MODIFIED = "2026-10-22";
 
 function toAbsoluteUrl(value: string | null | undefined, siteUrl: string) {
   if (!value) return undefined;
@@ -30,7 +38,14 @@ function serializeJsonLd(value: unknown) {
     .replace(/\u2029/g, "\\u2029");
 }
 
-export function SeoJsonLd({ locale, siteUrl, profile, projects }: SeoJsonLdProps) {
+export function SeoJsonLd({
+  locale,
+  siteUrl,
+  profile,
+  projects,
+  experiences,
+  education,
+}: SeoJsonLdProps) {
   const normalizedSiteUrl = siteUrl.replace(/\/+$/, "");
   const pageUrl = locale === "en" ? normalizedSiteUrl : `${normalizedSiteUrl}/${locale}`;
   const socialLinks = (profile.socialNetworks || [])
@@ -39,6 +54,16 @@ export function SeoJsonLd({ locale, siteUrl, profile, projects }: SeoJsonLdProps
   const email = profile.socialNetworks
     ?.find((network) => network.url.toLowerCase().startsWith("mailto:"))
     ?.url.slice(7);
+
+  const employer = experiences.find(
+    (experience) => experience.current && experience.company.includes(EMPLOYER)
+  );
+  const alumniOf = ALUMNI_PATTERNS.flatMap((pattern) => {
+    const entry = education.find((item) => pattern.test(item.institution));
+    return entry
+      ? [{ "@type": "EducationalOrganization", name: entry.institution.split(",")[0].trim() }]
+      : [];
+  });
 
   const person = {
     "@type": "Person",
@@ -49,6 +74,8 @@ export function SeoJsonLd({ locale, siteUrl, profile, projects }: SeoJsonLdProps
     url: pageUrl,
     image: toAbsoluteUrl(profile.photo, normalizedSiteUrl),
     inLanguage: locale,
+    ...(employer ? { worksFor: { "@type": "Organization", name: EMPLOYER } } : {}),
+    ...(alumniOf.length ? { alumniOf } : {}),
     ...(email ? { email } : {}),
     ...(socialLinks.length ? { sameAs: socialLinks } : {}),
   };
@@ -72,9 +99,25 @@ export function SeoJsonLd({ locale, siteUrl, profile, projects }: SeoJsonLdProps
     };
   });
 
+  const website = {
+    "@type": "WebSite",
+    "@id": `${normalizedSiteUrl}#website`,
+    url: pageUrl,
+    name: profile.name,
+    inLanguage: locale,
+  };
+
+  const profilePage = {
+    "@type": "ProfilePage",
+    "@id": `${pageUrl}#profilepage`,
+    url: pageUrl,
+    mainEntity: { "@id": person["@id"] },
+    inLanguage: locale,
+  };
+
   const jsonLd = {
     "@context": "https://schema.org",
-    "@graph": [person, ...projectItems],
+    "@graph": [website, profilePage, person, ...projectItems],
   };
 
   return <script type="application/ld+json">{serializeJsonLd(jsonLd)}</script>;
@@ -92,6 +135,8 @@ export function CaseStudyJsonLd({
   const normalizedSiteUrl = siteUrl.replace(/\/+$/, "");
   const localePrefix = locale === "en" ? "" : `/${locale}`;
   const url = `${normalizedSiteUrl}${localePrefix}/case-studies/${item.slug}`;
+  const personRef = { "@type": "Person", name: "Emerson Herrera Tolentino", url: normalizedSiteUrl };
+  const image = toAbsoluteUrl(item.visual?.src || FALLBACK_OG_IMAGE, normalizedSiteUrl);
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "Article",
@@ -100,7 +145,11 @@ export function CaseStudyJsonLd({
     description: item.summary,
     url,
     inLanguage: locale,
-    author: { "@type": "Person", name: "Emerson Herrera Tolentino", url: normalizedSiteUrl },
+    ...(image ? { image } : {}),
+    datePublished: CASE_STUDY_PUBLISHED,
+    dateModified: CASE_STUDY_MODIFIED,
+    author: personRef,
+    publisher: personRef,
     about: item.stack,
     keywords: item.stack,
   };

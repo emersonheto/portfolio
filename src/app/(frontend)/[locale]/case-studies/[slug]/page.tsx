@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { setRequestLocale } from "next-intl/server";
 import {
   CaseStudyDetail,
+  CASE_STUDY_VISUAL_SIZE,
   type CaseStudyDetailData,
   type CaseStudyDetailLabels,
 } from "@/components/site/case-study-detail";
@@ -59,9 +60,16 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     return { title: SITE_NAME };
   }
 
-  const languages = Object.fromEntries(
-    routing.locales.map((candidate) => [candidate, getCaseStudyUrl(candidate, slug)])
-  );
+  const image = item.visual
+    ? { url: item.visual.src, ...CASE_STUDY_VISUAL_SIZE }
+    : { url: "/images/og-emerson-herrera.jpg", width: 1200, height: 630 };
+
+  const languages = {
+    ...Object.fromEntries(
+      routing.locales.map((candidate) => [candidate, getCaseStudyUrl(candidate, slug)])
+    ),
+    "x-default": getCaseStudyUrl(routing.defaultLocale, slug),
+  };
   const url = getCaseStudyUrl(locale, slug);
 
   return {
@@ -75,8 +83,14 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       url,
       type: "article",
       siteName: SITE_NAME,
+      images: [{ ...image, alt: item.visual?.alt || item.title }],
     },
-    twitter: { card: "summary", title: item.title, description: item.summary },
+    twitter: {
+      card: "summary_large_image",
+      title: item.title,
+      description: item.summary,
+      images: [image.url],
+    },
   };
 }
 

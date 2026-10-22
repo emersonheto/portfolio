@@ -1,0 +1,25 @@
+# Emerson Herrera Tolentino
+
+> Software engineer specialising in production Generative AI and RAG systems, with 8+ years building software for banking, telecom, health and education. Currently at Canvia, building a multi-tenant RAG platform that serves four Central Reserve Bank of Peru (BCRP) applications.
+
+## Portfolio
+
+- [Portfolio (English)](https://portfolio.certilab.app/): Experience, AI work, research, projects, skills and education.
+- [Portafolio (Español)](https://portfolio.certilab.app/es): Spanish version of the portfolio.
+- [Portfólio (Português)](https://portfolio.certilab.app/pt): Portuguese version of the portfolio.
+
+## Case studies
+
+- [Multi-tenant RAG platform for BCRP](https://portfolio.certilab.app/case-studies/bcrp-rag): Multi-tenant RAG platform bringing grounded search and assistant experiences to four BCRP applications.
+- [Certilab RAG for calibration certificates](https://portfolio.certilab.app/case-studies/certilab-rag): A certification product and RAG foundation that turns calibration certificates into searchable, traceable decision support.
+
+## CVs (PDF)
+
+- [CV GenAI (English)](https://portfolio.certilab.app/cv/Emerson_Herrera_Tolentino_CV_GenAI_EN.pdf)
+- [CV Full Stack (English)](https://portfolio.certilab.app/cv/Emerson_Herrera_Tolentino_CV_FullStack_EN.pdf)
+- [Academic CV (English)](https://portfolio.certilab.app/cv/Emerson_Herrera_Tolentino_CV_Academico_EN.pdf)
+
+## Profiles
+
+- [LinkedIn](https://www.linkedin.com/in/emerson-herrera-tolentino/)
+- [GitHub](https://github.com/emersonheto)

@@ -1,6 +1,8 @@
 import Image from "next/image";
 import { ArrowLeft, ArrowUpRight, ExternalLink } from "lucide-react";
 
+export const CASE_STUDY_VISUAL_SIZE = { width: 1988, height: 1264 } as const;
+
 export type CaseStudySection = {
   heading: string;
   body: string;
@@ -90,8 +92,8 @@ export function CaseStudyDetail({
           <Image
             src={item.visual.src}
             alt={item.visual.alt}
-            width={1988}
-            height={1264}
+            width={CASE_STUDY_VISUAL_SIZE.width}
+            height={CASE_STUDY_VISUAL_SIZE.height}
             priority
             className="rounded-lg border border-mint-400/20"
           />
