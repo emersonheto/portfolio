@@ -281,65 +281,6 @@
             "label": "View Certilab Adaptive RAG"
           }
         ]
-      },
-      {
-        "id": "vision-language-research",
-        "eyebrow": "Research · CVPR 2026",
-        "title": "Vision-language models for damage detection",
-        "problem": "Disaster damage detection needed a grounded comparison of vision-language models across CrisisMMD and DamageDataset.",
-        "contribution": "I co-authored the evaluation of CLIP, SigLIP, SigLIP2 and FuseLIP, comparing contrastive fine-tuning, two-stage few-shot adaptation and multimodal fusion.",
-        "architecture": "Python, PyTorch, CLIP-family models, fine-tuning experiments and multimodal evaluation pipelines.",
-        "result": "Fine-tuning raised SigLIP F1 from 0.19 to 0.90; the paper was presented at the LXCV Workshop at CVPR 2026.",
-        "link": {
-          "href": "https://github.com/emersonheto/damage_dataset_fewshot_vlms",
-          "label": "View research code"
-        },
-        "slug": "vision-language-research",
-        "summary": "A measured comparison of vision-language models for disaster-damage detection, with reproducible fine-tuning experiments and a published workshop result.",
-        "role": "Co-author / Machine Learning researcher",
-        "stack": [
-          "Python",
-          "PyTorch",
-          "CLIP",
-          "SigLIP",
-          "SigLIP2",
-          "FuseLIP",
-          "CrisisMMD",
-          "DamageDataset"
-        ],
-        "sections": [
-          {
-            "heading": "Evaluation design",
-            "body": "The work compares CLIP-family models across disaster-damage datasets and adaptation strategies, including contrastive fine-tuning, two-stage few-shot adaptation and multimodal fusion."
-          },
-          {
-            "heading": "A result that explains the work",
-            "body": "Fine-tuning raised SigLIP F1 from 0.19 to 0.90 in the reported experiment. The important part is not only the number: the evaluation makes the trade-off between model adaptation and reliable disaster-domain predictions visible."
-          }
-        ],
-        "diagram": {
-          "heading": "From datasets to model evidence",
-          "nodes": [
-            {
-              "title": "Datasets",
-              "text": "CrisisMMD and DamageDataset with disaster-damage labels."
-            },
-            {
-              "title": "Model adaptation",
-              "text": "CLIP-family backbones, few-shot and multimodal experiments."
-            },
-            {
-              "title": "Evaluation",
-              "text": "F1 comparisons, error analysis and workshop communication."
-            }
-          ]
-        },
-        "evidence": [
-          {
-            "href": "https://github.com/emersonheto/damage_dataset_fewshot_vlms",
-            "label": "View the research repository"
-          }
-        ]
       }
     ]
   }

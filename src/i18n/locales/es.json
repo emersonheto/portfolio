@@ -281,65 +281,6 @@
             "label": "Ver Certilab Adaptive RAG"
           }
         ]
-      },
-      {
-        "id": "vision-language-research",
-        "eyebrow": "Investigación · CVPR 2026",
-        "title": "Modelos visión-lenguaje para detección de daños",
-        "problem": "La detección de daños por desastres necesitaba una comparación fundamentada de modelos visión-lenguaje sobre CrisisMMD y DamageDataset.",
-        "contribution": "Fui coautor de la evaluación de CLIP, SigLIP, SigLIP2 y FuseLIP, comparando fine-tuning contrastivo, adaptación few-shot en dos etapas y fusión multimodal.",
-        "architecture": "Python, PyTorch, modelos de la familia CLIP, experimentos de fine-tuning y pipelines de evaluación multimodal.",
-        "result": "El fine-tuning elevó el F1 de SigLIP de 0,19 a 0,90; el paper fue presentado en el LXCV Workshop de CVPR 2026.",
-        "link": {
-          "href": "https://github.com/emersonheto/damage_dataset_fewshot_vlms",
-          "label": "Ver código de investigación"
-        },
-        "slug": "vision-language-research",
-        "summary": "Una comparación medida de modelos visión-lenguaje para detectar daños por desastres, con experimentos reproducibles y un resultado publicado en workshop.",
-        "role": "Coautor / investigador de Machine Learning",
-        "stack": [
-          "Python",
-          "PyTorch",
-          "CLIP",
-          "SigLIP",
-          "SigLIP2",
-          "FuseLIP",
-          "CrisisMMD",
-          "DamageDataset"
-        ],
-        "sections": [
-          {
-            "heading": "Diseño de evaluación",
-            "body": "El trabajo compara modelos de la familia CLIP sobre datasets de daños por desastres y distintas estrategias de adaptación: fine-tuning contrastivo, adaptación few-shot en dos etapas y fusión multimodal."
-          },
-          {
-            "heading": "Un resultado que explica el trabajo",
-            "body": "El fine-tuning elevó el F1 de SigLIP de 0,19 a 0,90 en el experimento reportado. Lo importante no es solo el número: la evaluación vuelve visibles los trade-offs entre adaptar el modelo y obtener predicciones confiables en el dominio."
-          }
-        ],
-        "diagram": {
-          "heading": "De los datasets a la evidencia del modelo",
-          "nodes": [
-            {
-              "title": "Datasets",
-              "text": "CrisisMMD y DamageDataset con etiquetas de daños por desastres."
-            },
-            {
-              "title": "Adaptación",
-              "text": "Backbones de la familia CLIP y experimentos few-shot y multimodales."
-            },
-            {
-              "title": "Evaluación",
-              "text": "Comparaciones F1, análisis de errores y comunicación científica."
-            }
-          ]
-        },
-        "evidence": [
-          {
-            "href": "https://github.com/emersonheto/damage_dataset_fewshot_vlms",
-            "label": "Ver repositorio de investigación"
-          }
-        ]
       }
     ]
   }

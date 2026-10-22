@@ -14,6 +14,13 @@ const nextConfig = {
       { protocol: 'https', hostname: 'opengraph.githubassets.com' },
     ],
   },
+  async redirects() {
+    // The vision-language case study duplicated the Research section; keep its indexed URLs alive.
+    return [
+      { source: '/case-studies/vision-language-research', destination: '/#research', permanent: true },
+      { source: '/:locale(es|pt|en)/case-studies/vision-language-research', destination: '/:locale#research', permanent: true },
+    ]
+  },
   async headers() {
     return [
       {
