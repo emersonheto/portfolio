@@ -38,3 +38,6 @@ next-env.d.ts
 
 # CodeGraph index
 .codegraph/
+
+# Third-party agent skills: restore with `npx skills experimental_install` (see skills-lock.json)
+.agents/skills/
