@@ -56,6 +56,11 @@ const nextConfig = {
           }
         ],
       },
+      {
+        // CV PDFs carry phone numbers: downloadable from the site, kept out of search results.
+        source: '/cv/:file*',
+        headers: [{ key: 'X-Robots-Tag', value: 'noindex, nofollow' }],
+      },
     ]
   },
 }

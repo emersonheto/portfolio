@@ -18,7 +18,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const caseStudies = enMessages.caseStudies.items.flatMap(({ slug }) => {
     const path = `/case-studies/${slug}`;
     const alternates = localizedAlternates(path);
-    return Object.values(alternates.languages).map((url) => ({
+    // x-default points at the English URL, so list each URL once.
+    const { "x-default": _default, ...urls } = alternates.languages;
+    return Object.values(urls).map((url) => ({
       url,
       changeFrequency: "monthly" as const,
       priority: 0.8,
