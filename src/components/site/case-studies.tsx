@@ -34,7 +34,7 @@ export function CaseStudies({
   detailBasePath?: string;
 }) {
   return (
-    <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+    <ul className="grid gap-4 sm:grid-cols-2">
       {items.map((item, index) => {
         const titleId = `${item.id ?? `case-study-${index + 1}`}-title`;
 
