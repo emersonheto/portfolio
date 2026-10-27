@@ -86,6 +86,11 @@ const VARIANT_SECTIONS: Record<PortfolioVariant, SectionId[]> = {
 // Only the AI and NLP training is relevant to a Master's application.
 const ACADEMIC_CERTIFICATION_INSTITUTIONS = ["Data Science Research"];
 
+// Industry-only training that the academic CV also leaves out.
+const ACADEMIC_HIDDEN_EDUCATION_INSTITUTIONS = ["Lite Thinking"];
+
+const ACADEMIC_SKILL_CATEGORIES: Skill["category"][] = ["ai", "data"];
+
 const RESEARCH_CODE_URL = "https://github.com/emersonheto/damage_dataset_fewshot_vlms";
 
 const ACADEMIC_PROFILE_LINKS = {
@@ -269,6 +274,15 @@ export async function PortfolioPage({
           ACADEMIC_CERTIFICATION_INSTITUTIONS.some((name) => item.institution.includes(name))
         )
       : certifications;
+    const shownEducation = academic
+      ? education.filter(
+          (item) =>
+            !ACADEMIC_HIDDEN_EDUCATION_INSTITUTIONS.some((name) => item.institution.includes(name))
+        )
+      : education;
+    const shownSkills = academic
+      ? skills.filter((item) => ACADEMIC_SKILL_CATEGORIES.includes(item.category))
+      : skills;
     const profileLinks = academic
       ? (Object.keys(ACADEMIC_PROFILE_LINKS) as (keyof typeof ACADEMIC_PROFILE_LINKS)[]).map(
           (key) => ({ href: ACADEMIC_PROFILE_LINKS[key], label: academic.links[key] })
@@ -277,24 +291,29 @@ export async function PortfolioPage({
 
     const renderSection: Record<SectionId, () => React.ReactNode> = {
       about: () => (
-        <Section key="about" id="about" title={nav("about")}>
+        <Section showTitle={isAcademic} key="about" id="about" title={nav("about")}>
           <About profile={profile} highlights={highlights} text={academic?.statement}>
             {academic && <AcademicFocus text={academic} />}
           </About>
         </Section>
       ),
       experience: () => (
-        <Section key="experience" id="experience" title={nav("experience")}>
-          <ExperienceList items={experiences} locale={locale} present={t("present")} />
+        <Section showTitle={isAcademic} key="experience" id="experience" title={nav("experience")}>
+          <ExperienceList
+            items={experiences}
+            locale={locale}
+            present={t("present")}
+            compact={isAcademic}
+          />
         </Section>
       ),
       ai: () => (
-        <Section key="ai" id="ai" title={nav("ai")}>
+        <Section showTitle={isAcademic} key="ai" id="ai" title={nav("ai")}>
           <AiWork text={aiWork} />
         </Section>
       ),
       research: () => (
-        <Section key="research" id="research" title={nav("research")}>
+        <Section showTitle={isAcademic} key="research" id="research" title={nav("research")}>
           <Research
             text={research}
             href={RESEARCH_CODE_URL}
@@ -303,7 +322,12 @@ export async function PortfolioPage({
         </Section>
       ),
       caseStudies: () => (
-        <Section key="case-studies" id="case-studies" title={caseStudies.title}>
+        <Section
+          showTitle={isAcademic}
+          key="case-studies"
+          id="case-studies"
+          title={caseStudies.title}
+        >
           <CaseStudies
             items={caseStudies.items}
             labels={caseStudies.labels}
@@ -312,7 +336,7 @@ export async function PortfolioPage({
         </Section>
       ),
       projects: () => (
-        <Section key="projects" id="projects" title={nav("projects")}>
+        <Section showTitle={isAcademic} key="projects" id="projects" title={nav("projects")}>
           <ProjectList
             items={projects}
             labels={{ featured: t("featured"), viewCode: t("viewCode") }}
@@ -320,17 +344,22 @@ export async function PortfolioPage({
         </Section>
       ),
       skills: () => (
-        <Section key="skills" id="skills" title={nav("skills")}>
-          <Skills items={skills} labels={skillLabels} />
+        <Section showTitle={isAcademic} key="skills" id="skills" title={nav("skills")}>
+          <Skills items={shownSkills} labels={skillLabels} />
         </Section>
       ),
       education: () => (
-        <Section key="education" id="education" title={nav("education")}>
-          <EducationList items={education} locale={locale} present={t("present")} />
+        <Section showTitle={isAcademic} key="education" id="education" title={nav("education")}>
+          <EducationList items={shownEducation} locale={locale} present={t("present")} />
         </Section>
       ),
       certifications: () => (
-        <Section key="certifications" id="certifications" title={nav("certifications")}>
+        <Section
+          showTitle={isAcademic}
+          key="certifications"
+          id="certifications"
+          title={nav("certifications")}
+        >
           <CertificationList
             items={shownCertifications}
             locale={locale}
@@ -369,7 +398,7 @@ export async function PortfolioPage({
           />
           <main id="content" className="pt-24 lg:w-[54%] lg:py-24">
             {sections.map((id) => renderSection[id]())}
-            <Section id="contact" title={t("contactTitle")}>
+            <Section id="contact" title={t("contactTitle")} showTitle={isAcademic}>
               <Contact
                 profile={profile}
                 text={{ title: t("contactTitle"), body: academic?.contactText ?? t("contactText") }}

@@ -45,10 +45,13 @@ export function Section({
   id,
   title,
   children,
+  showTitle = false,
 }: {
   id: string;
   title: string;
   children: React.ReactNode;
+  /** Keep the title visible on large screens too, instead of relying on the side nav. */
+  showTitle?: boolean;
 }) {
   return (
     <section
@@ -56,8 +59,12 @@ export function Section({
       aria-label={title}
       className="mb-16 scroll-mt-16 md:mb-24 lg:mb-36 lg:scroll-mt-24"
     >
-      <div className="sticky top-0 z-20 -mx-6 mb-4 w-screen bg-ink-900/75 px-6 py-5 backdrop-blur md:-mx-12 md:px-12 lg:sr-only lg:relative lg:top-auto lg:mx-auto lg:w-full lg:px-0 lg:py-0 lg:opacity-0">
-        <h2 className="text-sm font-bold uppercase tracking-widest text-haze-100 lg:sr-only">
+      <div
+        className={`sticky top-0 z-20 -mx-6 mb-4 w-screen bg-ink-900/75 px-6 py-5 backdrop-blur md:-mx-12 md:px-12 lg:relative lg:top-auto lg:mx-auto lg:w-full lg:px-0 ${showTitle ? "lg:mb-8 lg:bg-transparent lg:py-0 lg:backdrop-blur-none" : "lg:sr-only lg:py-0 lg:opacity-0"}`}
+      >
+        <h2
+          className={`text-sm font-bold uppercase tracking-widest text-haze-100 ${showTitle ? "lg:text-mint-300" : "lg:sr-only"}`}
+        >
           {title}
         </h2>
       </div>
@@ -81,6 +88,9 @@ function Chips({ items }: { items: string[] }) {
     </ul>
   );
 }
+
+// In compact lists, roles older than this keep only their title, company and dates.
+const COMPACT_SINCE = "2021-01-01";
 
 function formatMonth(value: string | null | undefined, locale: Locale) {
   if (!value) return "";
@@ -171,10 +181,13 @@ export function ExperienceList({
   items,
   locale,
   present,
+  compact = false,
 }: {
   items: Experience[];
   locale: Locale;
   present: string;
+  /** Hide technology chips and the descriptions of roles that started before COMPACT_SINCE. */
+  compact?: boolean;
 }) {
   return (
     <ol className="group/list space-y-12">
@@ -194,8 +207,10 @@ export function ExperienceList({
                 <span className="block text-sm text-haze-300">{item.company}</span>
               </h3>
             </div>
-            <p className="mt-2 text-sm leading-normal text-haze-400">{item.description}</p>
-            <Chips items={(item.technologies || []).map((t) => t.technology)} />
+            {(!compact || item.startDate >= COMPACT_SINCE) && (
+              <p className="mt-2 text-sm leading-normal text-haze-400">{item.description}</p>
+            )}
+            {!compact && <Chips items={(item.technologies || []).map((t) => t.technology)} />}
           </Row>
         </li>
       ))}
