@@ -135,17 +135,23 @@ function Row({
 export function About({
   profile,
   highlights,
+  text,
+  children,
 }: {
   profile: Profile;
   highlights: { value: string; label: string }[];
+  /** Replaces the CMS long description, e.g. with the academic statement. */
+  text?: string;
+  children?: React.ReactNode;
 }) {
   return (
     <>
       <div className="space-y-4 leading-relaxed text-haze-400">
-        {profile.longDescription.split(/\n\s*\n/).map((paragraph) => (
+        {(text ?? profile.longDescription).split(/\n\s*\n/).map((paragraph) => (
           <p key={paragraph.slice(0, 32)}>{paragraph}</p>
         ))}
       </div>
+      {children}
       <dl className="mt-10 grid grid-cols-2 gap-4">
         {highlights.map((item) => (
           <div key={item.value} className="rounded-lg border border-mint-400/15 bg-ink-800/60 p-4">
@@ -197,12 +203,44 @@ export function ExperienceList({
   );
 }
 
+/** Research interests as chips and spoken languages, shown in the academic About section. */
+export function AcademicFocus({
+  text,
+}: {
+  text: { interestsTitle: string; interests: string[]; languagesTitle: string; languages: string };
+}) {
+  return (
+    <div className="mt-8 space-y-6">
+      <div>
+        <h3 className="text-sm font-semibold text-haze-100">{text.interestsTitle}</h3>
+        <ul className="mt-3 flex flex-wrap gap-2" aria-label={text.interestsTitle}>
+          {text.interests.map((item) => (
+            <li
+              key={item}
+              className="rounded-full bg-mint-400/10 px-3 py-1 text-xs font-medium leading-5 text-mint-300"
+            >
+              {item}
+            </li>
+          ))}
+        </ul>
+      </div>
+      <div>
+        <h3 className="text-sm font-semibold text-haze-100">{text.languagesTitle}</h3>
+        <p className="mt-2 text-sm leading-normal text-haze-400">{text.languages}</p>
+      </div>
+    </div>
+  );
+}
+
 export function Research({
   text,
   href,
+  contribution,
 }: {
   text: { title: string; venue: string; authors: string; summary: string; code: string };
   href: string;
+  /** The author's own part in the work, stated so a co-authored result is not read as theirs alone. */
+  contribution?: string;
 }) {
   return (
     <div className="rounded-lg border border-mint-400/20 bg-gradient-to-br from-ink-700/60 to-ink-800/40 p-6">
@@ -210,6 +248,7 @@ export function Research({
       <h3 className="mt-2 text-lg font-semibold leading-snug text-haze-100">{text.title}</h3>
       <p className="mt-1 text-sm text-haze-300">{text.authors}</p>
       <p className="mt-3 text-sm leading-normal text-haze-400">{text.summary}</p>
+      {contribution && <p className="mt-3 text-sm leading-normal text-haze-300">{contribution}</p>}
       <a
         href={href}
         target="_blank"

@@ -285,5 +285,47 @@
         ]
       }
     ]
+  },
+  "academic": {
+    "headline": "Master's applicant at PPGC/UFRGS · NLP, RAG and LLM evaluation",
+    "summary": "Special student at PPGC/UFRGS and software engineer with more than 8 years of experience. I want to research how to improve and evaluate systems that combine information retrieval and LLMs.",
+    "statement": "Software Engineer with more than 8 years of experience; since 2025 I have designed and improved a production RAG platform for the Central Reserve Bank of Peru. In the Master's program at PPGC – UFRGS, where I am currently a special student, I want to research how to improve and evaluate systems that combine information retrieval and LLMs: document segmentation, retrieval and answer verification. My first research experience was collaborating on a benchmark of vision-language models accepted at the LXCV workshop at CVPR 2026.",
+    "interestsTitle": "Research interests",
+    "interests": [
+      "Natural Language Processing",
+      "Large Language Models (LLMs)",
+      "Retrieval-Augmented Generation (RAG) and information retrieval",
+      "Evaluation of LLMs and RAG systems",
+      "Reinforcement learning applied to LLMs",
+      "Machine Learning",
+      "Computer vision and multimodal models",
+      "Applied AI"
+    ],
+    "languagesTitle": "Languages",
+    "languages": "Spanish: native · Portuguese: intermediate (good comprehension) · English: intermediate (advanced technical)",
+    "highlights": [
+      {
+        "value": "CVPR 2026",
+        "label": "Co-author of an extended abstract on vision-language models at the LXCV workshop, accepted through double-blind review"
+      },
+      {
+        "value": "CMP263",
+        "label": "Machine Learning as a special student at PPGC/UFRGS (2026/2)"
+      },
+      {
+        "value": "4",
+        "label": "Central Reserve Bank of Peru applications served by a RAG platform I design and improve"
+      },
+      {
+        "value": "8+",
+        "label": "years building software for banking, telecommunications, healthcare and education"
+      }
+    ],
+    "contribution": "My contribution: model comparison and part of the few-shot CLIP adaptation experiments on CrisisMMD and DamageDataset.",
+    "contactText": "I am looking for a Master's advisor at PPGC/UFRGS (2027/1 intake) in Natural Language Processing, Computer Vision and Machine Learning. The fastest way to reach me is by email.",
+    "links": {
+      "lattes": "Lattes CV",
+      "orcid": "ORCID"
+    }
   }
 }

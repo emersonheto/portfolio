@@ -20,6 +20,11 @@ type CvLink = {
   label: string;
 };
 
+type ProfileLink = {
+  href: string;
+  label: string;
+};
+
 const ICONS: Record<string, typeof Github> = { github: Github, linkedin: Linkedin, email: Mail };
 
 export function Sidebar({
@@ -28,12 +33,20 @@ export function Sidebar({
   labels,
   languages,
   cvLinks,
+  headline,
+  summary,
+  profileLinks = [],
 }: {
   profile: Profile;
   navItems: { id: string; label: string }[];
   labels: Labels;
   languages: LanguageOption[];
   cvLinks: CvLink[];
+  /** Overrides for the CMS title and short description, used by the academic page. */
+  headline?: string;
+  summary?: string;
+  /** Extra text links next to the social icons, such as Lattes or ORCID. */
+  profileLinks?: ProfileLink[];
 }) {
   return (
     <header className="lg:sticky lg:top-0 lg:flex lg:max-h-screen lg:w-[46%] lg:flex-col lg:overflow-y-auto lg:py-24">
@@ -71,9 +84,11 @@ export function Sidebar({
           {profile.name}
         </h1>
         <h2 className="mt-3 text-lg font-medium tracking-tight text-haze-100 sm:text-xl">
-          {profile.professionalTitle}
+          {headline ?? profile.professionalTitle}
         </h2>
-        <p className="mt-4 max-w-sm leading-normal text-haze-400">{profile.shortDescription}</p>
+        <p className="mt-4 max-w-sm leading-normal text-haze-400">
+          {summary ?? profile.shortDescription}
+        </p>
       </div>
 
       {/* CV and contact links sit above the section nav so short laptop screens never hide them. */}
@@ -111,6 +126,22 @@ export function Sidebar({
             );
           })}
         </ul>
+        {profileLinks.length > 0 && (
+          <ul className="flex flex-wrap items-center gap-4 text-sm font-medium">
+            {profileLinks.map((link) => (
+              <li key={link.href}>
+                <a
+                  href={link.href}
+                  target="_blank"
+                  rel="noreferrer noopener"
+                  className="text-haze-400 underline decoration-haze-500/50 underline-offset-4 transition hover:text-mint-300"
+                >
+                  {link.label}
+                </a>
+              </li>
+            ))}
+          </ul>
+        )}
       </div>
       <SideNav items={navItems} />
     </header>

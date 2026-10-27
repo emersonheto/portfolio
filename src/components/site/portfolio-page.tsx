@@ -4,6 +4,7 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Sidebar } from "@/components/site/sidebar";
 import {
   About,
+  AcademicFocus,
   AiWork,
   CertificationList,
   Contact,
@@ -47,6 +48,65 @@ const VARIANT_CVS: Record<PortfolioVariant, CvVariant[]> = {
   academic: ["academic"],
 };
 
+type SectionId =
+  | "about"
+  | "experience"
+  | "ai"
+  | "research"
+  | "caseStudies"
+  | "projects"
+  | "skills"
+  | "education"
+  | "certifications";
+
+// Advisors look for research first; the academic page drops the AI workflow and side projects.
+const VARIANT_SECTIONS: Record<PortfolioVariant, SectionId[]> = {
+  home: [
+    "about",
+    "experience",
+    "ai",
+    "research",
+    "caseStudies",
+    "projects",
+    "skills",
+    "education",
+    "certifications",
+  ],
+  academic: [
+    "about",
+    "research",
+    "education",
+    "experience",
+    "caseStudies",
+    "skills",
+    "certifications",
+  ],
+};
+
+// Only the AI and NLP training is relevant to a Master's application.
+const ACADEMIC_CERTIFICATION_INSTITUTIONS = ["Data Science Research"];
+
+const RESEARCH_CODE_URL = "https://github.com/emersonheto/damage_dataset_fewshot_vlms";
+
+const ACADEMIC_PROFILE_LINKS = {
+  lattes: "http://lattes.cnpq.br/3577308738802100",
+  orcid: "https://orcid.org/0009-0001-2884-3582",
+} as const;
+
+type AcademicText = {
+  headline: string;
+  summary: string;
+  statement: string;
+  interestsTitle: string;
+  interests: string[];
+  languagesTitle: string;
+  languages: string;
+  highlights: { value: string; label: string }[];
+  contribution: string;
+  contactText: string;
+  links: Record<keyof typeof ACADEMIC_PROFILE_LINKS, string>;
+};
+
 function toLocale(value: string): Locale {
   return routing.locales.includes(value as Locale) ? (value as Locale) : routing.defaultLocale;
 }
@@ -79,6 +139,7 @@ export async function generatePortfolioMetadata(
   setRequestLocale(locale);
   const t = await getTranslations("hero");
   const site = await getTranslations("site");
+  const academic = await getTranslations("academic");
 
   try {
     const profileData = await getProfile(locale);
@@ -86,7 +147,7 @@ export async function generatePortfolioMetadata(
 
     const pageUrl = getLocaleUrl(locale, variant);
     const isAcademic = variant === "academic";
-    const description = isAcademic ? profile?.shortDescription || t("hi") : site("homeDescription");
+    const description = isAcademic ? academic("summary") : site("homeDescription");
     const title = isAcademic
       ? profile
         ? `${profile.name} — ${site("academicTitle")}`
@@ -98,7 +159,7 @@ export async function generatePortfolioMetadata(
       metadataBase: new URL(SITE_URL),
       title,
       description,
-      // The academic page repeats the home content, so it is shared by link and kept out of search.
+      // The academic page overlaps the home content, so it is shared by link and kept out of search.
       robots: variant === "academic" ? { index: false, follow: true } : undefined,
       alternates: { canonical: pageUrl, languages: alternates },
       openGraph: {
@@ -165,7 +226,11 @@ export async function PortfolioPage({
     const t = await getTranslations("site");
     const nav = await getTranslations("nav");
     const root = await getTranslations();
-    const highlights = root.raw("highlights") as { value: string; label: string }[];
+    const isAcademic = variant === "academic";
+    const academic = isAcademic ? (root.raw("academic") as AcademicText) : undefined;
+    const highlights = academic
+      ? academic.highlights
+      : (root.raw("highlights") as { value: string; label: string }[]);
     const research = root.raw("research") as {
       title: string;
       venue: string;
@@ -183,17 +248,7 @@ export async function PortfolioPage({
       labels: CaseStudyLabels;
       items: CaseStudy[];
     };
-    const sections = [
-      "about",
-      "experience",
-      "ai",
-      "research",
-      "caseStudies",
-      "projects",
-      "skills",
-      "education",
-      "certifications",
-    ];
+    const sections = VARIANT_SECTIONS[variant];
     const navItems = sections.map((id) => ({
       id: id === "caseStudies" ? "case-studies" : id,
       label: nav(id),
@@ -209,6 +264,81 @@ export async function PortfolioPage({
       label: t(`cv.${cv}`),
     }));
     const caseStudyBasePath = locale === "en" ? "/case-studies" : `/${locale}/case-studies`;
+    const shownCertifications = academic
+      ? certifications.filter((item) =>
+          ACADEMIC_CERTIFICATION_INSTITUTIONS.some((name) => item.institution.includes(name))
+        )
+      : certifications;
+    const profileLinks = academic
+      ? (Object.keys(ACADEMIC_PROFILE_LINKS) as (keyof typeof ACADEMIC_PROFILE_LINKS)[]).map(
+          (key) => ({ href: ACADEMIC_PROFILE_LINKS[key], label: academic.links[key] })
+        )
+      : [];
+
+    const renderSection: Record<SectionId, () => React.ReactNode> = {
+      about: () => (
+        <Section key="about" id="about" title={nav("about")}>
+          <About profile={profile} highlights={highlights} text={academic?.statement}>
+            {academic && <AcademicFocus text={academic} />}
+          </About>
+        </Section>
+      ),
+      experience: () => (
+        <Section key="experience" id="experience" title={nav("experience")}>
+          <ExperienceList items={experiences} locale={locale} present={t("present")} />
+        </Section>
+      ),
+      ai: () => (
+        <Section key="ai" id="ai" title={nav("ai")}>
+          <AiWork text={aiWork} />
+        </Section>
+      ),
+      research: () => (
+        <Section key="research" id="research" title={nav("research")}>
+          <Research
+            text={research}
+            href={RESEARCH_CODE_URL}
+            contribution={academic?.contribution}
+          />
+        </Section>
+      ),
+      caseStudies: () => (
+        <Section key="case-studies" id="case-studies" title={caseStudies.title}>
+          <CaseStudies
+            items={caseStudies.items}
+            labels={caseStudies.labels}
+            detailBasePath={caseStudyBasePath}
+          />
+        </Section>
+      ),
+      projects: () => (
+        <Section key="projects" id="projects" title={nav("projects")}>
+          <ProjectList
+            items={projects}
+            labels={{ featured: t("featured"), viewCode: t("viewCode") }}
+          />
+        </Section>
+      ),
+      skills: () => (
+        <Section key="skills" id="skills" title={nav("skills")}>
+          <Skills items={skills} labels={skillLabels} />
+        </Section>
+      ),
+      education: () => (
+        <Section key="education" id="education" title={nav("education")}>
+          <EducationList items={education} locale={locale} present={t("present")} />
+        </Section>
+      ),
+      certifications: () => (
+        <Section key="certifications" id="certifications" title={nav("certifications")}>
+          <CertificationList
+            items={shownCertifications}
+            locale={locale}
+            labels={{ verify: t("verify"), view: t("view") }}
+          />
+        </Section>
+      ),
+    };
 
     return (
       <div className="mx-auto min-h-screen max-w-screen-xl px-6 py-12 font-sans md:px-12 md:py-16 lg:py-0">
@@ -232,54 +362,17 @@ export async function PortfolioPage({
             navItems={navItems}
             languages={languages}
             cvLinks={cvLinks}
+            headline={academic?.headline}
+            summary={academic?.summary}
+            profileLinks={profileLinks}
             labels={{ downloadCV: t("downloadCV"), languageSelect: t("languageSelect") }}
           />
           <main id="content" className="pt-24 lg:w-[54%] lg:py-24">
-            <Section id="about" title={nav("about")}>
-              <About profile={profile} highlights={highlights} />
-            </Section>
-            <Section id="experience" title={nav("experience")}>
-              <ExperienceList items={experiences} locale={locale} present={t("present")} />
-            </Section>
-            <Section id="ai" title={nav("ai")}>
-              <AiWork text={aiWork} />
-            </Section>
-            <Section id="research" title={nav("research")}>
-              <Research
-                text={research}
-                href="https://github.com/emersonheto/damage_dataset_fewshot_vlms"
-              />
-            </Section>
-            <Section id="case-studies" title={caseStudies.title}>
-              <CaseStudies
-                items={caseStudies.items}
-                labels={caseStudies.labels}
-                detailBasePath={caseStudyBasePath}
-              />
-            </Section>
-            <Section id="projects" title={nav("projects")}>
-              <ProjectList
-                items={projects}
-                labels={{ featured: t("featured"), viewCode: t("viewCode") }}
-              />
-            </Section>
-            <Section id="skills" title={nav("skills")}>
-              <Skills items={skills} labels={skillLabels} />
-            </Section>
-            <Section id="education" title={nav("education")}>
-              <EducationList items={education} locale={locale} present={t("present")} />
-            </Section>
-            <Section id="certifications" title={nav("certifications")}>
-              <CertificationList
-                items={certifications}
-                locale={locale}
-                labels={{ verify: t("verify"), view: t("view") }}
-              />
-            </Section>
+            {sections.map((id) => renderSection[id]())}
             <Section id="contact" title={t("contactTitle")}>
               <Contact
                 profile={profile}
-                text={{ title: t("contactTitle"), body: t("contactText") }}
+                text={{ title: t("contactTitle"), body: academic?.contactText ?? t("contactText") }}
               />
             </Section>
             <footer className="pb-16 text-sm text-haze-500 sm:pb-0">

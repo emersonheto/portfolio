@@ -285,5 +285,47 @@
         ]
       }
     ]
+  },
+  "academic": {
+    "headline": "Postulante a la maestría del PPGC/UFRGS · PLN, RAG y evaluación de LLMs",
+    "summary": "Alumno especial del PPGC/UFRGS e ingeniero de software con más de 8 años de experiencia. Quiero investigar cómo mejorar y evaluar sistemas que combinan recuperación de información y LLMs.",
+    "statement": "Ingeniero de Software con más de 8 años de experiencia; desde 2025 diseño y mejoro una plataforma RAG en producción para el Banco Central de Reserva del Perú. En la maestría del PPGC – UFRGS, donde hoy curso como alumno especial, quiero investigar cómo mejorar y evaluar sistemas que combinan recuperación de información y LLMs: segmentación de documentos, recuperación y verificación de respuestas. Mi primera experiencia de investigación fue colaborar en un benchmark de modelos de visión y lenguaje aceptado en el LXCV (CVPR 2026).",
+    "interestsTitle": "Intereses de investigación",
+    "interests": [
+      "Procesamiento de Lenguaje Natural",
+      "Large Language Models (LLMs)",
+      "Retrieval-Augmented Generation (RAG) y recuperación de información",
+      "Evaluación de LLMs y sistemas RAG",
+      "Aprendizaje por refuerzo aplicado a LLMs",
+      "Machine Learning",
+      "Visión computacional y modelos multimodales",
+      "IA aplicada"
+    ],
+    "languagesTitle": "Idiomas",
+    "languages": "Español: nativo · Portugués: intermedio (buena comprensión) · Inglés: intermedio (técnico avanzado)",
+    "highlights": [
+      {
+        "value": "CVPR 2026",
+        "label": "Coautor de un extended abstract sobre modelos de visión y lenguaje en el workshop LXCV, aceptado con revisión doble ciego"
+      },
+      {
+        "value": "CMP263",
+        "label": "Aprendizaje de Máquina como alumno especial del PPGC/UFRGS (2026/2)"
+      },
+      {
+        "value": "4",
+        "label": "aplicaciones del Banco Central de Reserva del Perú atendidas por una plataforma RAG que diseño y mejoro"
+      },
+      {
+        "value": "8+",
+        "label": "años desarrollando software para banca, telecomunicaciones, salud y educación"
+      }
+    ],
+    "contribution": "Mi aporte: comparación de modelos y parte de los experimentos de adaptación few-shot con CLIP sobre CrisisMMD y DamageDataset.",
+    "contactText": "Busco orientación para la maestría del PPGC/UFRGS (ingreso 2027/1) en las líneas de Procesamiento de Lenguaje Natural, Visión Computacional y Aprendizaje de Máquina. La forma más rápida de contactarme es por correo.",
+    "links": {
+      "lattes": "Currículo Lattes",
+      "orcid": "ORCID"
+    }
   }
 }
