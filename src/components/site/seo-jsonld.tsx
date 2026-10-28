@@ -13,7 +13,24 @@ export type SeoJsonLdProps = {
 };
 
 const EMPLOYER = "Canvia";
-const ALUMNI_PATTERNS = [/UFRGS|Rio Grande do Sul/i, /SENATI/i];
+// Completed degrees only; the ongoing UFRGS program is an affiliation, not alumni status.
+const ALUMNI_PATTERNS = [/UTP|Tecnol[oó]gica del Per[uú]/i, /SENATI/i];
+const AFFILIATION_PATTERN = /UFRGS|Rio Grande do Sul/i;
+// Academic profiles and the paper listing, so search engines link them to the same person.
+const EXTRA_SAME_AS = [
+  "https://orcid.org/0009-0001-2884-3582",
+  "http://lattes.cnpq.br/3577308738802100",
+  "https://www.latinxinai.org/cvpr-2026",
+];
+const KNOWS_ABOUT = [
+  "Natural Language Processing",
+  "Large Language Models",
+  "Retrieval-Augmented Generation",
+  "Information Retrieval",
+  "LLM Evaluation",
+  "Vision-Language Models",
+  "Machine Learning",
+];
 const FALLBACK_OG_IMAGE = "/images/og-emerson-herrera.jpg";
 const CASE_STUDY_PUBLISHED = "2026-10-20";
 const CASE_STUDY_MODIFIED = "2026-10-22";
@@ -48,9 +65,12 @@ export function SeoJsonLd({
 }: SeoJsonLdProps) {
   const normalizedSiteUrl = siteUrl.replace(/\/+$/, "");
   const pageUrl = locale === "en" ? normalizedSiteUrl : `${normalizedSiteUrl}/${locale}`;
-  const socialLinks = (profile.socialNetworks || [])
-    .map((network) => toAbsoluteUrl(network.url, normalizedSiteUrl))
-    .filter((url): url is string => Boolean(url));
+  const socialLinks = [
+    ...(profile.socialNetworks || [])
+      .map((network) => toAbsoluteUrl(network.url, normalizedSiteUrl))
+      .filter((url): url is string => Boolean(url)),
+    ...EXTRA_SAME_AS,
+  ];
   const email = profile.socialNetworks
     ?.find((network) => network.url.toLowerCase().startsWith("mailto:"))
     ?.url.slice(7);
@@ -64,6 +84,13 @@ export function SeoJsonLd({
       ? [{ "@type": "EducationalOrganization", name: entry.institution.split(",")[0].trim() }]
       : [];
   });
+  const affiliationEntry = education.find((item) => AFFILIATION_PATTERN.test(item.institution));
+  const affiliation = affiliationEntry
+    ? {
+        "@type": "EducationalOrganization",
+        name: affiliationEntry.institution.split(",")[0].trim(),
+      }
+    : undefined;
 
   const person = {
     "@type": "Person",
@@ -76,6 +103,8 @@ export function SeoJsonLd({
     inLanguage: locale,
     ...(employer ? { worksFor: { "@type": "Organization", name: EMPLOYER } } : {}),
     ...(alumniOf.length ? { alumniOf } : {}),
+    ...(affiliation ? { affiliation } : {}),
+    knowsAbout: KNOWS_ABOUT,
     ...(email ? { email } : {}),
     ...(socialLinks.length ? { sameAs: socialLinks } : {}),
   };
@@ -135,7 +164,11 @@ export function CaseStudyJsonLd({
   const normalizedSiteUrl = siteUrl.replace(/\/+$/, "");
   const localePrefix = locale === "en" ? "" : `/${locale}`;
   const url = `${normalizedSiteUrl}${localePrefix}/case-studies/${item.slug}`;
-  const personRef = { "@type": "Person", name: "Emerson Herrera Tolentino", url: normalizedSiteUrl };
+  const personRef = {
+    "@type": "Person",
+    name: "Emerson Herrera Tolentino",
+    url: normalizedSiteUrl,
+  };
   const image = toAbsoluteUrl(item.visual?.src || FALLBACK_OG_IMAGE, normalizedSiteUrl);
   const jsonLd = {
     "@context": "https://schema.org",
