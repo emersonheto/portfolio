@@ -1,3 +1,4 @@
+import { authenticated } from "./access";
 import { CollectionConfig } from "payload";
 
 const Messages: CollectionConfig = {
@@ -7,10 +8,10 @@ const Messages: CollectionConfig = {
     defaultColumns: ["name", "email", "createdAt"],
   },
   access: {
-    read: () => true,
-    create: () => true, // Only allow creation via API
-    update: () => false, // Disable editing
-    delete: () => true,
+    read: authenticated,
+    create: authenticated, // Contact form writes via the local API (overrideAccess), so REST stays closed
+    update: authenticated,
+    delete: authenticated,
   },
   fields: [
     {
