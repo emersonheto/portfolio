@@ -9,7 +9,6 @@ payload
 *.config.ts
 *.config.mjs
 .prettierrc
-.eslintrc.json
 pnpm-lock.yaml
 package-lock.json
 yarn.lock

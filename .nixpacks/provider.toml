@@ -1,8 +1,0 @@
-[phases.build]
-cmds = ["npm run build"]
-
-[start]
-cmd = "npm run start:prod"
-
-[build.env]
-NPM_CONFIG_PRODUCTION = "false"
