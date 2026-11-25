@@ -15,6 +15,10 @@ Four parallel work units, each in its own linked worktree/branch off `fix/portfo
 - S8 (perf): the priority image in `src/components/site/case-study-detail.tsx` gets a `sizes` prop matching its `max-w-4xl` container.
 - S9 (a11y/i18n): icon-only GitHub links in Projects get an accessible name; hardcoded English `aria-label`s (`sidebar.tsx` "Social media", `sections.tsx` "Technologies"/"Tools", `side-nav.tsx` "In-page") are translated via next-intl in en/es/pt with key parity kept.
 - S10 (cleanup): README matches reality (Payload 3.79, real folder tree, no false Zod-env claim); remove dead `src/payload.ts` and the unused `env` in `src/lib/validations.ts`; remove unused `framer-motion`; `@types/node` matches `engines` node>=24; remove stale `nixpacks.toml` (deploy is GHCR image → Dokploy); migrate ESLint 8 `.eslintrc.json` to ESLint 9 flat config only if `npm run lint` and `npm run build` still pass, else report partial.
+- S11 (CSP): the report-only CSP gets a collection endpoint (`report-uri` plus `Reporting-Endpoints`/`report-to`) backed by a small `src/app/api/csp-report` route that accepts both `application/csp-report` and `application/reports+json`, caps body size, logs a compact line and returns 204; add `connect-src`/`worker-src` entries that the public site and Payload `/admin` need. Still Report-Only.
+- S12 (Payload auth): `Users` auth gets brute-force protection (`maxLoginAttempts`, `lockTime`); document why forgot/reset/unlock stay (no email adapter configured, so no mail is sent).
+- S13 (deps): resolve `npm audit` findings with non-breaking upgrades only (no `--force`); list anything left with reason.
+- S14 (ops, browser/API): confirm `/admin` Users holds only the owner account; extend the Cloudflare cache rule to case-study paths; confirm the origin is not reachable bypassing Cloudflare.
 
 ## Tasks
 
@@ -22,6 +26,8 @@ Four parallel work units, each in its own linked worktree/branch off `fix/portfo
 - T2 S2-S4 — worker, worktree `sitio-hardening`, branch `fix/review-hardening` — Risk: items 2, 5 — commits: 7a3ba56, d20bdac, 437496c
 - T3 S5-S8 — worker, worktree `sitio-caching`, branch `fix/review-caching` — commits: 54bde68, 1f8e007, f6e2753 (next build OK, case studies SSG + ISR 1h)
 - T4 S9-S10 — worker, worktree `sitio-cleanup`, branch `fix/review-cleanup` — Risk: item 5 (dependencies) — commits: 3cb902b, a084ad8, fb33ee9, 68b42fd, adce854, a02ddbf
+- T5 S11-S13 — worker, branch `fix/review-followups` — Risk: items 2, 5 — commit: pending
+- T6 S14 — parent, ego-browser + Dokploy MCP — Risk: item 5 (environment) — commit: n/a
 
 ## Log
 
@@ -31,3 +37,4 @@ Four parallel work units, each in its own linked worktree/branch off `fix/portfo
 - L4 (evidence): independent verifiers — T1 S1 PASS, T2 S2-S4 MET, T4 S9-S10 PASS after fixing an `eslint.config.mjs` self-ignore that made `next build` warn "The Next.js plugin was not detected" (a02ddbf; lint exit 0, build exit 0, warning count 0). Residual: CSP needs connect-src/worker-src before enforcing; Payload forgot/reset/unlock endpoints remain default; npm audit findings untouched; `cf-connecting-ip` trust assumes origin only reachable through Cloudflare.
 - L5 (user): "si has todo" → merged to main and pushed (a072132), CI green, prod verified: /api/users, /api/messages, POST users/projects/messages and GraphQL Users all 403; projects 200; x-powered-by gone; CSP-Report-Only present; JSON-LD SoftwareSourceCode. Worktrees and branches removed.
 - L6 (evidence): unprefixed /case-studies/* stayed no-store because its root layout used next-intl without setRequestLocale (headers() opted it out of prerender silently). Fixed in bd06b2c; prod now `s-maxage=3600` on /case-studies/bcrp-rag. Cloudflare still reports `cf-cache-status: DYNAMIC` for case studies — the Cloudflare cache rule (outside the repo) only covers /, /es, /pt.
+- L7 (user): "hazlo y puedes revisar también con egolite" — do the pending follow-ups (admin users check, Cloudflare cache rule, origin exposure, CSP reporting, Payload auth endpoints, npm audit) and review with ego-browser.
