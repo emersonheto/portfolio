@@ -1,5 +1,5 @@
 import { Metadata } from "next";
-import { notFound } from "next/navigation";
+import { notFound, unstable_rethrow } from "next/navigation";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Sidebar } from "@/components/site/sidebar";
 import {
@@ -186,7 +186,8 @@ export async function generatePortfolioMetadata(
         images: [OG_IMAGE.url],
       },
     };
-  } catch {
+  } catch (error) {
+    console.error(`Error loading ${variant} page metadata (${locale}):`, error);
     return {
       title: SITE_NAME,
       description: t("hi"),
@@ -412,7 +413,9 @@ export async function PortfolioPage({
       </div>
     );
   } catch (error) {
-    console.error(`Error loading ${variant} page:`, error);
-    notFound();
+    // Let Next.js control-flow errors (notFound for a missing profile) through untouched.
+    unstable_rethrow(error);
+    console.error(`Error loading ${variant} page (${locale}):`, error);
+    throw error;
   }
 }

@@ -1,7 +1,18 @@
 import type { CollectionAfterChangeHook, CollectionAfterDeleteHook } from "payload";
+import enMessages from "@/i18n/locales/en.json";
+import esMessages from "@/i18n/locales/es.json";
+import ptMessages from "@/i18n/locales/pt.json";
+
+/** Case-study pages come from the locale messages; English is the unprefixed default locale. */
+const CASE_STUDY_PATHS = Object.entries({ en: enMessages, es: esMessages, pt: ptMessages }).flatMap(
+  ([locale, messages]) =>
+    messages.caseStudies.items.map(
+      ({ slug }) => `${locale === "en" ? "" : `/${locale}`}/case-studies/${slug}`
+    )
+);
 
 /** Public pages that the CDN caches; keep in sync with the Cloudflare cache rule. */
-const CACHED_PATHS = ["/", "/es", "/pt"];
+const CACHED_PATHS = ["/", "/es", "/pt", ...CASE_STUDY_PATHS];
 
 /** Ask Cloudflare to drop its copy of the public pages. Optional: skipped without credentials. */
 async function purgeCdn() {
@@ -27,6 +38,7 @@ async function refreshSite(purgeCdnCache = true) {
   try {
     const { revalidatePath } = await import("next/cache");
     revalidatePath("/", "layout");
+    for (const path of CASE_STUDY_PATHS) revalidatePath(path);
   } catch {
     // Outside a Next.js request (CLI, migrations) there is no cache to refresh.
     return;

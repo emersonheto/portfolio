@@ -117,12 +117,13 @@ export function SeoJsonLd({
       .filter(Boolean);
 
     return {
-      "@type": "Project",
+      "@type": project.githubUrl ? "SoftwareSourceCode" : "CreativeWork",
       "@id": `${pageUrl}#project-${project.id}`,
       name: project.name,
       description: project.description,
       inLanguage: locale,
       ...(url ? { url } : {}),
+      ...(project.githubUrl ? { codeRepository: project.githubUrl } : {}),
       ...(image ? { image } : {}),
       ...(keywords.length ? { keywords } : {}),
     };

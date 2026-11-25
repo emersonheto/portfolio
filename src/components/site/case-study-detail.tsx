@@ -94,6 +94,7 @@ export function CaseStudyDetail({
             alt={item.visual.alt}
             width={CASE_STUDY_VISUAL_SIZE.width}
             height={CASE_STUDY_VISUAL_SIZE.height}
+            sizes="(min-width: 1024px) 800px, 100vw"
             priority
             className="rounded-lg border border-mint-400/20"
           />

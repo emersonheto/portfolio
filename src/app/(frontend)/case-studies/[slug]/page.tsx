@@ -10,7 +10,6 @@ import { CaseStudyJsonLd } from "@/components/site/seo-jsonld";
 import enMessages from "@/i18n/locales/en.json";
 import { SITE_NAME, SITE_URL } from "@/lib/constants";
 
-export const dynamic = "force-dynamic";
 export const revalidate = 3600;
 
 type PageProps = { params: Promise<{ slug: string }> };
@@ -21,6 +20,10 @@ type CaseStudyTranslations = {
 };
 
 const data = enMessages.caseStudies as CaseStudyTranslations;
+
+export function generateStaticParams() {
+  return data.items.map(({ slug }) => ({ slug }));
+}
 
 function getCaseStudy(slug: string) {
   return data.items.find((item) => item.slug === slug);

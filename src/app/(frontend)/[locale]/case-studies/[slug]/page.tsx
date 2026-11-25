@@ -14,7 +14,6 @@ import enMessages from "@/i18n/locales/en.json";
 import esMessages from "@/i18n/locales/es.json";
 import ptMessages from "@/i18n/locales/pt.json";
 
-export const dynamic = "force-dynamic";
 export const revalidate = 3600;
 
 type PageProps = { params: Promise<{ locale: string; slug: string }> };
@@ -24,6 +23,13 @@ type CaseStudyTranslations = {
   labels: CaseStudyDetailLabels;
   items: CaseStudyDetailData[];
 };
+
+// Case studies come from the locale messages (no database), so every page is built ahead of time.
+export function generateStaticParams() {
+  return routing.locales.flatMap((locale) =>
+    LOCALE_MESSAGES[locale].caseStudies.items.map(({ slug }) => ({ locale, slug }))
+  );
+}
 
 function toLocale(value: string): Locale {
   return routing.locales.includes(value as Locale) ? (value as Locale) : routing.defaultLocale;
