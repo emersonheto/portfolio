@@ -4,8 +4,25 @@ import createNextIntlPlugin from 'next-intl/plugin'
 const withNextIntl = createNextIntlPlugin('./src/i18n/request.ts')
 
 /** @type {import('next').NextConfig} */
+// Report-Only on purpose: observe violations before enforcing. Inline scripts/styles are needed
+// by the Next runtime, JSON-LD and Payload admin; Cloudinary/GitHub hosts serve next/image sources.
+const csp = [
+  "default-src 'self'",
+  "script-src 'self' 'unsafe-inline' 'unsafe-eval'",
+  "style-src 'self' 'unsafe-inline'",
+  "img-src 'self' data: blob: https://res.cloudinary.com https://avatars.githubusercontent.com https://opengraph.githubassets.com",
+  "font-src 'self' data:",
+  "connect-src 'self'",
+  "media-src 'self' blob:",
+  "frame-ancestors 'self'",
+  "base-uri 'self'",
+  "form-action 'self'",
+  "object-src 'none'",
+].join('; ')
+
 const nextConfig = {
   reactStrictMode: true,
+  poweredByHeader: false,
   images: {
     formats: ['image/avif', 'image/webp'],
     remotePatterns: [
@@ -49,6 +66,10 @@ const nextConfig = {
           {
             key: 'Referrer-Policy',
             value: 'origin-when-cross-origin'
+          },
+          {
+            key: 'Content-Security-Policy-Report-Only',
+            value: csp
           },
           {
             key: 'Permissions-Policy',
