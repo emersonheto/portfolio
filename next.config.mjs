@@ -8,12 +8,13 @@ const withNextIntl = createNextIntlPlugin('./src/i18n/request.ts')
 // by the Next runtime, JSON-LD and Payload admin; Cloudinary/GitHub hosts serve next/image sources.
 const csp = [
   "default-src 'self'",
-  "script-src 'self' 'unsafe-inline' 'unsafe-eval'",
+  // Cloudflare Web Analytics injects its beacon at the edge.
+  "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://static.cloudflareinsights.com",
   "style-src 'self' 'unsafe-inline'",
-  "img-src 'self' data: blob: https://res.cloudinary.com https://avatars.githubusercontent.com https://opengraph.githubassets.com",
+  "img-src 'self' data: blob: https://res.cloudinary.com https://avatars.githubusercontent.com https://opengraph.githubassets.com https://www.gravatar.com",
   "font-src 'self' data:",
-  // Payload admin only talks to its own origin; add upload/API hosts here if that changes.
-  "connect-src 'self'",
+  // Payload admin talks to its own origin; the analytics beacon posts to cloudflareinsights.com.
+  "connect-src 'self' https://cloudflareinsights.com",
   "worker-src 'self' blob:",
   "media-src 'self' blob:",
   "frame-ancestors 'self'",
