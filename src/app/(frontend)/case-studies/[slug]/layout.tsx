@@ -1,10 +1,13 @@
 import "../../globals.css";
 import { NextIntlClientProvider } from "next-intl";
+import { setRequestLocale } from "next-intl/server";
 import type { AbstractIntlMessages } from "use-intl";
 import { Spotlight } from "@/components/site/spotlight";
 import enMessages from "@/i18n/locales/en.json";
 
 export default function CaseStudyLayout({ children }: { children: React.ReactNode }) {
+  // Without a request locale, next-intl reads headers() and opts the whole route out of prerendering.
+  setRequestLocale("en");
   return (
     <html lang="en" className="scroll-smooth">
       <body className="bg-ink-900 bg-[radial-gradient(1200px_600px_at_0%_0%,#12343B_0%,#0B1517_55%)] bg-fixed leading-relaxed text-haze-400 antialiased selection:bg-mint-400 selection:text-ink-950">
