@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { useTranslations } from "next-intl";
 import { ArrowUpRight, Github, Mail, Linkedin } from "lucide-react";
 import type {
   Certification,
@@ -74,9 +75,10 @@ export function Section({
 }
 
 function Chips({ items }: { items: string[] }) {
+  const t = useTranslations("site");
   if (!items.length) return null;
   return (
-    <ul className="mt-3 flex flex-wrap gap-2" aria-label="Technologies">
+    <ul className="mt-3 flex flex-wrap gap-2" aria-label={t("technologies")}>
       {items.map((item) => (
         <li
           key={item}
@@ -118,10 +120,13 @@ function Row({
   aside,
   children,
   href,
+  linkLabel,
 }: {
   aside: React.ReactNode;
   children: React.ReactNode;
   href?: string | null;
+  /** Accessible name for the full-row link; without it the link stays hidden from assistive tech. */
+  linkLabel?: string;
 }) {
   return (
     <div className="group relative grid gap-2 pb-1 transition-all sm:grid-cols-8 sm:gap-8 md:gap-4 lg:hover:!opacity-100 lg:group-hover/list:opacity-50">
@@ -133,9 +138,8 @@ function Row({
           href={href}
           target="_blank"
           rel="noreferrer noopener"
-          className="absolute inset-0 z-20"
-          aria-hidden
-          tabIndex={-1}
+          className="absolute inset-0 z-20 focus-visible:outline focus-visible:outline-2 focus-visible:outline-mint-300"
+          {...(linkLabel ? { "aria-label": linkLabel } : { "aria-hidden": true, tabIndex: -1 })}
         />
       )}
     </div>
@@ -284,12 +288,18 @@ export function ProjectList({
   items: Project[];
   labels: { featured: string; viewCode: string };
 }) {
+  const t = useTranslations("site");
   return (
     <ul className="group/list space-y-12">
       {items.map((item) => (
         <li key={item.id}>
           <Row
             href={item.githubUrl || item.demoUrl}
+            linkLabel={
+              item.githubUrl
+                ? t("viewOnGithub", { name: item.name })
+                : t("viewDemoOf", { name: item.name })
+            }
             aside={
               <Image
                 src={item.image}
@@ -306,7 +316,7 @@ export function ProjectList({
                 {(item.githubUrl || item.demoUrl) && (
                   <ArrowUpRight
                     className="h-4 w-4 shrink-0 translate-y-0.5"
-                    aria-label={labels.viewCode}
+                    aria-hidden
                   />
                 )}
               </span>
@@ -452,10 +462,11 @@ export function AiWork({
 }: {
   text: { intro: string; items: { title: string; text: string }[] };
 }) {
+  const t = useTranslations("site");
   return (
     <>
       <p className="leading-relaxed text-haze-400">{text.intro}</p>
-      <ul className="mt-6 flex flex-wrap gap-3" aria-label="Tools">
+      <ul className="mt-6 flex flex-wrap gap-3" aria-label={t("tools")}>
         {AI_TOOLS.map((tool) => (
           <li
             key={tool.name}
