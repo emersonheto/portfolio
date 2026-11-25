@@ -7,3 +7,4 @@ export const DEFAULT_LOCALE = "en" as const;
 export const REVALIDATE_SECONDS = 3600;
 
 export const CONTACT_FORM_RATE_LIMIT = 5; // requests per hour per IP
+export const CONTACT_FORM_RATE_WINDOW_MS = 60 * 60 * 1000;
