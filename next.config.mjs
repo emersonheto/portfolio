@@ -12,12 +12,16 @@ const csp = [
   "style-src 'self' 'unsafe-inline'",
   "img-src 'self' data: blob: https://res.cloudinary.com https://avatars.githubusercontent.com https://opengraph.githubassets.com",
   "font-src 'self' data:",
+  // Payload admin only talks to its own origin; add upload/API hosts here if that changes.
   "connect-src 'self'",
+  "worker-src 'self' blob:",
   "media-src 'self' blob:",
   "frame-ancestors 'self'",
   "base-uri 'self'",
   "form-action 'self'",
   "object-src 'none'",
+  'report-uri /api/csp-report',
+  'report-to csp-endpoint',
 ].join('; ')
 
 const nextConfig = {
@@ -70,6 +74,10 @@ const nextConfig = {
           {
             key: 'Content-Security-Policy-Report-Only',
             value: csp
+          },
+          {
+            key: 'Reporting-Endpoints',
+            value: 'csp-endpoint="/api/csp-report"'
           },
           {
             key: 'Permissions-Policy',
