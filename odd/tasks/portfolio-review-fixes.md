@@ -5,7 +5,7 @@ Four parallel work units, each in its own linked worktree/branch off `fix/portfo
 
 ## Specs
 
-- S1 (P0, access): Payload collections must not accept unauthenticated writes. Content collections (Projects, Experience, Education, Certifications, Skills, Profile) keep `read: () => true`; `create/update/delete` require `({ req }) => Boolean(req.user)`. `Users`: no public read/create/update/delete (authenticated only; `create` authenticated only so the first-admin flow via `/admin` still works only when Payload's own first-user screen is used — keep Payload's first-user registration working). `Messages`: `create: () => true` stays public for the contact form; `read/update/delete` authenticated only. Review finding: "Anyone can `POST /api/users` to self-register an admin account".
+- S1 (P0, access): Payload collections must not accept unauthenticated writes. Content collections (Projects, Experience, Education, Certifications, Skills, Profile) keep `read: () => true`; `create/update/delete` require `({ req }) => Boolean(req.user)`. `Users`: no public read/create/update/delete (authenticated only; `create` authenticated only so the first-admin flow via `/admin` still works only when Payload's own first-user screen is used — keep Payload's first-user registration working). `Messages`: `create/read/update/delete` authenticated only (the contact form writes through the local API with `overrideAccess`, so public REST create is unnecessary and would bypass the rate limiter; see L3). Review finding: "Anyone can `POST /api/users` to self-register an admin account".
 - S2 (hardening): contact rate limiter keys on `cf-connecting-ip` (fallback to first `x-forwarded-for` entry, then "unknown"), uses `CONTACT_FORM_RATE_LIMIT` from `src/lib/constants.ts` instead of the hardcoded `5`, and prunes expired entries so the `Map` cannot grow without bound.
 - S3 (hardening): `next.config.mjs` sets `poweredByHeader: false` and adds a `Content-Security-Policy-Report-Only` header compatible with the public site and Payload `/admin`.
 - S4 (hardening): `.github/workflows/deploy.yml` pins every third-party action to a full commit SHA with the tag as a trailing comment.
@@ -18,12 +18,14 @@ Four parallel work units, each in its own linked worktree/branch off `fix/portfo
 
 ## Tasks
 
-- T1 S1 — worker, worktree `sitio-access`, branch `fix/review-access` — Risk: item 2 (security) — commit: pending
-- T2 S2-S4 — worker, worktree `sitio-hardening`, branch `fix/review-hardening` — Risk: items 2, 5 — commit: pending
-- T3 S5-S8 — worker, worktree `sitio-caching`, branch `fix/review-caching` — commit: pending
-- T4 S9-S10 — worker, worktree `sitio-cleanup`, branch `fix/review-cleanup` — Risk: item 5 (dependencies) — commit: pending
+- T1 S1 — worker, worktree `sitio-access`, branch `fix/review-access` — Risk: item 2 (security) — commits: 0733371, 4fcb499
+- T2 S2-S4 — worker, worktree `sitio-hardening`, branch `fix/review-hardening` — Risk: items 2, 5 — commits: 7a3ba56, d20bdac, 437496c
+- T3 S5-S8 — worker, worktree `sitio-caching`, branch `fix/review-caching` — commits: 54bde68, 1f8e007, f6e2753 (next build OK, case studies SSG + ISR 1h)
+- T4 S9-S10 — worker, worktree `sitio-cleanup`, branch `fix/review-cleanup` — Risk: item 5 (dependencies) — commits: 3cb902b, a084ad8, fb33ee9, 68b42fd, adce854, a02ddbf
 
 ## Log
 
 - L1 (user, after the review summary was presented): "haz todas en paralelo"
 - L2: review evidence — prod `GET /api/users` returned 200 with the admin doc; `tsc --noEmit` and `next lint` pass on base 2d3eb90; repo has no test runner (verification = type-check, lint, build, structural checks).
+- L3 (decision, parent): T1 worker showed `src/app/api/contact/route.ts` creates messages via local API (overrideAccess defaults true), so S1 changed to close `Messages.create` over REST too (commit 4fcb499). First-user registration still works: `registerFirstUser` uses `overrideAccess: true` and refuses once a user exists.
+- L4 (evidence): independent verifiers — T1 S1 PASS, T2 S2-S4 MET, T4 S9-S10 PASS after fixing an `eslint.config.mjs` self-ignore that made `next build` warn "The Next.js plugin was not detected" (a02ddbf; lint exit 0, build exit 0, warning count 0). Residual: CSP needs connect-src/worker-src before enforcing; Payload forgot/reset/unlock endpoints remain default; npm audit findings untouched; `cf-connecting-ip` trust assumes origin only reachable through Cloudflare.
