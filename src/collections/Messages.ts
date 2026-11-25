@@ -1,4 +1,4 @@
-import { anyone, authenticated } from "./access";
+import { authenticated } from "./access";
 import { CollectionConfig } from "payload";
 
 const Messages: CollectionConfig = {
@@ -9,7 +9,7 @@ const Messages: CollectionConfig = {
   },
   access: {
     read: authenticated,
-    create: anyone, // Public: contact form
+    create: authenticated, // Contact form writes via the local API (overrideAccess), so REST stays closed
     update: authenticated,
     delete: authenticated,
   },
