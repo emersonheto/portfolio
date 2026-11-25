@@ -8,6 +8,25 @@ const clip = (value: unknown) =>
 
 type Violation = Record<string, unknown>;
 
+/** Reads the body as a stream and stops once it exceeds the cap; returns null when too large. */
+async function readCapped(request: NextRequest): Promise<string | null> {
+  if (!request.body) return "";
+  const reader = request.body.getReader();
+  const chunks: Uint8Array[] = [];
+  let total = 0;
+  for (;;) {
+    const { done, value } = await reader.read();
+    if (done) break;
+    total += value.byteLength;
+    if (total > MAX_BODY_BYTES) {
+      await reader.cancel();
+      return null;
+    }
+    chunks.push(value);
+  }
+  return Buffer.concat(chunks).toString("utf8");
+}
+
 /** Normalizes both the legacy `csp-report` body and the Reporting API array into violations. */
 function extractViolations(payload: unknown): Violation[] {
   if (Array.isArray(payload)) {
@@ -31,9 +50,9 @@ export async function POST(request: NextRequest) {
     return new NextResponse(null, { status: 413 });
   }
 
-  // Content-Length can be absent or wrong: enforce the cap on the actual bytes too.
-  const raw = await request.text();
-  if (Buffer.byteLength(raw) > MAX_BODY_BYTES) {
+  // Content-Length can be absent (chunked) or wrong: enforce the cap while reading.
+  const raw = await readCapped(request);
+  if (raw === null) {
     return new NextResponse(null, { status: 413 });
   }
 
