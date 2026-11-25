@@ -76,6 +76,12 @@
     "footer": "© 2026 Emerson Herrera Tolentino",
     "view": "View certificate",
     "languageSelect": "Languages",
+    "socialMedia": "Social media",
+    "technologies": "Technologies",
+    "tools": "Tools",
+    "inPage": "In-page",
+    "viewOnGithub": "View {name} on GitHub",
+    "viewDemoOf": "View {name} demo",
     "cv": {
       "genai": "CV GenAI",
       "fullstack": "CV Full Stack",

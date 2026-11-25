@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { useTranslations } from "next-intl";
 import { FileDown, Github, Languages, Linkedin, Mail } from "lucide-react";
 import type { Profile } from "@/payload-types";
 import { SideNav } from "./side-nav";
@@ -48,6 +49,7 @@ export function Sidebar({
   /** Extra text links next to the social icons, such as Lattes or ORCID. */
   profileLinks?: ProfileLink[];
 }) {
+  const t = useTranslations("site");
   return (
     <header className="lg:sticky lg:top-0 lg:flex lg:max-h-screen lg:w-[46%] lg:flex-col lg:overflow-y-auto lg:py-24">
       <div>
@@ -107,7 +109,7 @@ export function Sidebar({
             </li>
           ))}
         </ul>
-        <ul className="flex items-center gap-5" aria-label="Social media">
+        <ul className="flex items-center gap-5" aria-label={t("socialMedia")}>
           {(profile.socialNetworks || []).map((network) => {
             const Icon = ICONS[network.platform.toLowerCase()] ?? Mail;
             return (

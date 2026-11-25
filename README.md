@@ -5,12 +5,11 @@ Portafolio personal administrable construido con Next.js 15, Payload CMS 3.x, Po
 ## 🚀 Stack Tecnológico
 
 - **Frontend**: Next.js 15.4 (App Router) con TypeScript strict mode
-- **CMS**: Payload CMS 3.24 integrado
+- **CMS**: Payload CMS 3.79 integrado
 - **Base de Datos**: PostgreSQL 16
 - **Estilos**: Tailwind CSS con dark mode
-- **Animaciones**: Framer Motion
-- **Multi-idioma**: next-intl (Español/Inglés)
-- **Validación**: Zod
+- **Multi-idioma**: next-intl (Español/Inglés/Portugués)
+- **Validación**: Zod (formulario de contacto)
 - **Deployment**: GitHub Actions → GHCR → Dokploy, con caché de Cloudflare
 
 ## 📋 Características
@@ -18,7 +17,7 @@ Portafolio personal administrable construido con Next.js 15, Payload CMS 3.x, Po
 - ✅ Panel administrativo en `/admin`
 - ✅ CRUD completo para proyectos, experiencia, educación, certificaciones y skills
 - ✅ Formulario de contacto con rate limiting
-- ✅ Multi-idioma (ES/EN)
+- ✅ Multi-idioma (ES/EN/PT)
 - ✅ Dark/Light mode persistente
 - ✅ ISR con revalidación de 60 segundos
 - ✅ SEO optimizado (sitemap, robots.txt, metadata dinámica)
@@ -66,6 +65,8 @@ Accede a:
 - Panel Admin: http://localhost:3000/admin
 
 ## 🚀 Deployment en Dokploy
+
+El despliegue usa la imagen del `Dockerfile` (ya no hay `nixpacks.toml`).
 
 Cada push a `main` ejecuta `.github/workflows/deploy.yml`:
 
@@ -115,19 +116,20 @@ No usar una API key de Dokploy en GitHub: controla todo el servidor.
 ```
 src/
 ├── app/
-│   ├── (frontend)/[locale]/     # Rutas públicas del portafolio
-│   ├── (payload)/admin/         # Panel de Payload CMS
-│   ├── api/                     # API routes
-│   └── globals.css
-├── collections/                 # Colecciones de Payload CMS
-├── components/
-│   ├── ui/                      # Componentes atómicos
-│   ├── sections/                # Secciones del portafolio
-│   └── providers/               # Theme provider
-├── services/                    # Payload API con ISR
-├── lib/                         # Utils, validaciones, constants
-├── hooks/                       # Custom hooks
-└── i18n/                        # Traducciones (en/es)
+│   ├── (frontend)/              # Rutas públicas: [locale]/ y case-studies/[slug]/
+│   ├── (payload)/               # Panel de Payload CMS (/admin) y su API
+│   ├── api/                     # Rutas propias: contact y version
+│   ├── robots.ts
+│   └── sitemap.ts
+├── collections/                 # Colecciones de Payload CMS (y hooks de revalidación)
+├── components/site/             # Componentes del portafolio (secciones, sidebar, SEO)
+├── i18n/                        # Routing, request y traducciones (locales/en, es, pt)
+├── lib/                         # Constantes, CV, logos y utilidades
+├── migrations/                  # Migraciones de Payload
+├── payload/config.ts            # Configuración de Payload
+├── services/payload.ts          # Acceso a datos de Payload con ISR
+├── middleware.ts
+└── payload-types.ts             # Tipos generados por Payload
 ```
 
 ## 🔐 Seguridad
@@ -136,7 +138,6 @@ src/
 - ✅ Sanitización de inputs
 - ✅ Security headers configurados
 - ✅ Panel admin protegido con autenticación
-- ✅ Variables de entorno validadas con Zod
 - ✅ HTTPS automático con Traefik
 
 ## ⚡ Performance
@@ -164,7 +165,7 @@ src/
 npm run dev          # Iniciar desarrollo
 npm run build        # Build para producción
 npm run start        # Iniciar producción
-npm run lint         # Ejecutar ESLint
+npm run lint         # Ejecutar ESLint (flat config en eslint.config.mjs)
 npm run type-check   # Verificar tipos TypeScript
 ```
 

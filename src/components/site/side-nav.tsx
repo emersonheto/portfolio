@@ -1,11 +1,13 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useTranslations } from "next-intl";
 
 type Item = { id: string; label: string };
 
 /** Section navigation that highlights the section currently in view. */
 export function SideNav({ items }: { items: Item[] }) {
+  const t = useTranslations("site");
   const [active, setActive] = useState(items[0]?.id);
 
   useEffect(() => {
@@ -24,7 +26,7 @@ export function SideNav({ items }: { items: Item[] }) {
   }, [items]);
 
   return (
-    <nav className="hidden lg:block" aria-label="In-page">
+    <nav className="hidden lg:block" aria-label={t("inPage")}>
       <ul className="mt-14 w-max">
         {items.map(({ id, label }) => {
           const isActive = id === active;
