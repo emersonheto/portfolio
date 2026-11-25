@@ -1,3 +1,4 @@
+import { anyone, authenticated } from "./access";
 import { revalidateAfterChange, revalidateAfterDelete } from "./hooks/revalidate";
 import { CollectionConfig } from "payload";
 
@@ -11,8 +12,10 @@ const Profile: CollectionConfig = {
     useAsTitle: "name",
   },
   access: {
-    read: () => true,
-    update: () => true,
+    read: anyone,
+    create: authenticated,
+    update: authenticated,
+    delete: authenticated,
   },
   fields: [
     {

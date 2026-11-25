@@ -1,3 +1,4 @@
+import { anyone, authenticated } from "./access";
 import { revalidateAfterChange, revalidateAfterDelete } from "./hooks/revalidate";
 import { CollectionConfig } from "payload";
 
@@ -12,10 +13,10 @@ const Projects: CollectionConfig = {
     defaultColumns: ["name", "featured", "createdAt"],
   },
   access: {
-    read: () => true,
-    create: () => true,
-    update: () => true,
-    delete: () => true,
+    read: anyone,
+    create: authenticated,
+    update: authenticated,
+    delete: authenticated,
   },
   fields: [
     {

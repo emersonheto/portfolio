@@ -1,3 +1,4 @@
+import { authenticated } from "./access";
 import { CollectionConfig } from "payload";
 
 const Users: CollectionConfig = {
@@ -9,10 +10,10 @@ const Users: CollectionConfig = {
     useAsTitle: "email",
   },
   access: {
-    read: () => true,
-    create: () => true,
-    update: () => true,
-    delete: () => true,
+    read: authenticated,
+    create: authenticated,
+    update: authenticated,
+    delete: authenticated,
   },
   fields: [
     {
