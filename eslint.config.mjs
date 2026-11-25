@@ -15,7 +15,6 @@ const eslintConfig = [
       "dist/",
       ".public/",
       "**/payload/",
-      "**/payload",
       "**/*.config.js",
       "**/*.config.ts",
       "**/*.config.mjs",
