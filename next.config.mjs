@@ -95,7 +95,7 @@ const nextConfig = {
         headers: [{ key: 'Content-Security-Policy', value: adminCsp }],
       },
       {
-        source: '/((?!admin).*)',
+        source: '/((?!admin(?:/|$)).*)',
         headers: [
           { key: 'Content-Security-Policy', value: publicCsp },
           { key: 'Content-Security-Policy-Report-Only', value: publicStrictCsp },
