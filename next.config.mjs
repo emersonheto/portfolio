@@ -3,28 +3,35 @@ import createNextIntlPlugin from 'next-intl/plugin'
 
 const withNextIntl = createNextIntlPlugin('./src/i18n/request.ts')
 
-/** @type {import('next').NextConfig} */
-// Report-Only on purpose: observe violations before enforcing. Inline scripts/styles are needed
-// by the Next runtime, JSON-LD and Payload admin; Cloudinary/GitHub hosts serve next/image sources.
-const csp = [
-  "default-src 'self'",
-  // Cloudflare Web Analytics injects its beacon at the edge.
-  "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://static.cloudflareinsights.com",
-  "style-src 'self' 'unsafe-inline'",
-  "img-src 'self' data: blob: https://res.cloudinary.com https://avatars.githubusercontent.com https://opengraph.githubassets.com https://www.gravatar.com",
-  "font-src 'self' data:",
-  // Payload admin talks to its own origin; the analytics beacon posts to cloudflareinsights.com.
-  "connect-src 'self' https://cloudflareinsights.com",
-  "worker-src 'self' blob:",
-  "media-src 'self' blob:",
-  "frame-ancestors 'self'",
-  "base-uri 'self'",
-  "form-action 'self'",
-  "object-src 'none'",
-  'report-uri /api/csp-report',
-  'report-to csp-endpoint',
-].join('; ')
+// Enforced policy. Inline scripts/styles are needed by the Next runtime, JSON-LD and Payload admin;
+// Cloudinary/GitHub hosts serve next/image sources. No nonces on purpose: they would make every page
+// dynamic and defeat ISR and Cloudflare edge caching, so 'unsafe-inline' stays.
+const buildCsp = ({ allowEval }) =>
+  [
+    "default-src 'self'",
+    // Cloudflare Web Analytics injects its beacon at the edge.
+    `script-src 'self' 'unsafe-inline'${allowEval ? " 'unsafe-eval'" : ''} https://static.cloudflareinsights.com`,
+    "style-src 'self' 'unsafe-inline'",
+    "img-src 'self' data: blob: https://res.cloudinary.com https://avatars.githubusercontent.com https://opengraph.githubassets.com https://www.gravatar.com",
+    "font-src 'self' data:",
+    // Payload admin talks to its own origin; the analytics beacon posts to cloudflareinsights.com.
+    "connect-src 'self' https://cloudflareinsights.com",
+    "worker-src 'self' blob:",
+    "media-src 'self' blob:",
+    "frame-ancestors 'self'",
+    "base-uri 'self'",
+    "form-action 'self'",
+    "object-src 'none'",
+    'report-uri /api/csp-report',
+    'report-to csp-endpoint',
+  ].join('; ')
 
+// Admin keeps 'unsafe-eval'; the public site is enforced with it and also reports without it.
+const adminCsp = buildCsp({ allowEval: true })
+const publicCsp = buildCsp({ allowEval: true })
+const publicStrictCsp = buildCsp({ allowEval: false })
+
+/** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
   poweredByHeader: false,
@@ -73,10 +80,6 @@ const nextConfig = {
             value: 'origin-when-cross-origin'
           },
           {
-            key: 'Content-Security-Policy-Report-Only',
-            value: csp
-          },
-          {
             key: 'Reporting-Endpoints',
             value: 'csp-endpoint="/api/csp-report"'
           },
@@ -84,6 +87,18 @@ const nextConfig = {
             key: 'Permissions-Policy',
             value: 'camera=(), microphone=(), geolocation=()'
           }
+        ],
+      },
+      {
+        // `/admin/:path*` also matches `/admin`; the public rule excludes it, so exactly one CSP applies.
+        source: '/admin/:path*',
+        headers: [{ key: 'Content-Security-Policy', value: adminCsp }],
+      },
+      {
+        source: '/((?!admin).*)',
+        headers: [
+          { key: 'Content-Security-Policy', value: publicCsp },
+          { key: 'Content-Security-Policy-Report-Only', value: publicStrictCsp },
         ],
       },
       {
