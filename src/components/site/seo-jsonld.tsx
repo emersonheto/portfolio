@@ -10,7 +10,12 @@ export type SeoJsonLdProps = {
   projects: Project[];
   experiences: Experience[];
   education: Education[];
+  variant?: "home" | "academic";
 };
+
+function personHomeUrl(normalizedSiteUrl: string, locale: Locale) {
+  return locale === "en" ? normalizedSiteUrl : `${normalizedSiteUrl}/${locale}`;
+}
 
 const EMPLOYER = "Canvia";
 // Completed degrees only; the ongoing UFRGS program is an affiliation, not alumni status.
@@ -62,9 +67,12 @@ export function SeoJsonLd({
   projects,
   experiences,
   education,
+  variant = "home",
 }: SeoJsonLdProps) {
   const normalizedSiteUrl = siteUrl.replace(/\/+$/, "");
-  const pageUrl = locale === "en" ? normalizedSiteUrl : `${normalizedSiteUrl}/${locale}`;
+  // The Person entity always lives on the locale's home URL; the page may be a variant of it.
+  const homeUrl = personHomeUrl(normalizedSiteUrl, locale);
+  const pageUrl = variant === "academic" ? `${homeUrl}/academic` : homeUrl;
   const socialLinks = [
     ...(profile.socialNetworks || [])
       .map((network) => toAbsoluteUrl(network.url, normalizedSiteUrl))
@@ -94,11 +102,11 @@ export function SeoJsonLd({
 
   const person = {
     "@type": "Person",
-    "@id": `${pageUrl}#person`,
+    "@id": `${homeUrl}#person`,
     name: profile.name,
     jobTitle: profile.professionalTitle,
     description: profile.shortDescription,
-    url: pageUrl,
+    url: homeUrl,
     image: toAbsoluteUrl(profile.photo, normalizedSiteUrl),
     inLanguage: locale,
     ...(employer ? { worksFor: { "@type": "Organization", name: EMPLOYER } } : {}),

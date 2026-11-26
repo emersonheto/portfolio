@@ -164,8 +164,6 @@ export async function generatePortfolioMetadata(
       metadataBase: new URL(SITE_URL),
       title,
       description,
-      // The academic page overlaps the home content, so it is shared by link and kept out of search.
-      robots: variant === "academic" ? { index: false, follow: true } : undefined,
       alternates: { canonical: pageUrl, languages: alternates },
       openGraph: {
         title,
@@ -379,6 +377,7 @@ export async function PortfolioPage({
           projects={projects}
           experiences={experiences}
           education={education}
+          variant={variant}
         />
         <a
           href="#content"
