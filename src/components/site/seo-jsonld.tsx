@@ -10,7 +10,12 @@ export type SeoJsonLdProps = {
   projects: Project[];
   experiences: Experience[];
   education: Education[];
+  variant?: "home" | "academic";
 };
+
+function personHomeUrl(normalizedSiteUrl: string, locale: Locale) {
+  return locale === "en" ? normalizedSiteUrl : `${normalizedSiteUrl}/${locale}`;
+}
 
 const EMPLOYER = "Canvia";
 // Completed degrees only; the ongoing UFRGS program is an affiliation, not alumni status.
@@ -32,8 +37,13 @@ const KNOWS_ABOUT = [
   "Machine Learning",
 ];
 const FALLBACK_OG_IMAGE = "/images/og-emerson-herrera.jpg";
-const CASE_STUDY_PUBLISHED = "2026-10-20";
-const CASE_STUDY_MODIFIED = "2026-10-22";
+// Dates come from `git log` of the case-study content in src/i18n/locales/*.json:
+// both entries were added in 9fd812e (2026-10-20) and their text has not changed since.
+// Update `modified` when a case study's content changes.
+const CASE_STUDY_DATES: Record<string, { published: string; modified: string }> = {
+  "bcrp-rag": { published: "2026-10-20", modified: "2026-10-20" },
+  "certilab-rag": { published: "2026-10-20", modified: "2026-10-20" },
+};
 
 function toAbsoluteUrl(value: string | null | undefined, siteUrl: string) {
   if (!value) return undefined;
@@ -62,9 +72,12 @@ export function SeoJsonLd({
   projects,
   experiences,
   education,
+  variant = "home",
 }: SeoJsonLdProps) {
   const normalizedSiteUrl = siteUrl.replace(/\/+$/, "");
-  const pageUrl = locale === "en" ? normalizedSiteUrl : `${normalizedSiteUrl}/${locale}`;
+  // The Person entity always lives on the locale's home URL; the page may be a variant of it.
+  const homeUrl = personHomeUrl(normalizedSiteUrl, locale);
+  const pageUrl = variant === "academic" ? `${homeUrl}/academic` : homeUrl;
   const socialLinks = [
     ...(profile.socialNetworks || [])
       .map((network) => toAbsoluteUrl(network.url, normalizedSiteUrl))
@@ -94,11 +107,11 @@ export function SeoJsonLd({
 
   const person = {
     "@type": "Person",
-    "@id": `${pageUrl}#person`,
+    "@id": `${homeUrl}#person`,
     name: profile.name,
     jobTitle: profile.professionalTitle,
     description: profile.shortDescription,
-    url: pageUrl,
+    url: homeUrl,
     image: toAbsoluteUrl(profile.photo, normalizedSiteUrl),
     inLanguage: locale,
     ...(employer ? { worksFor: { "@type": "Organization", name: EMPLOYER } } : {}),
@@ -165,11 +178,9 @@ export function CaseStudyJsonLd({
   const normalizedSiteUrl = siteUrl.replace(/\/+$/, "");
   const localePrefix = locale === "en" ? "" : `/${locale}`;
   const url = `${normalizedSiteUrl}${localePrefix}/case-studies/${item.slug}`;
-  const personRef = {
-    "@type": "Person",
-    name: "Emerson Herrera Tolentino",
-    url: normalizedSiteUrl,
-  };
+  // Same node as the Person in the home graph of this locale (see SeoJsonLd).
+  const personRef = { "@id": `${personHomeUrl(normalizedSiteUrl, locale)}#person` };
+  const dates = CASE_STUDY_DATES[item.slug];
   const image = toAbsoluteUrl(item.visual?.src || FALLBACK_OG_IMAGE, normalizedSiteUrl);
   const jsonLd = {
     "@context": "https://schema.org",
@@ -179,9 +190,9 @@ export function CaseStudyJsonLd({
     description: item.summary,
     url,
     inLanguage: locale,
+    mainEntityOfPage: { "@type": "WebPage", "@id": url },
     ...(image ? { image } : {}),
-    datePublished: CASE_STUDY_PUBLISHED,
-    dateModified: CASE_STUDY_MODIFIED,
+    ...(dates ? { datePublished: dates.published, dateModified: dates.modified } : {}),
     author: personRef,
     publisher: personRef,
     about: item.stack,

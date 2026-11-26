@@ -13,8 +13,12 @@ function localizedAlternates(path: string) {
   };
 }
 
+// Build-time date: pages are ISR (revalidated hourly), so the build date is the honest upper bound.
+const LAST_MODIFIED = new Date();
+
 export default function sitemap(): MetadataRoute.Sitemap {
   const home = localizedAlternates("");
+  const academic = localizedAlternates("/academic");
   const caseStudies = enMessages.caseStudies.items.flatMap(({ slug }) => {
     const path = `/case-studies/${slug}`;
     const alternates = localizedAlternates(path);
@@ -22,6 +26,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     const { "x-default": _default, ...urls } = alternates.languages;
     return Object.values(urls).map((url) => ({
       url,
+      lastModified: LAST_MODIFIED,
       changeFrequency: "monthly" as const,
       priority: 0.8,
       alternates,
@@ -29,9 +34,30 @@ export default function sitemap(): MetadataRoute.Sitemap {
   });
 
   return [
-    { url: SITE_URL, changeFrequency: "monthly", priority: 1, alternates: home },
-    { url: `${SITE_URL}/es`, changeFrequency: "monthly", priority: 0.9, alternates: home },
-    { url: `${SITE_URL}/pt`, changeFrequency: "monthly", priority: 0.9, alternates: home },
+    { url: SITE_URL, lastModified: LAST_MODIFIED, changeFrequency: "monthly", priority: 1, alternates: home },
+    { url: `${SITE_URL}/es`, lastModified: LAST_MODIFIED, changeFrequency: "monthly", priority: 0.9, alternates: home },
+    { url: `${SITE_URL}/pt`, lastModified: LAST_MODIFIED, changeFrequency: "monthly", priority: 0.9, alternates: home },
+    {
+      url: `${SITE_URL}/academic`,
+      lastModified: LAST_MODIFIED,
+      changeFrequency: "monthly",
+      priority: 0.7,
+      alternates: academic,
+    },
+    {
+      url: `${SITE_URL}/es/academic`,
+      lastModified: LAST_MODIFIED,
+      changeFrequency: "monthly",
+      priority: 0.7,
+      alternates: academic,
+    },
+    {
+      url: `${SITE_URL}/pt/academic`,
+      lastModified: LAST_MODIFIED,
+      changeFrequency: "monthly",
+      priority: 0.7,
+      alternates: academic,
+    },
     ...caseStudies,
   ];
 }
