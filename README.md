@@ -84,8 +84,15 @@ Cada push a `main` ejecuta `.github/workflows/deploy.yml`:
 | `DOKPLOY_DEPLOY_WEBHOOK` | Webhook de deploy de la aplicación en Dokploy (solo despliega esta app).             |
 | `CLOUDFLARE_ZONE_ID`     | Zona `certilab.app`.                                                                 |
 | `CLOUDFLARE_PURGE_TOKEN` | Token limitado a `Zone > Cache Purge` en esa zona. Sin él, el paso avisa y no purga. |
+| `ORIGIN_IP`              | IP del origen, solo para comprobar que rechaza peticiones directas (nunca se imprime). |
 
 No usar una API key de Dokploy en GitHub: controla todo el servidor.
+
+### Origen protegido (nota de operaciones)
+
+- La regla de Cloudflare (Transform Rules, request header) «Portfolio origin auth header» añade `X-Origin-Auth` a cada petición, y los routers de Traefik en Dokploy exigen ese header. Una petición directa a la IP del origen se rechaza.
+- Editar el dominio en Dokploy puede regenerar el fichero de Traefik y perder esa comprobación. El paso «Verify the origin rejects direct requests» del deploy lo detecta (falla si el origen responde 200 a una petición directa); la solución es volver a añadir el matcher `Header()` en los routers.
+- El valor del secreto no se documenta aquí: vive solo en Cloudflare y en la configuración de Traefik.
 
 ### Aplicación en Dokploy
 
