@@ -68,6 +68,24 @@ jobs:
           echo "::error::$EXPECTED_VERSION was not live on $SITE_URL after 15 minutes; check the Dokploy deployment."
           exit 1
 
+      # Dokploy can regenerate the Traefik file and drop the X-Origin-Auth check; catch it here.
+      - name: Verify the origin rejects direct requests
+        if: ${{ env.DOKPLOY_DEPLOY_WEBHOOK != '' }}
+        timeout-minutes: 2
+        env:
+          ORIGIN_IP: ${{ secrets.ORIGIN_IP }}
+        run: |
+          if [ -z "$ORIGIN_IP" ]; then
+            echo "::notice::ORIGIN_IP is not set; skipping the direct-origin check."
+            exit 0
+          fi
+          status=$(curl -sk -o /dev/null -w '%{http_code}' --max-time 10 --resolve portfolio.certilab.app:443:${ORIGIN_IP} https://portfolio.certilab.app/api/version || true)
+          if [ "$status" = "200" ]; then
+            echo "::error::The origin answered 200 to a direct request; the Traefik X-Origin-Auth check is missing."
+            exit 1
+          fi
+          echo "Origin rejected the direct request (HTTP ${status:-none})."
+
       # Code deploys do not trigger the CMS hooks, so purge the edge-cached home pages here.
       - name: Purge Cloudflare cache for the home pages
         if: ${{ env.DOKPLOY_DEPLOY_WEBHOOK != '' }}
