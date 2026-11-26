@@ -33,10 +33,10 @@ Four parallel work units, each in its own linked worktree/branch off `fix/portfo
 - T4 S9-S10 — worker, worktree `sitio-cleanup`, branch `fix/review-cleanup` — Risk: item 5 (dependencies) — commits: 3cb902b, a084ad8, fb33ee9, 68b42fd, adce854, a02ddbf
 - T5 S11-S13 — worker, branch `fix/review-followups` — Risk: items 2, 5 — commits: 446d7c4, 02a2c63, a75ff37, 4747209 (streaming body cap) + CSP allowlist follow-up (verify PASS, native review approved)
 - T6 S14 — parent, ego-browser + Dokploy MCP — Risk: item 5 (environment) — done (no repo commit)
-- T7 S15 — worker, worktree `sitio-deps`, branch `fix/deps-bump` — Risk: item 5 — commit: pending
-- T8 S16-S17 — worker, worktree `sitio-csp`, branch `fix/csp-enforce` — Risk: items 2, 5 — commit: pending
-- T9 S18 — parent (ego-browser) + cargar.py inline — Risk: item 2 — commit: n/a (cargar.py lives outside the repo)
-- T10 S19 — explorer audit, then worker — commit: pending
+- T7 S15 — worker, worktree `sitio-deps`, branch `fix/deps-bump` — Risk: item 5 — commits: dddf222, 0d9f485 (migration), 47580ab (native review approved)
+- T8 S16-S17 — worker, worktree `sitio-csp`, branch `fix/csp-enforce` — Risk: items 2, 5 — commits: 8760bc3, b51f00c, 31cc9e0, c83be74 (native review approved)
+- T9 S18 — parent (ego-browser) + cargar.py inline — Risk: item 2 — done: Access app "Portfolio admin (Payload)" on /admin, /api/users, /api/graphql(-playground); cargar.py sends CF-Access headers when configured
+- T10 S19 — explorer audit, then worker — commits: da16ba7, b8f3905; Search Console domain property sc-domain:certilab.app verified + sitemap submitted
 
 ## Log
 
@@ -50,3 +50,4 @@ Four parallel work units, each in its own linked worktree/branch off `fix/portfo
 - L8 (evidence, T6): /admin Users = 1 (owner, created 2026-10-20); content last updated 2026-10-22..27; messages 0 → no abuse found. Cloudflare cache rule now also matches `/case-studies/`, `/es/case-studies/`, `/pt/case-studies/` (second request HIT). Origin: removed the `*.traefik.me` Dokploy domain; Traefik IP allowlist for Cloudflare ranges failed (Traefik sees Docker's IP, not the client) and was rolled back within ~30 s; instead a Cloudflare request-header transform rule "Portfolio origin auth header" sets `X-Origin-Auth` and both Traefik routers require `Header(X-Origin-Auth, <secret>)` → via Cloudflare 200, direct IP 404. The first secret value was shown in a dashboard snapshot and was rotated. Caveat: editing the domain in Dokploy may regenerate the Traefik file and drop the header check (fails open). Deployed 4747209; production CSP reports reach Dokploy logs (`[csp]` lines); ego-browser pass over /, /es, /pt, /es/academic, case studies and /admin found only Cloudflare Insights beacon and Gravatar violations → allowed in CSP. Open: 4 critical advisories need Payload ≥3.84 / Next 15.5 bumps; login lockout can be abused to lock the owner out (consider Cloudflare Access for /admin).
 - L9 (user): "todos y revisa el seo y posicionamiento" — do all four open items (Payload/Next bumps, admin lockout via Cloudflare Access, CSP enforcement, Traefik header durability) and review SEO and search positioning.
 - L10 (user decisions, S19): academic page → "Indexarla (recomendado)"; location in titles → "No agregar ubicación".
+- L11 (evidence): Payload 3.94.2 + Next 15.5.29 (npm override; Payload peer range excludes 15.5 but 15.4.11 has critical advisories) → npm audit 23→12, 0 critical; migration 20261126_021725 adds users.reset_password_requested_at and locale indexes, drift re-check empty on throwaway Postgres; Node image node:24-bookworm-slim = v24.22.3 meets Payload's floor. No Dokploy Postgres backup is configured (content rebuildable from contenido/*.json via cargar.py). Integrated main: tsc/lint/build 0, one CSP per route, sitemap 12 URLs. Bing Webmaster left to the user (Microsoft sign-in).
