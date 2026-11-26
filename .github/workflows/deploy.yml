@@ -84,7 +84,12 @@ jobs:
             echo "::error::The origin answered 200 to a direct request; the Traefik X-Origin-Auth check is missing."
             exit 1
           fi
-          echo "Origin rejected the direct request (HTTP ${status:-none})."
+          if [ "$status" = "000" ] || [ -z "$status" ]; then
+            # No HTTP answer is not proof of rejection: a stale ORIGIN_IP would look the same.
+            echo "::warning::The origin did not answer the direct request; check that ORIGIN_IP is current."
+            exit 0
+          fi
+          echo "Origin rejected the direct request (HTTP ${status})."
 
       # Code deploys do not trigger the CMS hooks, so purge the edge-cached home pages here.
       - name: Purge Cloudflare cache for the home pages
