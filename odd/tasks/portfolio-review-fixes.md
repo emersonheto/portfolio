@@ -19,6 +19,11 @@ Four parallel work units, each in its own linked worktree/branch off `fix/portfo
 - S12 (Payload auth): `Users` auth gets brute-force protection (`maxLoginAttempts`, `lockTime`); document why forgot/reset/unlock stay (no email adapter configured, so no mail is sent).
 - S13 (deps): resolve `npm audit` findings with non-breaking upgrades only (no `--force`); list anything left with reason.
 - S14 (ops, browser/API): confirm `/admin` Users holds only the owner account; extend the Cloudflare cache rule to case-study paths; confirm the origin is not reachable bypassing Cloudflare.
+- S15 (deps): fix the remaining critical/high advisories by bumping Payload (all `@payloadcms/*` + `payload`, same version) and `next` (+ `eslint-config-next`) to the latest compatible minor/patch in their current majors; detect any required Payload schema migration against a throwaway Postgres; tsc, lint and build stay green.
+- S16 (CSP): enforce the CSP (no longer Report-Only) with the policy that produced zero violations; `/admin` and the public site get mutually exclusive header rules so they never stack; a stricter Report-Only policy without `'unsafe-eval'` on the public site keeps collecting reports. Nonces are out of scope because they would force every page dynamic and defeat ISR/Cloudflare caching.
+- S17 (origin): the deploy workflow fails if the origin answers 200 when called directly by IP (secret `ORIGIN_IP`), so a Dokploy regeneration of the Traefik header check is caught; README documents the Cloudflare header rule and the check.
+- S18 (admin access): Cloudflare Access protects `/admin` and `/api/users/login` for the owner; `cargar.py` sends `CF-Access-Client-Id`/`CF-Access-Client-Secret` when the credentials file provides them.
+- S19 (SEO): audit technical SEO, structured data, content and search positioning (live site + Search Console when available) and implement the in-repo improvements.
 
 ## Tasks
 
@@ -28,6 +33,10 @@ Four parallel work units, each in its own linked worktree/branch off `fix/portfo
 - T4 S9-S10 — worker, worktree `sitio-cleanup`, branch `fix/review-cleanup` — Risk: item 5 (dependencies) — commits: 3cb902b, a084ad8, fb33ee9, 68b42fd, adce854, a02ddbf
 - T5 S11-S13 — worker, branch `fix/review-followups` — Risk: items 2, 5 — commits: 446d7c4, 02a2c63, a75ff37, 4747209 (streaming body cap) + CSP allowlist follow-up (verify PASS, native review approved)
 - T6 S14 — parent, ego-browser + Dokploy MCP — Risk: item 5 (environment) — done (no repo commit)
+- T7 S15 — worker, worktree `sitio-deps`, branch `fix/deps-bump` — Risk: item 5 — commit: pending
+- T8 S16-S17 — worker, worktree `sitio-csp`, branch `fix/csp-enforce` — Risk: items 2, 5 — commit: pending
+- T9 S18 — parent (ego-browser) + cargar.py inline — Risk: item 2 — commit: n/a (cargar.py lives outside the repo)
+- T10 S19 — explorer audit, then worker — commit: pending
 
 ## Log
 
@@ -39,3 +48,4 @@ Four parallel work units, each in its own linked worktree/branch off `fix/portfo
 - L6 (evidence): unprefixed /case-studies/* stayed no-store because its root layout used next-intl without setRequestLocale (headers() opted it out of prerender silently). Fixed in bd06b2c; prod now `s-maxage=3600` on /case-studies/bcrp-rag. Cloudflare still reports `cf-cache-status: DYNAMIC` for case studies — the Cloudflare cache rule (outside the repo) only covers /, /es, /pt.
 - L7 (user): "hazlo y puedes revisar también con egolite" — do the pending follow-ups (admin users check, Cloudflare cache rule, origin exposure, CSP reporting, Payload auth endpoints, npm audit) and review with ego-browser.
 - L8 (evidence, T6): /admin Users = 1 (owner, created 2026-10-20); content last updated 2026-10-22..27; messages 0 → no abuse found. Cloudflare cache rule now also matches `/case-studies/`, `/es/case-studies/`, `/pt/case-studies/` (second request HIT). Origin: removed the `*.traefik.me` Dokploy domain; Traefik IP allowlist for Cloudflare ranges failed (Traefik sees Docker's IP, not the client) and was rolled back within ~30 s; instead a Cloudflare request-header transform rule "Portfolio origin auth header" sets `X-Origin-Auth` and both Traefik routers require `Header(X-Origin-Auth, <secret>)` → via Cloudflare 200, direct IP 404. The first secret value was shown in a dashboard snapshot and was rotated. Caveat: editing the domain in Dokploy may regenerate the Traefik file and drop the header check (fails open). Deployed 4747209; production CSP reports reach Dokploy logs (`[csp]` lines); ego-browser pass over /, /es, /pt, /es/academic, case studies and /admin found only Cloudflare Insights beacon and Gravatar violations → allowed in CSP. Open: 4 critical advisories need Payload ≥3.84 / Next 15.5 bumps; login lockout can be abused to lock the owner out (consider Cloudflare Access for /admin).
+- L9 (user): "todos y revisa el seo y posicionamiento" — do all four open items (Payload/Next bumps, admin lockout via Cloudflare Access, CSP enforcement, Traefik header durability) and review SEO and search positioning.
